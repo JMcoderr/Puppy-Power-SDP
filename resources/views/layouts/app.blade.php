@@ -17,7 +17,7 @@
                 <a href="{{ route('shop.index') }}">Shop</a>
                 <a href="{{ route('training.index') }}">Training</a>
                 <a href="{{ route('daycare.index') }}">Dagopvang</a>
-                <a href="#">Contact</a>
+                <a href="{{ route('contact.index') }}">Contact</a>
                 @auth
                     <a href="{{ route('training.content') }}">Training content</a>
                     <form action="{{ route('logout') }}" method="post" style="display:inline;">
