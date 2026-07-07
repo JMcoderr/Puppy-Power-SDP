@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ContactController;
 use App\Http\Controllers\DaycareController;
 use App\Http\Controllers\ShopController;
 use App\Http\Controllers\TrainingController;
@@ -20,6 +21,9 @@ Route::get('/training/content', [TrainingController::class, 'content'])
 
 Route::get('/dagopvang', [DaycareController::class, 'index'])->name('daycare.index');
 Route::post('/dagopvang', [DaycareController::class, 'store'])->name('daycare.store');
+
+Route::get('/contact', [ContactController::class, 'index'])->name('contact.index');
+Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
 
 Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
 Route::post('/login', [AuthController::class, 'login'])->name('login.store');
