@@ -15,9 +15,18 @@
             <nav class="main-nav">
                 <a href="{{ route('home') }}">Home</a>
                 <a href="{{ route('shop.index') }}">Shop</a>
-                <a href="#">Training</a>
+                <a href="{{ route('training.index') }}">Training</a>
                 <a href="#">Dagopvang</a>
                 <a href="#">Contact</a>
+                @auth
+                    <a href="{{ route('training.content') }}">Training content</a>
+                    <form action="{{ route('logout') }}" method="post" style="display:inline;">
+                        @csrf
+                        <button type="submit" class="link-button">Uitloggen</button>
+                    </form>
+                @else
+                    <a href="{{ route('login') }}">Inloggen</a>
+                @endauth
             </nav>
         </div>
     </header>
