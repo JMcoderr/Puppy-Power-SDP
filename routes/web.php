@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\DaycareController;
 use App\Http\Controllers\ShopController;
 use App\Http\Controllers\TrainingController;
 use Illuminate\Support\Facades\Route;
@@ -16,6 +17,9 @@ Route::post('/training/enroll', [TrainingController::class, 'enroll'])->name('tr
 Route::get('/training/content', [TrainingController::class, 'content'])
     ->middleware('auth')
     ->name('training.content');
+
+Route::get('/dagopvang', [DaycareController::class, 'index'])->name('daycare.index');
+Route::post('/dagopvang', [DaycareController::class, 'store'])->name('daycare.store');
 
 Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
 Route::post('/login', [AuthController::class, 'login'])->name('login.store');
