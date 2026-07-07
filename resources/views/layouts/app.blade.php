@@ -16,7 +16,7 @@
                 <a href="{{ route('home') }}">Home</a>
                 <a href="{{ route('shop.index') }}">Shop</a>
                 <a href="{{ route('training.index') }}">Training</a>
-                <a href="#">Dagopvang</a>
+                <a href="{{ route('daycare.index') }}">Dagopvang</a>
                 <a href="#">Contact</a>
                 @auth
                     <a href="{{ route('training.content') }}">Training content</a>
