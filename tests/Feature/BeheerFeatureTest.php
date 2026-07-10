@@ -88,4 +88,46 @@ class BeheerFeatureTest extends TestCase
         $this->assertStringContainsString('Training inschrijvingen', $content);
         $this->assertStringContainsString('CsvNaam', $content);
     }
+
+    public function test_beheer_accepts_sorting_query_parameters(): void
+    {
+        $user = User::factory()->create();
+        $training = Training::query()->create([
+            'title' => 'Sort Test',
+            'slug' => 'sort-test',
+            'summary' => 'Sort test training.',
+            'capacity' => 10,
+            'is_active' => true,
+        ]);
+
+        TrainingEnrollment::query()->create([
+            'training_id' => $training->id,
+            'owner_name' => 'Bravo',
+            'email' => 'b@example.com',
+            'dog_name' => 'Boris',
+        ]);
+
+        TrainingEnrollment::query()->create([
+            'training_id' => $training->id,
+            'owner_name' => 'Alpha',
+            'email' => 'a@example.com',
+            'dog_name' => 'Aika',
+        ]);
+
+        $this->actingAs($user)
+            ->get('/beheer?sort_enrollments=owner_name&dir_enrollments=asc')
+            ->assertOk()
+            ->assertSee('Alpha')
+            ->assertSee('Bravo');
+    }
+
+    public function test_beheer_page_accepts_sort_filter(): void
+    {
+        $user = User::factory()->create();
+
+        $this->actingAs($user)
+            ->get('/beheer?sort=name_az')
+            ->assertOk()
+            ->assertSee('Sortering');
+    }
 }

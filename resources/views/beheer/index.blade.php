@@ -24,7 +24,7 @@
 
     <section class="mb-4 rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
         <h2 class="text-lg font-semibold text-slate-900">Zoeken en filteren</h2>
-        <form method="get" action="{{ route('beheer.index') }}" class="mt-3 grid gap-3 md:grid-cols-4 md:items-end">
+        <form method="get" action="{{ route('beheer.index') }}" class="mt-3 grid gap-3 md:grid-cols-5 md:items-end">
             <label class="grid gap-1 text-sm text-slate-700 md:col-span-2">
                 Zoekterm
                 <input
@@ -43,11 +43,20 @@
                 Tot en met
                 <input type="date" name="to" value="{{ $filters['to'] ?? '' }}" class="rounded-md border border-slate-300 px-3 py-2">
             </label>
+            <label class="grid gap-1 text-sm text-slate-700">
+                Sortering
+                <select name="sort" class="rounded-md border border-slate-300 px-3 py-2">
+                    <option value="newest" @selected(($filters['sort'] ?? 'newest') === 'newest')>Nieuwste eerst</option>
+                    <option value="oldest" @selected(($filters['sort'] ?? '') === 'oldest')>Oudste eerst</option>
+                    <option value="name_az" @selected(($filters['sort'] ?? '') === 'name_az')>Naam A-Z</option>
+                    <option value="name_za" @selected(($filters['sort'] ?? '') === 'name_za')>Naam Z-A</option>
+                </select>
+            </label>
             <div class="flex gap-2 md:col-span-4">
                 <button type="submit" class="inline-flex rounded-lg bg-slate-800 px-4 py-2 text-sm font-medium text-white hover:bg-slate-900">Toepassen</button>
                 <a href="{{ route('beheer.index') }}" class="inline-flex rounded-lg border border-slate-300 px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50">Reset</a>
                 <a
-                    href="{{ route('beheer.export', request()->only(['q', 'from', 'to'])) }}"
+                    href="{{ route('beheer.export', request()->only(['q', 'from', 'to', 'sort'])) }}"
                     class="inline-flex rounded-lg border border-emerald-300 bg-emerald-50 px-4 py-2 text-sm font-medium text-emerald-800 hover:bg-emerald-100"
                 >
                     Exporteer CSV
@@ -60,8 +69,20 @@
         <article class="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
             <h2 class="text-xl font-semibold text-slate-900">Training inschrijvingen</h2>
             <p class="mt-1 text-sm text-slate-500">Resultaten: {{ $filteredCounts['enrollments'] ?? 0 }}</p>
+            <div class="mt-3 grid gap-3 md:hidden">
+                @forelse ($enrollments as $item)
+                    <article class="rounded-lg border border-slate-200 bg-slate-50 p-3 text-sm">
+                        <p><strong>Eigenaar:</strong> {{ $item->owner_name }}</p>
+                        <p><strong>Hond:</strong> {{ $item->dog_name }}</p>
+                        <p><strong>Training:</strong> {{ $item->training?->title ?? '-' }}</p>
+                        <p><strong>E-mail:</strong> {{ $item->email }}</p>
+                    </article>
+                @empty
+                    <p class="text-sm text-slate-500">Nog geen inschrijvingen.</p>
+                @endforelse
+            </div>
             <div class="overflow-x-auto">
-                <table class="mt-3 w-full border-collapse text-sm">
+                <table class="mt-3 hidden w-full border-collapse text-sm md:table">
                     <thead>
                         <tr>
                             <th class="border-b border-slate-200 bg-slate-50 px-2 py-2 text-left font-semibold">Eigenaar</th>
@@ -94,8 +115,20 @@
         <article class="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
             <h2 class="text-xl font-semibold text-slate-900">Dagopvang aanmeldingen</h2>
             <p class="mt-1 text-sm text-slate-500">Resultaten: {{ $filteredCounts['daycare'] ?? 0 }}</p>
+            <div class="mt-3 grid gap-3 md:hidden">
+                @forelse ($daycareRegistrations as $item)
+                    <article class="rounded-lg border border-slate-200 bg-slate-50 p-3 text-sm">
+                        <p><strong>Eigenaar:</strong> {{ $item->owner_name }}</p>
+                        <p><strong>Hond:</strong> {{ $item->dog_name }}</p>
+                        <p><strong>Datum:</strong> {{ optional($item->drop_off_date)->format('d-m-Y') }}</p>
+                        <p><strong>Dagdeel:</strong> {{ $item->time_slot }}</p>
+                    </article>
+                @empty
+                    <p class="text-sm text-slate-500">Nog geen dagopvang aanmeldingen.</p>
+                @endforelse
+            </div>
             <div class="overflow-x-auto">
-                <table class="mt-3 w-full border-collapse text-sm">
+                <table class="mt-3 hidden w-full border-collapse text-sm md:table">
                     <thead>
                         <tr>
                             <th class="border-b border-slate-200 bg-slate-50 px-2 py-2 text-left font-semibold">Eigenaar</th>
@@ -128,8 +161,19 @@
         <article class="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
             <h2 class="text-xl font-semibold text-slate-900">Contactberichten</h2>
             <p class="mt-1 text-sm text-slate-500">Resultaten: {{ $filteredCounts['messages'] ?? 0 }}</p>
+            <div class="mt-3 grid gap-3 md:hidden">
+                @forelse ($contactMessages as $item)
+                    <article class="rounded-lg border border-slate-200 bg-slate-50 p-3 text-sm">
+                        <p><strong>Naam:</strong> {{ $item->name }}</p>
+                        <p><strong>Onderwerp:</strong> {{ $item->subject }}</p>
+                        <p><strong>E-mail:</strong> {{ $item->email }}</p>
+                    </article>
+                @empty
+                    <p class="text-sm text-slate-500">Nog geen contactberichten.</p>
+                @endforelse
+            </div>
             <div class="overflow-x-auto">
-                <table class="mt-3 w-full border-collapse text-sm">
+                <table class="mt-3 hidden w-full border-collapse text-sm md:table">
                     <thead>
                         <tr>
                             <th class="border-b border-slate-200 bg-slate-50 px-2 py-2 text-left font-semibold">Naam</th>

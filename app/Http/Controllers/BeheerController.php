@@ -10,7 +10,7 @@ class BeheerController extends Controller
 {
     public function index()
     {
-        [$search, $from, $to, $filters] = $this->filters();
+        [$search, $from, $to, $sort, $filters] = $this->filters();
 
         // simple latest lists for admin overview
         $totals = [
@@ -23,18 +23,15 @@ class BeheerController extends Controller
         $daycareQuery = $this->daycareQuery($search, $from, $to);
         $messagesQuery = $this->messagesQuery($search, $from, $to);
 
-        $enrollments = (clone $enrollmentsQuery)
-            ->latest()
+        $enrollments = $this->applySorting(clone $enrollmentsQuery, $sort, 'owner_name')
             ->paginate(10, ['*'], 'enrollments_page')
             ->withQueryString();
 
-        $daycareRegistrations = (clone $daycareQuery)
-            ->latest()
+        $daycareRegistrations = $this->applySorting(clone $daycareQuery, $sort, 'owner_name')
             ->paginate(10, ['*'], 'daycare_page')
             ->withQueryString();
 
-        $contactMessages = (clone $messagesQuery)
-            ->latest()
+        $contactMessages = $this->applySorting(clone $messagesQuery, $sort, 'name')
             ->paginate(10, ['*'], 'messages_page')
             ->withQueryString();
 
@@ -49,11 +46,11 @@ class BeheerController extends Controller
 
     public function export()
     {
-        [$search, $from, $to] = $this->filters();
+        [$search, $from, $to, $sort] = $this->filters();
 
-        $enrollments = $this->enrollmentsQuery($search, $from, $to)->latest()->get();
-        $daycareRegistrations = $this->daycareQuery($search, $from, $to)->latest()->get();
-        $contactMessages = $this->messagesQuery($search, $from, $to)->latest()->get();
+        $enrollments = $this->applySorting($this->enrollmentsQuery($search, $from, $to), $sort, 'owner_name')->get();
+        $daycareRegistrations = $this->applySorting($this->daycareQuery($search, $from, $to), $sort, 'owner_name')->get();
+        $contactMessages = $this->applySorting($this->messagesQuery($search, $from, $to), $sort, 'name')->get();
 
         $filename = 'beheer-export-' . now()->format('Ymd-His') . '.csv';
 
@@ -109,17 +106,35 @@ class BeheerController extends Controller
         $search = trim((string) request('q', ''));
         $from = request('from');
         $to = request('to');
+        $sort = (string) request('sort', 'newest');
+
+        $allowedSorts = ['newest', 'oldest', 'name_az', 'name_za'];
+        if (! in_array($sort, $allowedSorts, true)) {
+            $sort = 'newest';
+        }
 
         return [
             $search,
             $from,
             $to,
+            $sort,
             [
                 'q' => $search,
                 'from' => $from,
                 'to' => $to,
+                'sort' => $sort,
             ],
         ];
+    }
+
+    private function applySorting($query, string $sort, string $nameColumn)
+    {
+        return match ($sort) {
+            'oldest' => $query->orderBy('created_at'),
+            'name_az' => $query->orderBy($nameColumn)->orderByDesc('created_at'),
+            'name_za' => $query->orderByDesc($nameColumn)->orderByDesc('created_at'),
+            default => $query->orderByDesc('created_at'),
+        };
     }
 
     private function enrollmentsQuery(string $search, ?string $from, ?string $to)
