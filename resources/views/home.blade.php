@@ -80,4 +80,33 @@
             </article>
         </div>
     </section>
+
+    <section class="mt-5 grid gap-4 lg:grid-cols-[1.3fr_0.7fr]">
+        <article class="card">
+            <p class="text-xs font-semibold uppercase tracking-wide text-emerald-700 dark:text-emerald-400">Waarom klanten kiezen voor ons</p>
+            <div class="mt-4 grid gap-3 sm:grid-cols-3">
+                <div class="rounded-lg border border-slate-200 bg-slate-50 p-4 dark:border-slate-700 dark:bg-slate-700/50">
+                    <p class="text-sm font-semibold text-slate-900 dark:text-white">Persoonlijk</p>
+                    <p class="mt-1 text-sm text-slate-600 dark:text-slate-400">Advies dat past bij het gedrag en tempo van jouw hond.</p>
+                </div>
+                <div class="rounded-lg border border-slate-200 bg-slate-50 p-4 dark:border-slate-700 dark:bg-slate-700/50">
+                    <p class="text-sm font-semibold text-slate-900 dark:text-white">Praktisch</p>
+                    <p class="mt-1 text-sm text-slate-600 dark:text-slate-400">Duidelijke oefeningen die je meteen thuis kunt toepassen.</p>
+                </div>
+                <div class="rounded-lg border border-slate-200 bg-slate-50 p-4 dark:border-slate-700 dark:bg-slate-700/50">
+                    <p class="text-sm font-semibold text-slate-900 dark:text-white">Veilig</p>
+                    <p class="mt-1 text-sm text-slate-600 dark:text-slate-400">Rustige opbouw en aandacht voor welzijn en vertrouwen.</p>
+                </div>
+            </div>
+        </article>
+
+        <aside class="card">
+            <h2 class="text-xl font-semibold text-slate-900 dark:text-white">Snel starten?</h2>
+            <p class="mt-2 page-sub">Kies de route die nu het beste bij je past en zet vandaag de eerste stap.</p>
+            <div class="mt-4 grid gap-2">
+                <a href="{{ route('training.index') }}" class="inline-flex justify-center rounded-lg bg-emerald-700 px-4 py-2 text-sm font-medium text-white hover:bg-emerald-600">Start met training</a>
+                <a href="{{ route('daycare.index') }}" class="inline-flex justify-center rounded-lg border border-slate-300 px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50 dark:border-slate-600 dark:text-slate-200 dark:hover:bg-slate-700">Bekijk dagopvang</a>
+            </div>
+        </aside>
+    </section>
 @endsection
