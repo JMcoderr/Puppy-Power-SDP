@@ -3,49 +3,49 @@
 @section('content')
     {{-- quick admin page for recent form entries --}}
     <section class="mb-4">
-        <h1 class="text-3xl font-bold text-slate-900">Beheer overzicht</h1>
-        <p class="mt-1 text-slate-600">Hier zie je de nieuwste inschrijvingen, dagopvang-aanmeldingen en contactberichten.</p>
+        <h1 class="page-heading">Beheer overzicht</h1>
+        <p class="page-sub mt-1">Hier zie je de nieuwste inschrijvingen, dagopvang-aanmeldingen en contactberichten.</p>
     </section>
 
     <section class="mb-4 grid gap-4 sm:grid-cols-3">
-        <article class="rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
-            <p class="text-sm text-slate-500">Totaal training inschrijvingen</p>
-            <p class="mt-1 text-2xl font-bold text-slate-900">{{ $totals['enrollments'] ?? 0 }}</p>
+        <article class="card p-4">
+            <p class="text-sm text-slate-500 dark:text-slate-400">Totaal training inschrijvingen</p>
+            <p class="mt-1 text-2xl font-bold text-slate-900 dark:text-white">{{ $totals['enrollments'] ?? 0 }}</p>
         </article>
-        <article class="rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
-            <p class="text-sm text-slate-500">Totaal dagopvang aanmeldingen</p>
-            <p class="mt-1 text-2xl font-bold text-slate-900">{{ $totals['daycare'] ?? 0 }}</p>
+        <article class="card p-4">
+            <p class="text-sm text-slate-500 dark:text-slate-400">Totaal dagopvang aanmeldingen</p>
+            <p class="mt-1 text-2xl font-bold text-slate-900 dark:text-white">{{ $totals['daycare'] ?? 0 }}</p>
         </article>
-        <article class="rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
-            <p class="text-sm text-slate-500">Totaal contactberichten</p>
-            <p class="mt-1 text-2xl font-bold text-slate-900">{{ $totals['messages'] ?? 0 }}</p>
+        <article class="card p-4">
+            <p class="text-sm text-slate-500 dark:text-slate-400">Totaal contactberichten</p>
+            <p class="mt-1 text-2xl font-bold text-slate-900 dark:text-white">{{ $totals['messages'] ?? 0 }}</p>
         </article>
     </section>
 
-    <section class="mb-4 rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
-        <h2 class="text-lg font-semibold text-slate-900">Zoeken en filteren</h2>
+    <section class="card mb-4 p-4">
+        <h2 class="text-lg font-semibold text-slate-900 dark:text-white">Zoeken en filteren</h2>
         <form method="get" action="{{ route('beheer.index') }}" class="mt-3 grid gap-3 md:grid-cols-5 md:items-end">
-            <label class="grid gap-1 text-sm text-slate-700 md:col-span-2">
+            <label class="grid gap-1 text-sm text-slate-700 dark:text-slate-300 md:col-span-2">
                 Zoekterm
                 <input
                     type="text"
                     name="q"
                     value="{{ $filters['q'] ?? '' }}"
                     placeholder="Naam, e-mail, hond of onderwerp"
-                    class="rounded-md border border-slate-300 px-3 py-2"
+                    class="form-input"
                 >
             </label>
-            <label class="grid gap-1 text-sm text-slate-700">
+            <label class="grid gap-1 text-sm text-slate-700 dark:text-slate-300">
                 Vanaf
-                <input type="date" name="from" value="{{ $filters['from'] ?? '' }}" class="rounded-md border border-slate-300 px-3 py-2">
+                <input type="date" name="from" value="{{ $filters['from'] ?? '' }}" class="form-input">
             </label>
-            <label class="grid gap-1 text-sm text-slate-700">
+            <label class="grid gap-1 text-sm text-slate-700 dark:text-slate-300">
                 Tot en met
-                <input type="date" name="to" value="{{ $filters['to'] ?? '' }}" class="rounded-md border border-slate-300 px-3 py-2">
+                <input type="date" name="to" value="{{ $filters['to'] ?? '' }}" class="form-input">
             </label>
-            <label class="grid gap-1 text-sm text-slate-700">
+            <label class="grid gap-1 text-sm text-slate-700 dark:text-slate-300">
                 Sortering
-                <select name="sort" class="rounded-md border border-slate-300 px-3 py-2">
+                <select name="sort" class="form-input">
                     <option value="newest" @selected(($filters['sort'] ?? 'newest') === 'newest')>Nieuwste eerst</option>
                     <option value="oldest" @selected(($filters['sort'] ?? '') === 'oldest')>Oudste eerst</option>
                     <option value="name_az" @selected(($filters['sort'] ?? '') === 'name_az')>Naam A-Z</option>
@@ -53,11 +53,11 @@
                 </select>
             </label>
             <div class="flex gap-2 md:col-span-4">
-                <button type="submit" class="inline-flex rounded-lg bg-slate-800 px-4 py-2 text-sm font-medium text-white hover:bg-slate-900">Toepassen</button>
-                <a href="{{ route('beheer.index') }}" class="inline-flex rounded-lg border border-slate-300 px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50">Reset</a>
+                <button type="submit" class="inline-flex rounded-lg bg-slate-800 px-4 py-2 text-sm font-medium text-white hover:bg-slate-700 dark:bg-slate-700 dark:hover:bg-slate-600">Toepassen</button>
+                <a href="{{ route('beheer.index') }}" class="inline-flex rounded-lg border border-slate-300 px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50 dark:border-slate-600 dark:text-slate-300 dark:hover:bg-slate-700">Reset</a>
                 <a
                     href="{{ route('beheer.export', request()->only(['q', 'from', 'to', 'sort'])) }}"
-                    class="inline-flex rounded-lg border border-emerald-300 bg-emerald-50 px-4 py-2 text-sm font-medium text-emerald-800 hover:bg-emerald-100"
+                    class="inline-flex rounded-lg border border-emerald-300 bg-emerald-50 px-4 py-2 text-sm font-medium text-emerald-800 hover:bg-emerald-100 dark:border-emerald-800 dark:bg-emerald-950 dark:text-emerald-300 dark:hover:bg-emerald-900"
                 >
                     Exporteer CSV
                 </a>
@@ -65,7 +65,7 @@
         </form>
 
         @if (($filters['adjusted'] ?? false) === true)
-            <p class="mt-3 rounded-md border border-amber-200 bg-amber-50 px-3 py-2 text-sm text-amber-900">
+            <p class="mt-3 rounded-md border border-amber-200 bg-amber-50 px-3 py-2 text-sm text-amber-900 dark:border-amber-800 dark:bg-amber-950 dark:text-amber-300">
                 Datumbereik is automatisch omgedraaid, omdat "vanaf" later was dan "tot en met".
             </p>
         @endif
@@ -73,13 +73,13 @@
         @if (! empty($filters['q']) || ! empty($filters['from']) || ! empty($filters['to']))
             <div class="mt-3 flex flex-wrap gap-2 text-xs">
                 @if (! empty($filters['q']))
-                    <span class="rounded-full border border-sky-200 bg-sky-50 px-3 py-1 font-medium text-sky-800">Zoek: {{ $filters['q'] }}</span>
+                    <span class="rounded-full border border-sky-200 bg-sky-50 px-3 py-1 font-medium text-sky-800 dark:border-sky-800 dark:bg-sky-950 dark:text-sky-300">Zoek: {{ $filters['q'] }}</span>
                 @endif
                 @if (! empty($filters['from']))
-                    <span class="rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1 font-medium text-emerald-800">Vanaf: {{ $filters['from'] }}</span>
+                    <span class="rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1 font-medium text-emerald-800 dark:border-emerald-800 dark:bg-emerald-950 dark:text-emerald-300">Vanaf: {{ $filters['from'] }}</span>
                 @endif
                 @if (! empty($filters['to']))
-                    <span class="rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1 font-medium text-emerald-800">Tot: {{ $filters['to'] }}</span>
+                    <span class="rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1 font-medium text-emerald-800 dark:border-emerald-800 dark:bg-emerald-950 dark:text-emerald-300">Tot: {{ $filters['to'] }}</span>
                 @endif
             </div>
         @endif
