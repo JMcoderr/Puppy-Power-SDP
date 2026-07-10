@@ -76,7 +76,7 @@
     </main>
 
     {{-- footer uses a soft card-like light theme and switches to dark in dark mode --}}
-    <footer class="mt-8 border-t border-slate-200 bg-linear-to-br from-white via-slate-50 to-emerald-50 text-slate-700 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300">
+    <footer class="mt-8 border-t border-slate-200 bg-linear-to-br from-white via-slate-50 to-emerald-50 text-slate-700 dark:border-slate-700 dark:bg-none dark:bg-slate-950 dark:text-slate-300">
         <div class="mx-auto w-full max-w-6xl px-4 pt-10 pb-6">
 
             {{-- top row: four columns --}}
@@ -96,7 +96,7 @@
 
                 {{-- column 2: page links --}}
                 <nav aria-label="Footer navigatie">
-                    <p class="text-xs font-semibold uppercase tracking-widest text-slate-500 dark:text-slate-500">Navigatie</p>
+                    <p class="text-xs font-semibold uppercase tracking-widest text-slate-500 dark:text-slate-400">Navigatie</p>
                     <ul class="mt-3 space-y-2 text-sm">
                         <li><a href="{{ route('home') }}"           class="hover:text-emerald-700 transition-colors dark:hover:text-emerald-400">Home</a></li>
                         <li><a href="{{ route('shop.index') }}"     class="hover:text-emerald-700 transition-colors dark:hover:text-emerald-400">Shop</a></li>
@@ -108,7 +108,7 @@
 
                 {{-- column 3: opening hours --}}
                 <div>
-                    <p class="text-xs font-semibold uppercase tracking-widest text-slate-500 dark:text-slate-500">Openingstijden</p>
+                    <p class="text-xs font-semibold uppercase tracking-widest text-slate-500 dark:text-slate-400">Openingstijden</p>
                     <ul class="mt-3 space-y-2 text-sm">
                         <li class="flex justify-between gap-4"><span>Maandag – vrijdag</span><span class="text-slate-500 dark:text-slate-400">09:00 – 17:00</span></li>
                         <li class="flex justify-between gap-4"><span>Zaterdag</span><span class="text-slate-500 dark:text-slate-400">10:00 – 14:00</span></li>
@@ -118,7 +118,7 @@
 
                 {{-- column 4: contact details --}}
                 <div>
-                    <p class="text-xs font-semibold uppercase tracking-widest text-slate-500 dark:text-slate-500">Contact</p>
+                    <p class="text-xs font-semibold uppercase tracking-widest text-slate-500 dark:text-slate-400">Contact</p>
                     <ul class="mt-3 space-y-2 text-sm">
                         <li>
                             <a href="mailto:info@puppypoweracademy.nl" class="hover:text-emerald-700 transition-colors dark:hover:text-emerald-400">
@@ -144,7 +144,7 @@
             </div>
 
             {{-- bottom bar with copyright --}}
-            <div class="mt-8 flex flex-col items-center justify-between gap-2 border-t border-slate-200 pt-5 text-xs text-slate-500 dark:border-slate-700 dark:text-slate-500 sm:flex-row">
+            <div class="mt-8 flex flex-col items-center justify-between gap-2 border-t border-slate-200 pt-5 text-xs text-slate-500 dark:border-slate-700 dark:text-slate-400 sm:flex-row">
                 <p>&copy; {{ date('Y') }} Puppy Power Academy. Alle rechten voorbehouden.</p>
                 <div class="flex items-center gap-4">
                     <a href="#main-content" class="hover:text-emerald-700 dark:hover:text-emerald-400">Naar boven</a>

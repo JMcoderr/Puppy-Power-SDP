@@ -44,9 +44,9 @@ class TrainingController extends Controller
     {
         // static lesson list shown to authenticated users only
         $lessons = [
-            ['title' => 'Week 1: Focus en rust opbouwen', 'duration' => '18 min'],
-            ['title' => 'Week 2: Wandelen zonder trekken', 'duration' => '24 min'],
-            ['title' => 'Week 3: Prikkeltraining in de stad', 'duration' => '20 min'],
+            ['title' => 'Week 1: Focus en rust opbouwen', 'duration' => '18 min', 'level' => 'Start', 'status' => 'Nu bekijken'],
+            ['title' => 'Week 2: Wandelen zonder trekken', 'duration' => '24 min', 'level' => 'Basis', 'status' => 'Volgende stap'],
+            ['title' => 'Week 3: Prikkeltraining in de stad', 'duration' => '20 min', 'level' => 'Gevorderd', 'status' => 'Komt hierna'],
         ];
 
         return view('training.content', compact('lessons'));

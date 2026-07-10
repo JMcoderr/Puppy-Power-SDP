@@ -21,7 +21,10 @@ class AuthIntegrationTest extends TestCase
 
         $this->actingAs($user)
             ->get('/training/content')
-            ->assertOk();
+            ->assertOk()
+            ->assertSee('Jouw trainingspad')
+            ->assertSee('Lessenoverzicht')
+            ->assertSee('Nu bekijken');
     }
 }
 
