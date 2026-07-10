@@ -7,3 +7,94 @@
     --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
         'Segoe UI Symbol', 'Noto Color Emoji';
 }
+
+/* enable class-based dark mode so JavaScript can toggle it */
+@custom-variant dark (&:where(.dark, .dark *));
+
+@layer base {
+    /* light mode background */
+    body {
+        background:
+            radial-gradient(circle at top right, #d9f3e7, transparent 40%),
+            radial-gradient(circle at 10% 20%, #fdeecf, transparent 35%),
+            repeating-linear-gradient(
+                135deg,
+                rgba(255, 255, 255, 0.45) 0,
+                rgba(255, 255, 255, 0.45) 6px,
+                rgba(255, 255, 255, 0) 6px,
+                rgba(255, 255, 255, 0) 12px
+            ),
+            #f9f6f1;
+    }
+
+    /* dark mode background - solid dark colour */
+    .dark body {
+        background: #0f172a;
+    }
+
+    ::selection {
+        background: #9ae6b4;
+        color: #0f172a;
+    }
+
+    :focus-visible {
+        outline: 2px solid #059669;
+        outline-offset: 2px;
+    }
+}
+
+@keyframes fade-up {
+    from {
+        opacity: 0;
+        transform: translateY(12px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@layer utilities {
+    .fade-up {
+        animation: fade-up 0.55s ease-out both;
+    }
+
+    .fade-delay-1 {
+        animation-delay: 0.08s;
+    }
+
+    .fade-delay-2 {
+        animation-delay: 0.16s;
+    }
+
+    .fade-delay-3 {
+        animation-delay: 0.24s;
+    }
+}
+
+/* reusable component classes so dark mode only needs to be set once */
+@layer components {
+    /* standard white card used across all pages */
+    .card {
+        @apply rounded-xl border border-slate-200 bg-white p-5 shadow-sm
+               dark:border-slate-700 dark:bg-slate-800;
+    }
+
+    /* form input / select / textarea shared styling */
+    .form-input {
+        @apply rounded-md border border-slate-300 px-3 py-2 bg-white text-slate-900
+               dark:border-slate-600 dark:bg-slate-700 dark:text-slate-100
+               dark:placeholder-slate-400;
+    }
+
+    /* page heading text */
+    .page-heading {
+        @apply text-3xl font-bold text-slate-900 dark:text-white;
+    }
+
+    /* secondary body text */
+    .page-sub {
+        @apply text-slate-600 dark:text-slate-400;
+    }
+}
