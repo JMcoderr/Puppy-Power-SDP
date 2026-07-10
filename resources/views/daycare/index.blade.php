@@ -14,14 +14,43 @@
     @include('partials.form-error-summary')
 
     <section class="grid gap-4 lg:grid-cols-2">
-        <article class="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
-            <h2 class="text-xl font-semibold text-slate-900">Beschikbare planning</h2>
-            <ul class="mt-3 list-disc space-y-2 pl-5 text-slate-600">
-                @foreach ($schedule as $slot)
-                    <li>{{ $slot['date'] }} - {{ $slot['available'] }}</li>
-                @endforeach
-            </ul>
-        </article>
+        {{-- left column: schedule preview + why-daycare info block --}}
+        <div class="grid gap-4">
+            <article class="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
+                <h2 class="text-xl font-semibold text-slate-900">Beschikbare planning</h2>
+                <p class="mt-1 text-sm text-slate-500">Indicatief overzicht voor de komende dagen.</p>
+                <div class="mt-3 overflow-x-auto">
+                    <table class="w-full border-collapse text-sm">
+                        <thead>
+                            <tr>
+                                <th class="border-b border-slate-200 bg-slate-50 px-3 py-2 text-left font-semibold">Datum</th>
+                                <th class="border-b border-slate-200 bg-slate-50 px-3 py-2 text-left font-semibold">Beschikbaarheid</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($schedule as $slot)
+                                <tr>
+                                    <td class="border-b border-slate-100 px-3 py-2">{{ $slot['date'] }}</td>
+                                    <td class="border-b border-slate-100 px-3 py-2 text-emerald-700">{{ $slot['available'] }}</td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </article>
+
+            {{-- extra info block to explain what daycare offers --}}
+            <article class="rounded-xl border border-slate-200 bg-emerald-50 p-5">
+                <h2 class="text-lg font-semibold text-slate-900">Waarom dagopvang bij ons?</h2>
+                <ul class="mt-3 list-disc space-y-2 pl-5 text-sm text-slate-700">
+                    <li>Kleine groepen van maximaal 6 honden</li>
+                    <li>Begeleiding door gecertificeerde trainers</li>
+                    <li>Dagelijks rapport via e-mail</li>
+                    <li>Veilige buitenruimte met toezicht</li>
+                </ul>
+                <a href="{{ route('contact.index') }}" class="mt-4 inline-flex rounded-lg bg-emerald-700 px-3 py-2 text-sm font-medium text-white hover:bg-emerald-800">Meer vragen? Neem contact op</a>
+            </article>
+        </div>
 
         <article class="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
             <h2 class="text-xl font-semibold text-slate-900">Aanmelding dagopvang</h2>
