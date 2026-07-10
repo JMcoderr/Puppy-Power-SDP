@@ -67,6 +67,48 @@ class TrainingIntegrationTest extends TestCase
             ->assertOk()
             ->assertSee('3 van 5');
     }
+
+    public function test_training_page_shows_filter_and_summary_sections(): void
+    {
+        $this->get('/training')
+            ->assertOk()
+            ->assertSee('Filter en sorteer')
+            ->assertSee('Actieve trainingen')
+            ->assertSee('Open inschrijvingen');
+    }
+
+    public function test_training_page_can_filter_full_trainings(): void
+    {
+        $fullTraining = Training::query()->create([
+            'title' => 'Volle training',
+            'slug' => 'volle-training',
+            'summary' => 'Geen plekken meer',
+            'starts_on' => '2026-11-01',
+            'capacity' => 1,
+            'is_active' => true,
+        ]);
+
+        $openTraining = Training::query()->create([
+            'title' => 'Open training',
+            'slug' => 'open-training',
+            'summary' => 'Nog plekken vrij',
+            'starts_on' => '2026-11-02',
+            'capacity' => 3,
+            'is_active' => true,
+        ]);
+
+        TrainingEnrollment::query()->create([
+            'training_id' => $fullTraining->id,
+            'owner_name' => 'Tester',
+            'email' => 'tester@test.nl',
+            'dog_name' => 'Rex',
+        ]);
+
+        $this->get('/training?availability=full')
+            ->assertOk()
+            ->assertSee('Volle training')
+            ->assertDontSee('Open training');
+    }
 }
 
 

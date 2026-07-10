@@ -11,15 +11,51 @@ class TrainingController extends Controller
 {
     public function index()
     {
+        $availability = (string) request('availability', 'all');
+        $sort = (string) request('sort', 'start_date');
+
         // only show active trainings, sorted by start date
         // withCount attaches enrollment_count to each training model
         $trainings = Training::query()
             ->withCount('enrollments')
             ->where('is_active', true)
-            ->orderBy('starts_on')
             ->get();
 
-        return view('training.index', compact('trainings'));
+        // add remaining spots so the view and filters can use the same number
+        $trainings = $trainings->map(function (Training $training) {
+            $training->remaining_spots = max(0, $training->capacity - ($training->enrollments_count ?? 0));
+
+            return $training;
+        });
+
+        // filter the collection by whether a training is still open or full
+        $trainings = match ($availability) {
+            'open' => $trainings->where('remaining_spots', '>', 0),
+            'full' => $trainings->where('remaining_spots', 0),
+            default => $trainings,
+        };
+
+        // sort the collection based on the selected browse mode
+        $trainings = (match ($sort) {
+            'spots' => $trainings->sortByDesc('remaining_spots'),
+            'capacity' => $trainings->sortByDesc('capacity'),
+            'name' => $trainings->sortBy('title'),
+            default => $trainings->sortBy('starts_on'),
+        })->values();
+
+        // summary cards shown above the training grid
+        $summary = [
+            'active' => $trainings->count(),
+            'open' => $trainings->where('remaining_spots', '>', 0)->count(),
+            'nextStart' => optional($trainings->sortBy('starts_on')->first()?->starts_on)->format('d-m-Y'),
+        ];
+
+        $filters = [
+            'availability' => $availability,
+            'sort' => $sort,
+        ];
+
+        return view('training.index', compact('trainings', 'summary', 'filters'));
     }
 
     public function enroll(Request $request)
