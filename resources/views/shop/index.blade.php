@@ -7,6 +7,40 @@
         <p class="page-sub mt-1">Ontdek cursussen en DIY-pakketten voor jou en je hond.</p>
     </section>
 
+    <section class="mb-4 grid gap-4 lg:grid-cols-[1.2fr_0.8fr]">
+        <article class="card">
+            <p class="text-xs font-semibold uppercase tracking-wide text-emerald-700 dark:text-emerald-400">Keuzehulp</p>
+            <h2 class="mt-1 text-xl font-semibold text-slate-900 dark:text-white">Wat past het best bij jouw situatie?</h2>
+            <div class="mt-4 grid gap-3 sm:grid-cols-2">
+                <div class="rounded-lg border border-emerald-200 bg-emerald-50 p-4 dark:border-emerald-800 dark:bg-emerald-950">
+                    <p class="text-sm font-semibold text-slate-900 dark:text-white">Kies een cursus als je:</p>
+                    <ul class="mt-2 list-disc space-y-1 pl-5 text-sm text-slate-600 dark:text-slate-400">
+                        <li>stap voor stap begeleiding wilt</li>
+                        <li>zelf thuis wilt oefenen</li>
+                        <li>meer structuur zoekt in training</li>
+                    </ul>
+                </div>
+                <div class="rounded-lg border border-amber-200 bg-amber-50 p-4 dark:border-amber-800 dark:bg-amber-950">
+                    <p class="text-sm font-semibold text-slate-900 dark:text-white">Kies een DIY-pakket als je:</p>
+                    <ul class="mt-2 list-disc space-y-1 pl-5 text-sm text-slate-600 dark:text-slate-400">
+                        <li>praktisch bezig wilt zijn</li>
+                        <li>je hond mentaal wilt uitdagen</li>
+                        <li>een laagdrempelig startpunt zoekt</li>
+                    </ul>
+                </div>
+            </div>
+        </article>
+
+        <article class="card">
+            <h2 class="text-lg font-semibold text-slate-900 dark:text-white">Veelgekozen redenen</h2>
+            <ul class="mt-3 space-y-2 text-sm text-slate-600 dark:text-slate-400">
+                <li class="rounded-lg bg-slate-50 px-3 py-2 dark:bg-slate-700/50">Puppy bijt of luistert nog niet goed</li>
+                <li class="rounded-lg bg-slate-50 px-3 py-2 dark:bg-slate-700/50">Hond raakt snel overprikkeld</li>
+                <li class="rounded-lg bg-slate-50 px-3 py-2 dark:bg-slate-700/50">Je wilt thuis gerichter oefenen</li>
+            </ul>
+        </article>
+    </section>
+
     <section class="grid gap-4 lg:grid-cols-[2fr_1fr]">
         <div class="grid gap-4 md:grid-cols-2">
         @forelse ($products as $product)
@@ -45,6 +79,11 @@
                 <li>Praktische tips op jouw niveau</li>
             </ul>
             <a href="{{ route('contact.index') }}" class="mt-4 inline-flex rounded-lg bg-slate-800 px-3 py-2 text-sm font-medium text-white hover:bg-slate-700 dark:bg-slate-600 dark:hover:bg-slate-500">Stel je vraag</a>
+
+            <div class="mt-5 rounded-lg border border-slate-200 bg-slate-50 p-4 dark:border-slate-700 dark:bg-slate-700/50">
+                <p class="text-sm font-semibold text-slate-900 dark:text-white">Nog niet zeker?</p>
+                <p class="mt-1 text-sm text-slate-600 dark:text-slate-400">Stuur een korte omschrijving van je hond en je doel. Dan helpen we je kiezen.</p>
+            </div>
         </aside>
     </section>
 @endsection
