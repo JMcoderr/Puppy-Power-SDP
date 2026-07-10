@@ -9,23 +9,24 @@
     @endif
 </head>
 <body>
+    {{-- simple fixed header with nav --}}
     <header class="site-header">
         <div class="container nav-wrap">
             <a href="{{ route('home') }}" class="brand">Puppy Power Academy</a>
             <nav class="main-nav">
-                <a href="{{ route('home') }}">Home</a>
-                <a href="{{ route('shop.index') }}">Shop</a>
-                <a href="{{ route('training.index') }}">Training</a>
-                <a href="{{ route('daycare.index') }}">Dagopvang</a>
-                <a href="{{ route('contact.index') }}">Contact</a>
+                <a href="{{ route('home') }}" class="{{ request()->routeIs('home') ? 'is-active' : '' }}">Home</a>
+                <a href="{{ route('shop.index') }}" class="{{ request()->routeIs('shop.*') ? 'is-active' : '' }}">Shop</a>
+                <a href="{{ route('training.index') }}" class="{{ request()->routeIs('training.index') ? 'is-active' : '' }}">Training</a>
+                <a href="{{ route('daycare.index') }}" class="{{ request()->routeIs('daycare.*') ? 'is-active' : '' }}">Dagopvang</a>
+                <a href="{{ route('contact.index') }}" class="{{ request()->routeIs('contact.*') ? 'is-active' : '' }}">Contact</a>
                 @auth
-                    <a href="{{ route('training.content') }}">Training content</a>
+                    <a href="{{ route('training.content') }}" class="{{ request()->routeIs('training.content') ? 'is-active' : '' }}">Training content</a>
                     <form action="{{ route('logout') }}" method="post" style="display:inline;">
                         @csrf
                         <button type="submit" class="link-button">Uitloggen</button>
                     </form>
                 @else
-                    <a href="{{ route('login') }}">Inloggen</a>
+                    <a href="{{ route('login') }}" class="{{ request()->routeIs('login') ? 'is-active' : '' }}">Inloggen</a>
                 @endauth
             </nav>
         </div>
@@ -34,5 +35,12 @@
     <main class="container page-content">
         @yield('content')
     </main>
+
+    {{-- quick footer with basic info --}}
+    <footer class="site-footer">
+        <div class="container footer-wrap">
+            <p>Puppy Power Academy - Shop, training en dagopvang op 1 plek.</p>
+        </div>
+    </footer>
 </body>
 </html>
