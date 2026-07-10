@@ -38,15 +38,21 @@
                     <table class="w-full border-collapse text-sm">
                         <thead>
                             <tr>
+                                <th class="border-b border-slate-200 bg-slate-50 px-3 py-2 text-left font-semibold dark:border-slate-600 dark:bg-slate-700 dark:text-slate-200">Dag</th>
                                 <th class="border-b border-slate-200 bg-slate-50 px-3 py-2 text-left font-semibold dark:border-slate-600 dark:bg-slate-700 dark:text-slate-200">Datum</th>
-                                <th class="border-b border-slate-200 bg-slate-50 px-3 py-2 text-left font-semibold dark:border-slate-600 dark:bg-slate-700 dark:text-slate-200">Beschikbaarheid</th>
+                                <th class="border-b border-slate-200 bg-slate-50 px-3 py-2 text-left font-semibold dark:border-slate-600 dark:bg-slate-700 dark:text-slate-200">Slot</th>
+                                <th class="border-b border-slate-200 bg-slate-50 px-3 py-2 text-left font-semibold dark:border-slate-600 dark:bg-slate-700 dark:text-slate-200">Status</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach ($schedule as $slot)
                                 <tr>
+                                    <td class="border-b border-slate-100 px-3 py-2 font-medium capitalize dark:border-slate-700 dark:text-slate-300">{{ $slot['weekday'] }}</td>
                                     <td class="border-b border-slate-100 px-3 py-2 dark:border-slate-700 dark:text-slate-300">{{ $slot['date'] }}</td>
-                                    <td class="border-b border-slate-100 px-3 py-2 text-emerald-700 dark:border-slate-700 dark:text-emerald-400">{{ $slot['available'] }}</td>
+                                    <td class="border-b border-slate-100 px-3 py-2 dark:border-slate-700">
+                                        <span class="inline-flex rounded-full border border-emerald-200 bg-emerald-50 px-2 py-0.5 text-xs font-medium text-emerald-800 dark:border-emerald-800 dark:bg-emerald-950 dark:text-emerald-300">{{ $slot['slot'] }}</span>
+                                    </td>
+                                    <td class="border-b border-slate-100 px-3 py-2 text-slate-600 dark:border-slate-700 dark:text-slate-400">{{ $slot['status'] }}</td>
                                 </tr>
                             @endforeach
                         </tbody>
@@ -73,6 +79,15 @@
                     <li>Controleer of de opvangdatum in de toekomst ligt.</li>
                     <li>Vermeld medicatie of sociaal gedrag bij notities.</li>
                     <li>Kies ochtend, middag of hele dag op basis van je planning.</li>
+                </ul>
+            </article>
+
+            <article class="card">
+                <h2 class="text-lg font-semibold text-slate-900 dark:text-white">Zo lees je de planning</h2>
+                <ul class="mt-3 list-disc space-y-2 pl-5 text-sm text-slate-600 dark:text-slate-400">
+                    <li><strong>Ochtend</strong> is handig voor honden die rustig willen opstarten.</li>
+                    <li><strong>Middag</strong> past goed bij honden die graag actief spelen.</li>
+                    <li>De status laat zien welk soort groep je ongeveer kunt verwachten.</li>
                 </ul>
             </article>
         </div>
