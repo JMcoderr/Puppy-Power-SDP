@@ -22,9 +22,38 @@
         </article>
     </section>
 
+    <section class="mb-4 rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
+        <h2 class="text-lg font-semibold text-slate-900">Zoeken en filteren</h2>
+        <form method="get" action="{{ route('beheer.index') }}" class="mt-3 grid gap-3 md:grid-cols-4 md:items-end">
+            <label class="grid gap-1 text-sm text-slate-700 md:col-span-2">
+                Zoekterm
+                <input
+                    type="text"
+                    name="q"
+                    value="{{ $filters['q'] ?? '' }}"
+                    placeholder="Naam, e-mail, hond of onderwerp"
+                    class="rounded-md border border-slate-300 px-3 py-2"
+                >
+            </label>
+            <label class="grid gap-1 text-sm text-slate-700">
+                Vanaf
+                <input type="date" name="from" value="{{ $filters['from'] ?? '' }}" class="rounded-md border border-slate-300 px-3 py-2">
+            </label>
+            <label class="grid gap-1 text-sm text-slate-700">
+                Tot en met
+                <input type="date" name="to" value="{{ $filters['to'] ?? '' }}" class="rounded-md border border-slate-300 px-3 py-2">
+            </label>
+            <div class="flex gap-2 md:col-span-4">
+                <button type="submit" class="inline-flex rounded-lg bg-slate-800 px-4 py-2 text-sm font-medium text-white hover:bg-slate-900">Toepassen</button>
+                <a href="{{ route('beheer.index') }}" class="inline-flex rounded-lg border border-slate-300 px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50">Reset</a>
+            </div>
+        </form>
+    </section>
+
     <section class="grid gap-4">
         <article class="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
             <h2 class="text-xl font-semibold text-slate-900">Training inschrijvingen</h2>
+            <p class="mt-1 text-sm text-slate-500">Resultaten: {{ $filteredCounts['enrollments'] ?? 0 }}</p>
             <div class="overflow-x-auto">
                 <table class="mt-3 w-full border-collapse text-sm">
                     <thead>
@@ -55,6 +84,7 @@
 
         <article class="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
             <h2 class="text-xl font-semibold text-slate-900">Dagopvang aanmeldingen</h2>
+            <p class="mt-1 text-sm text-slate-500">Resultaten: {{ $filteredCounts['daycare'] ?? 0 }}</p>
             <div class="overflow-x-auto">
                 <table class="mt-3 w-full border-collapse text-sm">
                     <thead>
@@ -85,6 +115,7 @@
 
         <article class="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
             <h2 class="text-xl font-semibold text-slate-900">Contactberichten</h2>
+            <p class="mt-1 text-sm text-slate-500">Resultaten: {{ $filteredCounts['messages'] ?? 0 }}</p>
             <div class="overflow-x-auto">
                 <table class="mt-3 w-full border-collapse text-sm">
                     <thead>
