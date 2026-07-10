@@ -38,7 +38,9 @@ class DaycareFeatureTest extends TestCase
             ->assertSee('Waarom dagopvang bij ons?')
             ->assertSee('Kleine groepen van maximaal 6 honden')
             ->assertSee('Beschikbare dagen')
-            ->assertSee('Intake checklist');
+            ->assertSee('Intake checklist')
+            ->assertSee('Zo lees je de planning')
+            ->assertSee('Rustige start');
     }
 
     public function test_daycare_form_stores_valid_registration(): void

@@ -14,11 +14,15 @@ class DaycareController extends Controller
         // build a simple 5-day availability preview for display
         $schedule = collect(range(1, 5))->map(function (int $offset) {
             $date = Carbon::today()->addDays($offset);
+            $isMorning = $offset % 2 !== 0;
 
             return [
+                'weekday' => $date->translatedFormat('l'),
                 'date' => $date->format('d-m-Y'),
                 // alternate morning/afternoon slots so it looks realistic
-                'available' => $offset % 2 === 0 ? 'Middag plekken vrij' : 'Ochtend plekken vrij',
+                'available' => $isMorning ? 'Ochtend plekken vrij' : 'Middag plekken vrij',
+                'slot' => $isMorning ? 'Ochtend' : 'Middag',
+                'status' => $isMorning ? 'Rustige start' : 'Actieve groep',
             ];
         });
 
