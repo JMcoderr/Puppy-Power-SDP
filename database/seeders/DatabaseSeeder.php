@@ -2,8 +2,11 @@
 
 namespace Database\Seeders;
 
+use App\Models\ContactMessage;
+use App\Models\DaycareRegistration;
 use App\Models\Product;
 use App\Models\Training;
+use App\Models\TrainingEnrollment;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -192,6 +195,96 @@ class DatabaseSeeder extends Seeder
             Training::query()->updateOrCreate(
                 ['slug' => $training['slug']],
                 $training,
+            );
+        }
+
+        // extra dummy users so the app feels like it has active members
+        foreach ([
+            ['name' => 'Sanne de Vries', 'email' => 'sanne@example.com', 'is_admin' => false],
+            ['name' => 'Milan Jansen', 'email' => 'milan@example.com', 'is_admin' => false],
+            ['name' => 'Lotte Bakker', 'email' => 'lotte@example.com', 'is_admin' => false],
+            ['name' => 'Daan Smit', 'email' => 'daan@example.com', 'is_admin' => false],
+            ['name' => 'Noor Visser', 'email' => 'noor@example.com', 'is_admin' => false],
+            ['name' => 'Bram van Dijk', 'email' => 'bram@example.com', 'is_admin' => false],
+            ['name' => 'Kim Mulder', 'email' => 'kim@example.com', 'is_admin' => false],
+            ['name' => 'Floor Tester', 'email' => 'floor.admin@example.com', 'is_admin' => true],
+        ] as $dummyUser) {
+            User::query()->updateOrCreate(
+                ['email' => $dummyUser['email']],
+                [
+                    'name' => $dummyUser['name'],
+                    'password' => Hash::make('password'),
+                    'is_admin' => $dummyUser['is_admin'],
+                ],
+            );
+        }
+
+        $trainingIdsBySlug = Training::query()->pluck('id', 'slug');
+
+        // sample enrollments for a realistic beheer overview
+        foreach ([
+            ['slug' => 'puppytraining', 'owner_name' => 'Sanne de Vries', 'email' => 'sanne@example.com', 'dog_name' => 'Puck', 'phone' => '0611111111', 'notes' => 'Eerste puppy, wil vooral structuur.'],
+            ['slug' => 'gedragstraining', 'owner_name' => 'Milan Jansen', 'email' => 'milan@example.com', 'dog_name' => 'Rex', 'phone' => '0622222222', 'notes' => 'Trekt veel aan de lijn.'],
+            ['slug' => 'vuurwerkangst', 'owner_name' => 'Lotte Bakker', 'email' => 'lotte@example.com', 'dog_name' => 'Milo', 'phone' => '0633333333', 'notes' => 'Spanning bij harde geluiden.'],
+            ['slug' => 'rust-in-huis', 'owner_name' => 'Noor Visser', 'email' => 'noor@example.com', 'dog_name' => 'Nala', 'phone' => '0644444444', 'notes' => 'Onrustig tijdens bezoek.'],
+            ['slug' => 'snuffel-en-focuswerk', 'owner_name' => 'Bram van Dijk', 'email' => 'bram@example.com', 'dog_name' => 'Bikkel', 'phone' => '0655555555', 'notes' => 'Zoekt meer uitdaging thuis.'],
+            ['slug' => 'zelfvertrouwen-op-straat', 'owner_name' => 'Kim Mulder', 'email' => 'kim@example.com', 'dog_name' => 'Luna', 'phone' => '0666666666', 'notes' => 'Schrikt snel buiten.'],
+        ] as $enrollment) {
+            $trainingId = $trainingIdsBySlug[$enrollment['slug']] ?? null;
+
+            if (! $trainingId) {
+                continue;
+            }
+
+            TrainingEnrollment::query()->updateOrCreate(
+                [
+                    'training_id' => $trainingId,
+                    'email' => $enrollment['email'],
+                    'dog_name' => $enrollment['dog_name'],
+                ],
+                [
+                    'owner_name' => $enrollment['owner_name'],
+                    'phone' => $enrollment['phone'],
+                    'notes' => $enrollment['notes'],
+                ],
+            );
+        }
+
+        foreach ([
+            ['owner_name' => 'Sanne de Vries', 'email' => 'sanne@example.com', 'dog_name' => 'Puck', 'drop_off_date' => now()->addDays(2)->toDateString(), 'time_slot' => 'Ochtend', 'notes' => 'Nog jong, graag rustige groep.'],
+            ['owner_name' => 'Milan Jansen', 'email' => 'milan@example.com', 'dog_name' => 'Rex', 'drop_off_date' => now()->addDays(3)->toDateString(), 'time_slot' => 'Middag', 'notes' => 'Actieve hond, houdt van spelen.'],
+            ['owner_name' => 'Noor Visser', 'email' => 'noor@example.com', 'dog_name' => 'Nala', 'drop_off_date' => now()->addDays(4)->toDateString(), 'time_slot' => 'Hele dag', 'notes' => 'Kan in het begin wat spanning hebben.'],
+            ['owner_name' => 'Daan Smit', 'email' => 'daan@example.com', 'dog_name' => 'Kaya', 'drop_off_date' => now()->addDays(5)->toDateString(), 'time_slot' => 'Ochtend', 'notes' => 'Lief en sociaal met andere honden.'],
+        ] as $daycare) {
+            DaycareRegistration::query()->updateOrCreate(
+                [
+                    'email' => $daycare['email'],
+                    'dog_name' => $daycare['dog_name'],
+                    'drop_off_date' => $daycare['drop_off_date'],
+                ],
+                [
+                    'owner_name' => $daycare['owner_name'],
+                    'time_slot' => $daycare['time_slot'],
+                    'notes' => $daycare['notes'],
+                ],
+            );
+        }
+
+        foreach ([
+            ['name' => 'Sanne de Vries', 'email' => 'sanne@example.com', 'subject' => 'Vraag over training', 'message' => 'Ik twijfel tussen puppytraining en basis herstart, wat past beter?'],
+            ['name' => 'Milan Jansen', 'email' => 'milan@example.com', 'subject' => 'Vraag over dagopvang', 'message' => 'Is er nog plek op dinsdagmiddag voor een actieve hond?'],
+            ['name' => 'Lotte Bakker', 'email' => 'lotte@example.com', 'subject' => 'Vraag over een product', 'message' => 'Welk pakket helpt het meest bij rustig snuffelwerk thuis?'],
+            ['name' => 'Kim Mulder', 'email' => 'kim@example.com', 'subject' => 'Overige vraag', 'message' => 'Kan ik eerst een intakeadvies krijgen voordat ik kies?'],
+        ] as $message) {
+            ContactMessage::query()->updateOrCreate(
+                [
+                    'email' => $message['email'],
+                    'subject' => $message['subject'],
+                ],
+                [
+                    'name' => $message['name'],
+                    'message' => $message['message'],
+                ],
             );
         }
     }
