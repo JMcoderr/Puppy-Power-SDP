@@ -21,6 +21,7 @@
                 <a href="{{ route('contact.index') }}" class="{{ request()->routeIs('contact.*') ? 'is-active' : '' }}">Contact</a>
                 @auth
                     <a href="{{ route('training.content') }}" class="{{ request()->routeIs('training.content') ? 'is-active' : '' }}">Training content</a>
+                    <a href="{{ route('beheer.index') }}" class="{{ request()->routeIs('beheer.*') ? 'is-active' : '' }}">Beheer</a>
                     <form action="{{ route('logout') }}" method="post" style="display:inline;">
                         @csrf
                         <button type="submit" class="link-button">Uitloggen</button>
