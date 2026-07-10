@@ -28,11 +28,11 @@
             <form action="{{ route('daycare.store') }}" method="post" class="mt-4 grid gap-3">
                 @csrf
                 <label class="grid gap-1 text-sm">Naam eigenaar
-                    <input class="rounded-md border border-slate-300 px-3 py-2" type="text" name="owner_name" value="{{ old('owner_name') }}" required>
+                    <input class="rounded-md border border-slate-300 px-3 py-2" type="text" name="owner_name" value="{{ old('owner_name') }}" autocomplete="name" required>
                 </label>
                 @error('owner_name') <p class="text-sm text-red-700">{{ $message }}</p> @enderror
                 <label class="grid gap-1 text-sm">E-mail
-                    <input class="rounded-md border border-slate-300 px-3 py-2" type="email" name="email" value="{{ old('email') }}" required>
+                    <input class="rounded-md border border-slate-300 px-3 py-2" type="email" name="email" value="{{ old('email') }}" autocomplete="email" required>
                 </label>
                 @error('email') <p class="text-sm text-red-700">{{ $message }}</p> @enderror
                 <label class="grid gap-1 text-sm">Naam hond
@@ -54,6 +54,7 @@
                 <label class="grid gap-1 text-sm">Notities
                     <textarea class="rounded-md border border-slate-300 px-3 py-2" name="notes" rows="4">{{ old('notes') }}</textarea>
                 </label>
+                <p class="-mt-2 text-xs text-slate-500">Vermeld bijzonderheden zoals medicatie of sociaal gedrag.</p>
                 @error('notes') <p class="text-sm text-red-700">{{ $message }}</p> @enderror
                 <button type="submit" class="inline-flex w-fit rounded-lg bg-emerald-700 px-4 py-2 text-sm font-medium text-white hover:bg-emerald-800">Aanmelden</button>
             </form>

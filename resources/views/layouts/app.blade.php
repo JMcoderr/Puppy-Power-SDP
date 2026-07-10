@@ -9,8 +9,14 @@
     @endif
 </head>
 <body class="min-h-screen bg-slate-50 text-slate-800">
-    <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:rounded-md focus:bg-white focus:px-3 focus:py-2 focus:text-slate-900 focus:shadow">
-        Skip to main content
+    <a
+        href="#main-content"
+        class="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:rounded-md focus:bg-white focus:px-3 focus:py-2 focus:text-slate-900 focus:shadow"
+        style="position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden;"
+        onfocus="this.style.left='1rem';this.style.top='1rem';this.style.width='auto';this.style.height='auto';"
+        onblur="this.style.left='-9999px';this.style.top='auto';this.style.width='1px';this.style.height='1px';"
+    >
+        Ga naar hoofdinhoud
     </a>
 
     @unless (file_exists(public_path('build/manifest.json')) || file_exists(public_path('hot')))
