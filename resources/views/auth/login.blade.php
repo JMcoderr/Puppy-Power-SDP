@@ -6,6 +6,10 @@
         <h1 class="text-3xl font-bold text-slate-900 dark:text-white">Inloggen</h1>
         <p class="mt-1 text-slate-600 dark:text-slate-400">Log in om afgeschermde trainingscontent te bekijken.</p>
 
+        @if (session('status'))
+            <p class="mt-4 rounded-lg border border-emerald-200 bg-emerald-50 p-3 text-sm text-emerald-900 dark:border-emerald-800 dark:bg-emerald-950 dark:text-emerald-300">{{ session('status') }}</p>
+        @endif
+
         @include('partials.form-error-summary')
 
         <form action="{{ route('login.store') }}" method="post" class="mt-4 grid gap-3">
@@ -23,5 +27,10 @@
             </label>
             <button type="submit" class="inline-flex w-fit rounded-lg bg-emerald-700 px-4 py-2 text-sm font-medium text-white hover:bg-emerald-600">Login</button>
         </form>
+
+        <div class="mt-5 flex flex-wrap gap-3 text-sm">
+            <a href="{{ route('register') }}" class="font-medium text-emerald-700 hover:underline dark:text-emerald-400">Nog geen account? Registreer</a>
+            <a href="{{ route('password.request') }}" class="font-medium text-slate-700 hover:underline dark:text-slate-300">Wachtwoord vergeten?</a>
+        </div>
     </section>
 @endsection
