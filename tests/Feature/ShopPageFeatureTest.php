@@ -16,7 +16,9 @@ class ShopPageFeatureTest extends TestCase
             ->assertOk()
             ->assertSee('Wat past het best bij jouw situatie?')
             ->assertSee('Kies een cursus als je:')
-            ->assertSee('Veelgekozen redenen');
+            ->assertSee('Veelgekozen redenen')
+            ->assertSee('Zo haal je meer uit de shop')
+            ->assertSee('Shop veelgestelde vragen');
     }
 
     public function test_shop_page_shows_filter_section_and_summary_cards(): void

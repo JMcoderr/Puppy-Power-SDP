@@ -1,6 +1,23 @@
 @extends('layouts.app')
 
 @section('content')
+    @php
+        $faqs = [
+            [
+                'question' => 'Wat is slim als ik thuis zelfstandig wil oefenen?',
+                'answer' => 'Kies dan meestal een cursus als je duidelijke uitleg wilt, of een DIY-pakket als je vooral praktische opdrachten en verrijking zoekt.',
+            ],
+            [
+                'question' => 'Kan ik producten combineren met training?',
+                'answer' => 'Ja. Veel bezoekers gebruiken de shop juist als extra ondersteuning naast een trainingstraject of intake.',
+            ],
+            [
+                'question' => 'Wat als ik nog twijfel over het juiste product?',
+                'answer' => 'Gebruik de keuzehulp op deze pagina of neem contact op voor een persoonlijk advies dat past bij je hond en je doel.',
+            ],
+        ];
+    @endphp
+
     {{-- page intro so user knows what this page is about --}}
     <section class="mb-4">
         <h1 class="page-heading">Shop</h1>
@@ -105,6 +122,42 @@
         </article>
     </section>
 
+    <section class="mb-4 grid gap-4 lg:grid-cols-[1.15fr_0.85fr]">
+        <article class="card">
+            <p class="section-eyebrow">Shop route</p>
+            <h2 class="mt-1 text-2xl font-semibold text-slate-900 dark:text-white">Zo haal je meer uit de shop</h2>
+            <div class="mt-4 grid gap-3 md:grid-cols-3">
+                <div class="timeline-step">
+                    <p class="text-sm font-semibold text-slate-900 dark:text-white">1. Kies je doel</p>
+                    <p class="mt-1 text-sm text-slate-600 dark:text-slate-400">Wil je rust, focus, spelverrijking of een volledige trainingsopbouw?</p>
+                </div>
+                <div class="timeline-step">
+                    <p class="text-sm font-semibold text-slate-900 dark:text-white">2. Filter slim</p>
+                    <p class="mt-1 text-sm text-slate-600 dark:text-slate-400">Gebruik categorie, budget en zoekterm om sneller bij de juiste keuze uit te komen.</p>
+                </div>
+                <div class="timeline-step">
+                    <p class="text-sm font-semibold text-slate-900 dark:text-white">3. Combineer met advies</p>
+                    <p class="mt-1 text-sm text-slate-600 dark:text-slate-400">Twijfel je? Dan kun je direct door naar contact voor persoonlijk advies.</p>
+                </div>
+            </div>
+        </article>
+
+        <article class="card">
+            <p class="section-eyebrow">Aanbevolen gebruik</p>
+            <h2 class="mt-1 text-2xl font-semibold text-slate-900 dark:text-white">Meest gekozen combinaties</h2>
+            <div class="mt-4 grid gap-3">
+                <div class="soft-panel">
+                    <p class="text-sm font-semibold text-slate-900 dark:text-white">Nieuwe puppy</p>
+                    <p class="mt-1 text-sm text-slate-600 dark:text-slate-400">Start met een basiscursus en voeg een laagdrempelig DIY-pakket toe voor thuis.</p>
+                </div>
+                <div class="soft-panel">
+                    <p class="text-sm font-semibold text-slate-900 dark:text-white">Drukke of slimme hond</p>
+                    <p class="mt-1 text-sm text-slate-600 dark:text-slate-400">Kies een speur- of focuspakket naast een cursus met meer structuur en oefeningen.</p>
+                </div>
+            </div>
+        </article>
+    </section>
+
     <section class="grid gap-4 lg:grid-cols-[2fr_1fr]">
         <div class="grid gap-4 md:grid-cols-2">
         @forelse ($products as $product)
@@ -149,5 +202,14 @@
                 <p class="mt-1 text-sm text-slate-600 dark:text-slate-400">Stuur een korte omschrijving van je hond en je doel. Dan helpen we je kiezen.</p>
             </div>
         </aside>
+    </section>
+
+    <section class="mt-5">
+        @include('partials.faq-accordion', [
+            'title' => 'Shop veelgestelde vragen',
+            'intro' => 'Extra uitleg voor bezoekers die nog twijfelen tussen producten en routes.',
+            'items' => $faqs,
+            'accent' => 'amber',
+        ])
     </section>
 @endsection

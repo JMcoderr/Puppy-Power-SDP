@@ -15,6 +15,8 @@ class HomePageFeatureTest extends TestCase
             ->assertOk()
             ->assertSee('Waarom klanten kiezen voor ons')
             ->assertSee('Snel starten?')
-            ->assertSee('Persoonlijk');
+            ->assertSee('Persoonlijk')
+            ->assertSee('Veelgestelde vragen voor nieuwe bezoekers')
+            ->assertSee('Officieel compleet gevoel');
     }
 }

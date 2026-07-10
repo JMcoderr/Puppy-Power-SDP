@@ -89,7 +89,9 @@ class AuthIntegrationTest extends TestCase
             ->get('/mijn-account')
             ->assertOk()
             ->assertSee('Mijn account')
-            ->assertSee('Snelle acties');
+            ->assertSee('Snelle acties')
+            ->assertSee('Checklist om verder te gaan')
+            ->assertSee('Persoonlijke routeplanner');
     }
 
     public function test_account_page_requires_login(): void

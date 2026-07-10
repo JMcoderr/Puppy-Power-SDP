@@ -1,6 +1,20 @@
 @extends('layouts.app')
 
 @section('content')
+    @php
+        $resources = [
+            'Train altijd kort en duidelijk: liever 5 minuten sterk oefenen dan 20 minuten zonder focus.',
+            'Beloon op het juiste moment zodat je hond beter snapt welk gedrag je wilt zien.',
+            'Sluit een oefening rustig af zodat spanning niet onnodig blijft hangen.',
+        ];
+
+        $homework = [
+            ['title' => 'Focusmoment thuis', 'copy' => 'Oefen 3 keer per week een korte focusopdracht op een rustige plek in huis.'],
+            ['title' => 'Wandeling met plan', 'copy' => 'Kies een vaste route en let op waar je hond spanning of afleiding laat zien.'],
+            ['title' => 'Prikkelnotities', 'copy' => 'Schrijf na elke oefening kort op wat goed ging en wat nog lastig was.'],
+        ];
+    @endphp
+
     {{-- protected page intro --}}
     <section class="mb-4">
         <h1 class="page-heading">Afgeschermde Trainingscontent</h1>
@@ -59,9 +73,45 @@
                 <p class="text-xs font-semibold uppercase tracking-wide text-emerald-700 dark:text-emerald-400">Les {{ $loop->iteration }}</p>
                 <h2 class="text-xl font-semibold text-slate-900 dark:text-white">{{ $lesson['title'] }}</h2>
                 <p class="mt-2 page-sub">Video duur: {{ $lesson['duration'] }}</p>
+                <p class="mt-2 text-sm text-slate-600 dark:text-slate-400">{{ $lesson['summary'] }}</p>
                 <div class="mt-3 inline-flex rounded-full border border-slate-200 bg-slate-50 px-3 py-1 text-xs font-medium text-slate-700 dark:border-slate-700 dark:bg-slate-700 dark:text-slate-200">{{ $lesson['status'] }}</div>
                 <a href="{{ route('contact.index') }}" class="mt-4 inline-flex rounded-lg bg-emerald-700 px-3 py-2 text-sm font-medium text-white hover:bg-emerald-600">Vraag over deze les</a>
             </article>
         @endforeach
+    </section>
+
+    <section class="mt-5 grid gap-4 lg:grid-cols-[1.1fr_0.9fr]">
+        <article class="card">
+            <p class="section-eyebrow">Huiswerk</p>
+            <h2 class="mt-1 text-2xl font-semibold text-slate-900 dark:text-white">Oefeningen tussen de lessen door</h2>
+            <div class="mt-4 grid gap-3">
+                @foreach ($homework as $item)
+                    <div class="timeline-step">
+                        <p class="text-sm font-semibold text-slate-900 dark:text-white">{{ $item['title'] }}</p>
+                        <p class="mt-1 text-sm text-slate-600 dark:text-slate-400">{{ $item['copy'] }}</p>
+                    </div>
+                @endforeach
+            </div>
+        </article>
+
+        <article class="card">
+            <p class="section-eyebrow">Praktische tips</p>
+            <h2 class="mt-1 text-2xl font-semibold text-slate-900 dark:text-white">Wat helpt om sneller vooruitgang te zien</h2>
+            <ul class="mt-4 space-y-3 text-sm text-slate-600 dark:text-slate-400">
+                @foreach ($resources as $item)
+                    <li class="soft-panel">{{ $item }}</li>
+                @endforeach
+            </ul>
+        </article>
+    </section>
+
+    <section class="mt-5 card">
+        <p class="section-eyebrow">Volgende stap</p>
+        <h2 class="mt-1 text-2xl font-semibold text-slate-900 dark:text-white">Koppel je online lessen aan echte feedback</h2>
+        <p class="mt-2 max-w-3xl text-sm text-slate-600 dark:text-slate-400">De ledencontent helpt je zelfstandig oefenen, maar de grootste winst zit vaak in de combinatie van kijken, toepassen en daarna gericht een vraag stellen over wat je in de praktijk tegenkomt.</p>
+        <div class="mt-4 flex flex-wrap gap-2">
+            <a href="{{ route('training.index') }}" class="btn-primary">Bekijk trainingen</a>
+            <a href="{{ route('contact.index') }}" class="btn-secondary">Vraag feedback</a>
+        </div>
     </section>
 @endsection

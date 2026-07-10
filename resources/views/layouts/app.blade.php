@@ -33,6 +33,17 @@
         </div>
     @endunless
 
+    <div class="border-b border-emerald-200/70 bg-emerald-50/80 backdrop-blur dark:border-emerald-900 dark:bg-emerald-950/60">
+        <div class="mx-auto flex w-full max-w-6xl flex-col gap-2 px-4 py-2 text-sm text-emerald-900 dark:text-emerald-300 md:flex-row md:items-center md:justify-between">
+            <p>Persoonlijke begeleiding, snelle reactie en een compleet aanbod voor hond en eigenaar.</p>
+            <div class="flex flex-wrap gap-3 text-xs font-medium uppercase tracking-wide">
+                <span>Binnen 1 werkdag reactie</span>
+                <span>Training, shop en dagopvang</span>
+                <span>Veilige en praktische aanpak</span>
+            </div>
+        </div>
+    </div>
+
     {{-- simple fixed header with nav --}}
     <header class="border-b border-slate-200 bg-white/95 backdrop-blur dark:border-slate-700 dark:bg-slate-800/95">
         <div class="mx-auto flex w-full max-w-6xl flex-col gap-3 px-4 py-4 md:flex-row md:items-center md:justify-between">
@@ -76,8 +87,16 @@
         @yield('content')
     </main>
 
+    <div class="sticky bottom-0 z-20 border-t border-slate-200 bg-white/95 px-4 py-3 shadow-[0_-8px_30px_rgba(15,23,42,0.08)] backdrop-blur dark:border-slate-700 dark:bg-slate-900/95 lg:hidden">
+        <div class="mx-auto flex w-full max-w-6xl gap-2">
+            <a href="{{ route('training.index') }}" class="btn-primary flex-1">Training</a>
+            <a href="{{ route('daycare.index') }}" class="btn-secondary flex-1">Dagopvang</a>
+            <a href="{{ route('contact.index') }}" class="btn-dark flex-1">Contact</a>
+        </div>
+    </div>
+
     {{-- footer uses a soft card-like light theme and switches to dark in dark mode --}}
-    <footer class="mt-8 border-t border-slate-200 bg-linear-to-br from-white via-slate-50 to-emerald-50 text-slate-700 dark:border-slate-700 dark:bg-none dark:bg-slate-950 dark:text-slate-300">
+    <footer class="mt-8 border-t border-slate-200 bg-linear-to-br from-white via-slate-50 to-emerald-50 pb-20 text-slate-700 dark:border-slate-700 dark:bg-none dark:bg-slate-950 dark:text-slate-300 lg:pb-0">
         <div class="mx-auto w-full max-w-6xl px-4 pt-10 pb-6">
 
             {{-- top row: four columns --}}

@@ -46,7 +46,36 @@ class BeheerController extends Controller
             'messages' => (clone $messagesQuery)->count(),
         ];
 
-        return view('beheer.index', compact('totals', 'filteredCounts', 'filters', 'enrollments', 'daycareRegistrations', 'contactMessages'));
+        $insights = [
+            'today' => TrainingEnrollment::query()->whereDate('created_at', today())->count()
+                + DaycareRegistration::query()->whereDate('created_at', today())->count()
+                + ContactMessage::query()->whereDate('created_at', today())->count(),
+            'latestActivity' => collect([
+                TrainingEnrollment::query()->latest('created_at')->value('created_at'),
+                DaycareRegistration::query()->latest('created_at')->value('created_at'),
+                ContactMessage::query()->latest('created_at')->value('created_at'),
+            ])->filter()->sortDesc()->first(),
+            'attentionArea' => ContactMessage::query()
+                ->select('subject')
+                ->get()
+                ->countBy('subject')
+                ->sortDesc()
+                ->keys()
+                ->first() ?? 'Nog geen voorkeur zichtbaar',
+        ];
+
+        $breakdowns = [
+            'subjects' => ContactMessage::query()->select('subject')->get()->countBy('subject')->sortDesc(),
+            'daycareSlots' => DaycareRegistration::query()->select('time_slot')->get()->countBy('time_slot')->sortDesc(),
+            'topTrainings' => TrainingEnrollment::query()
+                ->with('training:id,title')
+                ->get()
+                ->countBy(fn ($item) => $item->training?->title ?? 'Onbekende training')
+                ->sortDesc()
+                ->take(3),
+        ];
+
+        return view('beheer.index', compact('totals', 'filteredCounts', 'filters', 'enrollments', 'daycareRegistrations', 'contactMessages', 'insights', 'breakdowns'));
     }
 
     // streams all filtered data as a CSV download (respects current filters)

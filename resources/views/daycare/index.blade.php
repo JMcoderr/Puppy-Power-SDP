@@ -1,6 +1,23 @@
 @extends('layouts.app')
 
 @section('content')
+    @php
+        $faqs = [
+            [
+                'question' => 'Is dagopvang geschikt voor elke hond?',
+                'answer' => 'Dagopvang is vooral geschikt voor honden die baat hebben bij structuur, begeleiding en een veilige sociale setting. Bij twijfel kun je eerst contact opnemen.',
+            ],
+            [
+                'question' => 'Wat moet ik invullen bij notities?',
+                'answer' => 'Denk aan medicatie, gevoeligheden, sociaal gedrag, energieniveau of andere aandachtspunten die belangrijk zijn voor de opvangdag.',
+            ],
+            [
+                'question' => 'Hoe snel hoor ik iets na aanmelden?',
+                'answer' => 'Na je aanmelding nemen we de aanvraag op in de planning en krijg je zo snel mogelijk een bevestiging terug.',
+            ],
+        ];
+    @endphp
+
     {{-- intro for daycare section --}}
     <section class="mb-4">
         <h1 class="page-heading">Dagopvang</h1>
@@ -90,6 +107,25 @@
                     <li>De status laat zien welk soort groep je ongeveer kunt verwachten.</li>
                 </ul>
             </article>
+
+            <article class="card">
+                <p class="section-eyebrow">Dagindeling</p>
+                <h2 class="mt-1 text-xl font-semibold text-slate-900 dark:text-white">Hoe een opvangdag meestal verloopt</h2>
+                <div class="mt-4 grid gap-3">
+                    <div class="timeline-step">
+                        <p class="text-sm font-semibold text-slate-900 dark:text-white">1. Rustige start en intake</p>
+                        <p class="mt-1 text-sm text-slate-600 dark:text-slate-400">We kijken eerst naar energie, spanning en wat jouw hond die dag nodig heeft.</p>
+                    </div>
+                    <div class="timeline-step">
+                        <p class="text-sm font-semibold text-slate-900 dark:text-white">2. Passende activiteit</p>
+                        <p class="mt-1 text-sm text-slate-600 dark:text-slate-400">Spel, rustmomenten en begeleiding wisselen elkaar af op basis van de groep.</p>
+                    </div>
+                    <div class="timeline-step">
+                        <p class="text-sm font-semibold text-slate-900 dark:text-white">3. Heldere terugkoppeling</p>
+                        <p class="mt-1 text-sm text-slate-600 dark:text-slate-400">Je weet hoe de dag verliep en of er extra aandachtspunten waren.</p>
+                    </div>
+                </div>
+            </article>
         </div>
 
         <article class="card">
@@ -128,5 +164,14 @@
                 <button type="submit" class="inline-flex w-fit rounded-lg bg-emerald-700 px-4 py-2 text-sm font-medium text-white hover:bg-emerald-600">Aanmelden</button>
             </form>
         </article>
+    </section>
+
+    <section class="mt-5">
+        @include('partials.faq-accordion', [
+            'title' => 'Dagopvang veelgestelde vragen',
+            'intro' => 'Praktische antwoorden voor bezoekers die opvang willen plannen.',
+            'items' => $faqs,
+            'accent' => 'amber',
+        ])
     </section>
 @endsection

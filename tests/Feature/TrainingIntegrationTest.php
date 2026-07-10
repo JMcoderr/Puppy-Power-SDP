@@ -74,7 +74,9 @@ class TrainingIntegrationTest extends TestCase
             ->assertOk()
             ->assertSee('Filter en sorteer')
             ->assertSee('Actieve trainingen')
-            ->assertSee('Open inschrijvingen');
+            ->assertSee('Open inschrijvingen')
+            ->assertSee('Zo bereid je je goed voor op een training')
+            ->assertSee('Training veelgestelde vragen');
     }
 
     public function test_training_page_can_filter_full_trainings(): void

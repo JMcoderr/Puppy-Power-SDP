@@ -22,6 +22,50 @@
         </article>
     </section>
 
+    <section class="mb-4 grid gap-4 lg:grid-cols-[1fr_1fr_1.1fr]">
+        <article class="card">
+            <p class="section-eyebrow">Operationele inzichten</p>
+            <h2 class="mt-1 text-xl font-semibold text-slate-900 dark:text-white">Live status</h2>
+            <div class="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-1">
+                <div class="soft-panel">
+                    <p class="text-sm text-slate-500 dark:text-slate-400">Nieuwe items vandaag</p>
+                    <p class="mt-1 text-2xl font-bold text-slate-900 dark:text-white">{{ $insights['today'] ?? 0 }}</p>
+                </div>
+                <div class="soft-panel">
+                    <p class="text-sm text-slate-500 dark:text-slate-400">Laatste activiteit</p>
+                    <p class="mt-1 text-sm font-semibold text-slate-900 dark:text-white">{{ $insights['latestActivity'] ? \Illuminate\Support\Carbon::parse($insights['latestActivity'])->format('d-m-Y H:i') : 'Nog geen activiteit' }}</p>
+                </div>
+            </div>
+        </article>
+
+        <article class="card">
+            <p class="section-eyebrow">Aandachtspunt</p>
+            <h2 class="mt-1 text-xl font-semibold text-slate-900 dark:text-white">Meest voorkomende contactvraag</h2>
+            <div class="mt-4 rounded-2xl border border-emerald-200 bg-emerald-50 p-4 dark:border-emerald-800 dark:bg-emerald-950">
+                <p class="text-sm text-emerald-800 dark:text-emerald-300">Onderwerp met meeste signalen</p>
+                <p class="mt-2 text-xl font-bold text-slate-900 dark:text-white">{{ $insights['attentionArea'] }}</p>
+            </div>
+            <p class="mt-3 text-sm text-slate-600 dark:text-slate-400">Gebruik dit om je opvolging en planning extra gericht te organiseren.</p>
+        </article>
+
+        <article class="card">
+            <p class="section-eyebrow">Verdeling</p>
+            <h2 class="mt-1 text-xl font-semibold text-slate-900 dark:text-white">Korte managementsamenvatting</h2>
+            <div class="mt-4 grid gap-3">
+                <div class="soft-panel">
+                    <p class="text-sm font-semibold text-slate-900 dark:text-white">Top trainingen</p>
+                    <ul class="mt-2 space-y-1 text-sm text-slate-600 dark:text-slate-400">
+                        @forelse ($breakdowns['topTrainings'] as $name => $count)
+                            <li>{{ $name }}: <strong class="text-slate-900 dark:text-white">{{ $count }}</strong></li>
+                        @empty
+                            <li>Nog geen trainingsdata beschikbaar.</li>
+                        @endforelse
+                    </ul>
+                </div>
+            </div>
+        </article>
+    </section>
+
     <section class="card mb-4 p-4">
         <h2 class="text-lg font-semibold text-slate-900 dark:text-white">Zoeken en filteren</h2>
         <form method="get" action="{{ route('beheer.index') }}" class="mt-3 grid gap-3 md:grid-cols-5 md:items-end">
@@ -83,6 +127,36 @@
                 @endif
             </div>
         @endif
+    </section>
+
+    <section class="mb-4 grid gap-4 lg:grid-cols-2">
+        <article class="card">
+            <h2 class="text-lg font-semibold text-slate-900 dark:text-white">Contactverdeling</h2>
+            <div class="mt-4 grid gap-3">
+                @forelse ($breakdowns['subjects'] as $subject => $count)
+                    <div class="flex items-center justify-between rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 dark:border-slate-700 dark:bg-slate-700/40">
+                        <span class="text-sm text-slate-700 dark:text-slate-300">{{ $subject }}</span>
+                        <span class="rounded-full bg-emerald-100 px-3 py-1 text-xs font-semibold text-emerald-800 dark:bg-emerald-900 dark:text-emerald-300">{{ $count }}</span>
+                    </div>
+                @empty
+                    <p class="text-sm text-slate-500 dark:text-slate-400">Nog geen contactberichten beschikbaar.</p>
+                @endforelse
+            </div>
+        </article>
+
+        <article class="card">
+            <h2 class="text-lg font-semibold text-slate-900 dark:text-white">Dagopvang verdeling</h2>
+            <div class="mt-4 grid gap-3">
+                @forelse ($breakdowns['daycareSlots'] as $slot => $count)
+                    <div class="flex items-center justify-between rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 dark:border-slate-700 dark:bg-slate-700/40">
+                        <span class="text-sm text-slate-700 dark:text-slate-300">{{ $slot }}</span>
+                        <span class="rounded-full bg-sky-100 px-3 py-1 text-xs font-semibold text-sky-800 dark:bg-sky-900 dark:text-sky-300">{{ $count }}</span>
+                    </div>
+                @empty
+                    <p class="text-sm text-slate-500 dark:text-slate-400">Nog geen dagopvang-aanmeldingen beschikbaar.</p>
+                @endforelse
+            </div>
+        </article>
     </section>
 
     <section class="grid gap-4">

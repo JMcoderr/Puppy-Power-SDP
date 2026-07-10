@@ -1,6 +1,23 @@
 @extends('layouts.app')
 
 @section('content')
+    @php
+        $faqs = [
+            [
+                'question' => 'Wat moet ik in mijn bericht zetten?',
+                'answer' => 'Beschrijf kort de leeftijd van je hond, de situatie thuis en waar je hulp bij zoekt. Dan kunnen we sneller gericht reageren.',
+            ],
+            [
+                'question' => 'Kan ik ook advies vragen zonder direct te boeken?',
+                'answer' => 'Ja. Het contactformulier is juist bedoeld om eerst helder te krijgen welke route, training of product het beste past.',
+            ],
+            [
+                'question' => 'Wanneer krijg ik meestal antwoord?',
+                'answer' => 'We reageren meestal binnen 1 werkdag. Bij duidelijke informatie kunnen we sneller een passend voorstel doen.',
+            ],
+        ];
+    @endphp
+
     {{-- page intro --}}
     <section class="mb-4">
         <h1 class="page-heading">Contact</h1>
@@ -75,6 +92,32 @@
                 <li>Zet erbij wanneer je wilt starten.</li>
             </ul>
             <p class="mt-4 text-sm text-slate-500 dark:text-slate-400">Zo kunnen we je sneller en gerichter helpen.</p>
+
+            <div class="mt-4 rounded-xl border border-slate-200 bg-slate-50 p-4 dark:border-slate-700 dark:bg-slate-700/50">
+                <p class="text-sm font-semibold text-slate-900 dark:text-white">Zo pakken we je vraag op</p>
+                <div class="mt-3 space-y-3 text-sm text-slate-600 dark:text-slate-400">
+                    <div>
+                        <p class="font-medium text-slate-900 dark:text-white">1. Jij beschrijft de situatie</p>
+                        <p>Vertel kort waar je hond tegenaan loopt of wat je zoekt.</p>
+                    </div>
+                    <div>
+                        <p class="font-medium text-slate-900 dark:text-white">2. Wij koppelen je vraag aan de juiste route</p>
+                        <p>Training, productadvies of dagopvang, afhankelijk van jouw doel.</p>
+                    </div>
+                    <div>
+                        <p class="font-medium text-slate-900 dark:text-white">3. Je krijgt een praktisch vervolg</p>
+                        <p>Denk aan een training, een adviesreactie of een concrete vervolgstap.</p>
+                    </div>
+                </div>
+            </div>
         </aside>
+    </section>
+
+    <section class="mt-5">
+        @include('partials.faq-accordion', [
+            'title' => 'Contact veelgestelde vragen',
+            'intro' => 'Deze antwoorden verlagen de drempel om een vraag te sturen.',
+            'items' => $faqs,
+        ])
     </section>
 @endsection

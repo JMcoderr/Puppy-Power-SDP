@@ -1,6 +1,23 @@
 @extends('layouts.app')
 
 @section('content')
+    @php
+        $faqs = [
+            [
+                'question' => 'Welke training past bij een jonge of onzekere hond?',
+                'answer' => 'Begin meestal met een basis- of puppyroute. Die bouwt rust, focus en vertrouwen op voordat je moeilijkere gedragsthema\'s aanpakt.',
+            ],
+            [
+                'question' => 'Wat gebeurt er na mijn inschrijving?',
+                'answer' => 'Na inschrijving nemen we je aanvraag mee in de planning. Daarna volgt een bevestiging en kun je gericht voorbereiden op de startdatum.',
+            ],
+            [
+                'question' => 'Kan ik ook advies krijgen als ik twijfel?',
+                'answer' => 'Ja. Gebruik het contactformulier als je wilt sparren over gedrag, leeftijd, energie of de beste eerste stap.',
+            ],
+        ];
+    @endphp
+
     {{-- quick heading and context --}}
     <section class="mb-4">
         <h1 class="page-heading">Training</h1>
@@ -69,6 +86,46 @@
         </form>
     </section>
 
+    <section class="mb-4 grid gap-4 lg:grid-cols-[1.05fr_0.95fr]">
+        <article class="card">
+            <p class="section-eyebrow">Aanpak</p>
+            <h2 class="mt-1 text-2xl font-semibold text-slate-900 dark:text-white">Wat je kunt verwachten van onze training</h2>
+            <div class="mt-4 grid gap-3 md:grid-cols-3">
+                <div class="timeline-step">
+                    <p class="text-xs font-semibold uppercase tracking-wide text-emerald-700 dark:text-emerald-400">Stap 1</p>
+                    <p class="mt-2 text-sm font-semibold text-slate-900 dark:text-white">Kies een passend doel</p>
+                    <p class="mt-1 text-sm text-slate-600 dark:text-slate-400">Basis, gedrag, focus of zelfvertrouwen. Zo start je meteen in de juiste richting.</p>
+                </div>
+                <div class="timeline-step">
+                    <p class="text-xs font-semibold uppercase tracking-wide text-sky-700 dark:text-sky-400">Stap 2</p>
+                    <p class="mt-2 text-sm font-semibold text-slate-900 dark:text-white">Meld je online aan</p>
+                    <p class="mt-1 text-sm text-slate-600 dark:text-slate-400">Vul eigenaar, hond en eventuele notities in zodat de intake goed begint.</p>
+                </div>
+                <div class="timeline-step">
+                    <p class="text-xs font-semibold uppercase tracking-wide text-amber-700 dark:text-amber-400">Stap 3</p>
+                    <p class="mt-2 text-sm font-semibold text-slate-900 dark:text-white">Werk met duidelijke opbouw</p>
+                    <p class="mt-1 text-sm text-slate-600 dark:text-slate-400">We bouwen vaardigheden stap voor stap op en houden het praktisch.</p>
+                </div>
+            </div>
+        </article>
+
+        <article class="card">
+            <p class="section-eyebrow">Keuzehulp</p>
+            <h2 class="mt-1 text-2xl font-semibold text-slate-900 dark:text-white">Twijfel je nog tussen trainingen?</h2>
+            <div class="mt-4 grid gap-3">
+                <div class="soft-panel">
+                    <p class="text-sm font-semibold text-slate-900 dark:text-white">Puppy of basis</p>
+                    <p class="mt-1 text-sm text-slate-600 dark:text-slate-400">Goed als je wilt werken aan luisteren, ritme en een fijne start samen.</p>
+                </div>
+                <div class="soft-panel">
+                    <p class="text-sm font-semibold text-slate-900 dark:text-white">Gedrag of spanning</p>
+                    <p class="mt-1 text-sm text-slate-600 dark:text-slate-400">Handig bij uitvallen, onrust, vuurwerkangst of moeite met prikkels.</p>
+                </div>
+                <a href="{{ route('contact.index') }}" class="btn-secondary w-fit">Vraag eerst persoonlijk advies</a>
+            </div>
+        </article>
+    </section>
+
     <section class="grid gap-4 lg:grid-cols-2">
         @forelse ($trainings as $training)
             <article class="card">
@@ -129,5 +186,45 @@
                 <p class="mt-2 page-sub">Op dit moment zijn er geen trainingen beschikbaar.</p>
             </article>
         @endforelse
+    </section>
+
+    <section class="mt-5 grid gap-4 lg:grid-cols-[1.2fr_0.8fr]">
+        <article class="card">
+            <p class="section-eyebrow">Extra voorbereiding</p>
+            <h2 class="mt-1 text-2xl font-semibold text-slate-900 dark:text-white">Zo bereid je je goed voor op een training</h2>
+            <div class="mt-4 grid gap-3 md:grid-cols-3">
+                <div class="soft-panel">
+                    <p class="text-sm font-semibold text-slate-900 dark:text-white">Observeer gedrag</p>
+                    <p class="mt-1 text-sm text-slate-600 dark:text-slate-400">Noteer wanneer spanning, trekken of afleiding het sterkst opvalt.</p>
+                </div>
+                <div class="soft-panel">
+                    <p class="text-sm font-semibold text-slate-900 dark:text-white">Kies een realistisch tempo</p>
+                    <p class="mt-1 text-sm text-slate-600 dark:text-slate-400">Een rustige opbouw werkt vaak beter dan te veel tegelijk willen aanpakken.</p>
+                </div>
+                <div class="soft-panel">
+                    <p class="text-sm font-semibold text-slate-900 dark:text-white">Gebruik notities slim</p>
+                    <p class="mt-1 text-sm text-slate-600 dark:text-slate-400">Vertel in je inschrijving waar je hond op vastloopt, zodat de intake sterker start.</p>
+                </div>
+            </div>
+        </article>
+
+        <article class="card">
+            <p class="section-eyebrow">Na inschrijving</p>
+            <h2 class="mt-1 text-2xl font-semibold text-slate-900 dark:text-white">Wat je daarna kunt verwachten</h2>
+            <ul class="mt-4 space-y-3 text-sm text-slate-600 dark:text-slate-400">
+                <li class="soft-panel">Je aanvraag wordt gekoppeld aan de juiste training en planning.</li>
+                <li class="soft-panel">Je krijgt duidelijkheid over startmoment, aanpak en vervolgstap.</li>
+                <li class="soft-panel">Ingelogde gebruikers kunnen daarna verder in de trainingscontent.</li>
+            </ul>
+        </article>
+    </section>
+
+    <section class="mt-5">
+        @include('partials.faq-accordion', [
+            'title' => 'Training veelgestelde vragen',
+            'intro' => 'Deze extra uitleg helpt bezoekers sneller en zekerder inschrijven.',
+            'items' => $faqs,
+            'accent' => 'sky',
+        ])
     </section>
 @endsection

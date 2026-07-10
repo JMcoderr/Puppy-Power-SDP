@@ -42,7 +42,9 @@ class BeheerFeatureTest extends TestCase
             ->get('/beheer')
             ->assertOk()
             ->assertSee('Beheer overzicht')
-            ->assertSee('Totaal training inschrijvingen');
+            ->assertSee('Totaal training inschrijvingen')
+            ->assertSee('Operationele inzichten')
+            ->assertSee('Contactverdeling');
     }
 
     public function test_beheer_search_filters_results(): void
@@ -75,6 +77,33 @@ class BeheerFeatureTest extends TestCase
             ->assertOk()
             ->assertSee('ZoekNaam')
             ->assertDontSee('AndereNaam');
+    }
+
+    public function test_beheer_shows_breakdowns_for_contact_and_daycare(): void
+    {
+        $user = $this->adminUser();
+
+        \App\Models\ContactMessage::query()->create([
+            'name' => 'Lisa',
+            'email' => 'lisa@example.com',
+            'subject' => 'Vraag over training',
+            'message' => 'Welke training past bij mijn pup?',
+        ]);
+
+        \App\Models\DaycareRegistration::query()->create([
+            'owner_name' => 'Tom',
+            'email' => 'tom@example.com',
+            'dog_name' => 'Bo',
+            'drop_off_date' => now()->addDay()->toDateString(),
+            'time_slot' => 'Ochtend',
+            'notes' => 'Rustige hond',
+        ]);
+
+        $this->actingAs($user)
+            ->get('/beheer')
+            ->assertOk()
+            ->assertSee('Vraag over training')
+            ->assertSee('Ochtend');
     }
 
     public function test_logged_in_user_can_export_beheer_csv(): void

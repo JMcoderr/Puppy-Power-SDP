@@ -62,6 +62,21 @@ class TrainingController extends Controller
                     'level' => 'Thuisrust',
                     'highlights' => ['Ontspanning', 'Prikkelreductie'],
                 ],
+                'zelfvertrouwen-op-straat' => [
+                    'focus' => 'zelfvertrouwen',
+                    'level' => 'Buitenrust',
+                    'highlights' => ['Rustig observeren', 'Spanning verlagen'],
+                ],
+                'snuffel-en-focuswerk' => [
+                    'focus' => 'focus',
+                    'level' => 'Verrijking',
+                    'highlights' => ['Neuswerk', 'Concentratie'],
+                ],
+                'basis-herstart' => [
+                    'focus' => 'basis',
+                    'level' => 'Herstart',
+                    'highlights' => ['Opnieuw opbouwen', 'Dagelijkse structuur'],
+                ],
                 default => [
                     'focus' => 'basis',
                     'level' => 'Algemeen',
@@ -139,9 +154,11 @@ class TrainingController extends Controller
     {
         // static lesson list shown to authenticated users only
         $lessons = [
-            ['title' => 'Week 1: Focus en rust opbouwen', 'duration' => '18 min', 'level' => 'Start', 'status' => 'Nu bekijken'],
-            ['title' => 'Week 2: Wandelen zonder trekken', 'duration' => '24 min', 'level' => 'Basis', 'status' => 'Volgende stap'],
-            ['title' => 'Week 3: Prikkeltraining in de stad', 'duration' => '20 min', 'level' => 'Gevorderd', 'status' => 'Komt hierna'],
+            ['title' => 'Week 1: Focus en rust opbouwen', 'duration' => '18 min', 'level' => 'Start', 'status' => 'Nu bekijken', 'summary' => 'Leer hoe je sessies kort, duidelijk en rustig opbouwt zodat je hond beter kan schakelen.'],
+            ['title' => 'Week 2: Wandelen zonder trekken', 'duration' => '24 min', 'level' => 'Basis', 'status' => 'Volgende stap', 'summary' => 'Werk aan tempo, aandacht en lijngevoel tijdens dagelijkse wandelmomenten.'],
+            ['title' => 'Week 3: Prikkeltraining in de stad', 'duration' => '20 min', 'level' => 'Gevorderd', 'status' => 'Komt hierna', 'summary' => 'Gebruik afstand, timing en rustmomenten om beter om te gaan met drukte en afleiding.'],
+            ['title' => 'Week 4: Bezoek ontvangen zonder chaos', 'duration' => '16 min', 'level' => 'Thuis', 'status' => 'Hierna vrij', 'summary' => 'Maak een duidelijk plan voor binnenkomen, begroeten en het bewaken van rust in huis.'],
+            ['title' => 'Week 5: Snuffelwerk als herstelmoment', 'duration' => '14 min', 'level' => 'Herstel', 'status' => 'Bonusles', 'summary' => 'Ontdek hoe neuswerk helpt om spanning te zakken en focus op een rustige manier op te bouwen.'],
         ];
 
         return view('training.content', compact('lessons'));

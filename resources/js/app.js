@@ -29,4 +29,26 @@ window.toggleTheme = function () {
 };
 
 // update the button once the DOM is ready so the first icon is always correct
-document.addEventListener('DOMContentLoaded', syncThemeButton);
+function setupAccordions() {
+    document.querySelectorAll('[data-accordion]').forEach((accordion) => {
+        accordion.querySelectorAll('[data-accordion-trigger]').forEach((trigger) => {
+            trigger.addEventListener('click', () => {
+                const panel = trigger.parentElement.querySelector('[data-accordion-panel]');
+                const icon = trigger.querySelector('.faq-icon');
+                const isExpanded = trigger.getAttribute('aria-expanded') === 'true';
+
+                trigger.setAttribute('aria-expanded', String(!isExpanded));
+                panel.classList.toggle('hidden', isExpanded);
+
+                if (icon) {
+                    icon.textContent = isExpanded ? '+' : '−';
+                }
+            });
+        });
+    });
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    syncThemeButton();
+    setupAccordions();
+});

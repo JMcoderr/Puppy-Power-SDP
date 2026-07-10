@@ -19,6 +19,10 @@
             <p class="text-sm text-slate-500 dark:text-slate-400">E-mail</p>
             <p class="mt-1 text-xl font-bold text-slate-900 dark:text-white">{{ $user->email }}</p>
         </article>
+        <article class="card p-4 sm:col-span-3">
+            <p class="text-sm text-slate-500 dark:text-slate-400">Account actief sinds</p>
+            <p class="mt-1 text-xl font-bold text-slate-900 dark:text-white">{{ $summary['memberSince'] ?: 'Onbekend' }}</p>
+        </article>
     </section>
 
     <section class="mb-4 grid gap-4 lg:grid-cols-[1.3fr_0.7fr]">
@@ -44,5 +48,34 @@
                 <li>Toegang tot trainingscontent: <strong class="text-slate-900 dark:text-white">Ja</strong></li>
             </ul>
         </aside>
+    </section>
+
+    <section class="mb-4 grid gap-4 lg:grid-cols-[0.9fr_1.1fr]">
+        <article class="card">
+            <p class="section-eyebrow">Jouw volgende stappen</p>
+            <h2 class="mt-1 text-2xl font-semibold text-slate-900 dark:text-white">Checklist om verder te gaan</h2>
+            <ul class="mt-4 space-y-3 text-sm text-slate-600 dark:text-slate-400">
+                @foreach ($checklist as $item)
+                    <li class="flex gap-3 rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 dark:border-slate-700 dark:bg-slate-700/40">
+                        <span class="mt-0.5 inline-flex h-6 w-6 items-center justify-center rounded-full bg-emerald-100 text-emerald-700 dark:bg-emerald-900 dark:text-emerald-300">✓</span>
+                        <span>{{ $item }}</span>
+                    </li>
+                @endforeach
+            </ul>
+        </article>
+
+        <article class="card">
+            <p class="section-eyebrow">Persoonlijke routeplanner</p>
+            <h2 class="mt-1 text-2xl font-semibold text-slate-900 dark:text-white">Kies de beste volgende actie</h2>
+            <div class="mt-4 grid gap-3">
+                @foreach ($nextSteps as $step)
+                    <div class="soft-panel">
+                        <p class="text-sm font-semibold text-slate-900 dark:text-white">{{ $step['title'] }}</p>
+                        <p class="mt-1 text-sm text-slate-600 dark:text-slate-400">{{ $step['copy'] }}</p>
+                        <a href="{{ $step['route'] }}" class="btn-secondary mt-3 w-fit">{{ $step['label'] }}</a>
+                    </div>
+                @endforeach
+            </div>
+        </article>
     </section>
 @endsection
