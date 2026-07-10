@@ -34,7 +34,7 @@ class TrainingIntegrationTest extends TestCase
         $freshTraining = Training::with('enrollments')->findOrFail($training->id);
 
         $this->assertCount(1, $freshTraining->enrollments);
-        $this->assertSame('Luna', $freshTraining->enrollments->first()->dog_name);
+        $this->assertSame('Mauwie', $freshTraining->enrollments->first()->dog_name);
     }
 }
 
