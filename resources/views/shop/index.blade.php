@@ -196,6 +196,7 @@
                 <li>Praktische tips op jouw niveau</li>
             </ul>
             <a href="{{ route('contact.index') }}" class="mt-4 inline-flex rounded-lg bg-slate-800 px-3 py-2 text-sm font-medium text-white hover:bg-slate-700 dark:bg-slate-600 dark:hover:bg-slate-500">Stel je vraag</a>
+            <a href="{{ route('guide.index') }}" class="mt-2 inline-flex rounded-lg border border-slate-300 px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50 dark:border-slate-600 dark:text-slate-300 dark:hover:bg-slate-700">Lees adviesgids</a>
 
             <div class="mt-5 rounded-lg border border-slate-200 bg-slate-50 p-4 dark:border-slate-700 dark:bg-slate-700/50">
                 <p class="text-sm font-semibold text-slate-900 dark:text-white">Nog niet zeker?</p>

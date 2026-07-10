@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AccountController;
+use App\Http\Controllers\AdviceGuideController;
 use App\Http\Controllers\BeheerController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\DaycareController;
@@ -12,6 +13,7 @@ use Illuminate\Support\Facades\Route;
 
 // public pages - no authentication needed
 Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/adviesgids', [AdviceGuideController::class, 'index'])->name('guide.index');
 
 Route::get('/shop', [ShopController::class, 'index'])->name('shop.index');
 

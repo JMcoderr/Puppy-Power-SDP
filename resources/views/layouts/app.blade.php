@@ -50,6 +50,7 @@
             <a href="{{ route('home') }}" class="text-lg font-bold tracking-tight text-slate-900 dark:text-white">Puppy Power Academy</a>
             <nav class="flex flex-wrap items-center gap-1 text-sm md:gap-2">
                 <a href="{{ route('home') }}" aria-current="{{ request()->routeIs('home') ? 'page' : 'false' }}" class="rounded-md px-3 py-2 {{ request()->routeIs('home') ? 'is-active bg-emerald-100 text-emerald-900 dark:bg-emerald-900 dark:text-emerald-200' : 'text-slate-700 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-700' }}">Home</a>
+                <a href="{{ route('guide.index') }}" aria-current="{{ request()->routeIs('guide.*') ? 'page' : 'false' }}" class="rounded-md px-3 py-2 {{ request()->routeIs('guide.*') ? 'is-active bg-emerald-100 text-emerald-900 dark:bg-emerald-900 dark:text-emerald-200' : 'text-slate-700 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-700' }}">Adviesgids</a>
                 <a href="{{ route('shop.index') }}" aria-current="{{ request()->routeIs('shop.*') ? 'page' : 'false' }}" class="rounded-md px-3 py-2 {{ request()->routeIs('shop.*') ? 'is-active bg-emerald-100 text-emerald-900 dark:bg-emerald-900 dark:text-emerald-200' : 'text-slate-700 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-700' }}">Shop</a>
                 <a href="{{ route('training.index') }}" aria-current="{{ request()->routeIs('training.index') ? 'page' : 'false' }}" class="rounded-md px-3 py-2 {{ request()->routeIs('training.index') ? 'is-active bg-emerald-100 text-emerald-900 dark:bg-emerald-900 dark:text-emerald-200' : 'text-slate-700 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-700' }}">Training</a>
                 <a href="{{ route('daycare.index') }}" aria-current="{{ request()->routeIs('daycare.*') ? 'page' : 'false' }}" class="rounded-md px-3 py-2 {{ request()->routeIs('daycare.*') ? 'is-active bg-emerald-100 text-emerald-900 dark:bg-emerald-900 dark:text-emerald-200' : 'text-slate-700 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-700' }}">Dagopvang</a>
@@ -119,6 +120,7 @@
                     <p class="text-xs font-semibold uppercase tracking-widest text-slate-500 dark:text-slate-400">Navigatie</p>
                     <ul class="mt-3 space-y-2 text-sm">
                         <li><a href="{{ route('home') }}"           class="hover:text-emerald-700 transition-colors dark:hover:text-emerald-400">Home</a></li>
+                        <li><a href="{{ route('guide.index') }}"    class="hover:text-emerald-700 transition-colors dark:hover:text-emerald-400">Adviesgids</a></li>
                         <li><a href="{{ route('shop.index') }}"     class="hover:text-emerald-700 transition-colors dark:hover:text-emerald-400">Shop</a></li>
                         <li><a href="{{ route('training.index') }}" class="hover:text-emerald-700 transition-colors dark:hover:text-emerald-400">Training</a></li>
                         <li><a href="{{ route('daycare.index') }}"  class="hover:text-emerald-700 transition-colors dark:hover:text-emerald-400">Dagopvang</a></li>

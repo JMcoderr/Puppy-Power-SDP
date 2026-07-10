@@ -122,6 +122,7 @@
                     <p class="mt-1 text-sm text-slate-600 dark:text-slate-400">Handig bij uitvallen, onrust, vuurwerkangst of moeite met prikkels.</p>
                 </div>
                 <a href="{{ route('contact.index') }}" class="btn-secondary w-fit">Vraag eerst persoonlijk advies</a>
+                <a href="{{ route('guide.index') }}" class="btn-dark w-fit">Lees eerst de adviesgids</a>
             </div>
         </article>
     </section>
