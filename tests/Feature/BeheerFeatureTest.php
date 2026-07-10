@@ -22,6 +22,7 @@ class BeheerFeatureTest extends TestCase
         $this->actingAs($user)
             ->get('/beheer')
             ->assertOk()
-            ->assertSee('Beheer overzicht');
+            ->assertSee('Beheer overzicht')
+            ->assertSee('Totaal training inschrijvingen');
     }
 }

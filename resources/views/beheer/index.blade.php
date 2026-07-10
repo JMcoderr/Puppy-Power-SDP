@@ -7,6 +7,21 @@
         <p class="mt-1 text-slate-600">Hier zie je de nieuwste inschrijvingen, dagopvang-aanmeldingen en contactberichten.</p>
     </section>
 
+    <section class="mb-4 grid gap-4 sm:grid-cols-3">
+        <article class="rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
+            <p class="text-sm text-slate-500">Totaal training inschrijvingen</p>
+            <p class="mt-1 text-2xl font-bold text-slate-900">{{ $totals['enrollments'] ?? 0 }}</p>
+        </article>
+        <article class="rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
+            <p class="text-sm text-slate-500">Totaal dagopvang aanmeldingen</p>
+            <p class="mt-1 text-2xl font-bold text-slate-900">{{ $totals['daycare'] ?? 0 }}</p>
+        </article>
+        <article class="rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
+            <p class="text-sm text-slate-500">Totaal contactberichten</p>
+            <p class="mt-1 text-2xl font-bold text-slate-900">{{ $totals['messages'] ?? 0 }}</p>
+        </article>
+    </section>
+
     <section class="grid gap-4">
         <article class="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
             <h2 class="text-xl font-semibold text-slate-900">Training inschrijvingen</h2>
