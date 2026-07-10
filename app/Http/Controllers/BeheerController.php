@@ -11,6 +11,12 @@ class BeheerController extends Controller
     public function index()
     {
         // simple latest lists for admin overview
+        $totals = [
+            'enrollments' => TrainingEnrollment::query()->count(),
+            'daycare' => DaycareRegistration::query()->count(),
+            'messages' => ContactMessage::query()->count(),
+        ];
+
         $enrollments = TrainingEnrollment::query()
             ->with('training')
             ->latest()
@@ -27,6 +33,6 @@ class BeheerController extends Controller
             ->take(10)
             ->get();
 
-        return view('beheer.index', compact('enrollments', 'daycareRegistrations', 'contactMessages'));
+        return view('beheer.index', compact('totals', 'enrollments', 'daycareRegistrations', 'contactMessages'));
     }
 }

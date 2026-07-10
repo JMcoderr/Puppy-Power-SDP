@@ -9,6 +9,10 @@
     @endif
 </head>
 <body class="min-h-screen bg-slate-50 text-slate-800">
+    <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:rounded-md focus:bg-white focus:px-3 focus:py-2 focus:text-slate-900 focus:shadow">
+        Skip to main content
+    </a>
+
     @unless (file_exists(public_path('build/manifest.json')) || file_exists(public_path('hot')))
         <div class="border-b border-amber-200 bg-amber-50 px-4 py-2 text-sm text-amber-900">
             Frontend assets are missing. Run <strong>npm run dev</strong> or <strong>npm run build</strong>.
@@ -20,26 +24,26 @@
         <div class="mx-auto flex w-full max-w-6xl flex-col gap-3 px-4 py-4 md:flex-row md:items-center md:justify-between">
             <a href="{{ route('home') }}" class="text-lg font-bold tracking-tight text-slate-900">Puppy Power Academy</a>
             <nav class="flex flex-wrap items-center gap-1 text-sm md:gap-2">
-                <a href="{{ route('home') }}" class="rounded-md px-3 py-2 {{ request()->routeIs('home') ? 'is-active bg-emerald-100 text-emerald-900' : 'text-slate-700 hover:bg-slate-100' }}">Home</a>
-                <a href="{{ route('shop.index') }}" class="rounded-md px-3 py-2 {{ request()->routeIs('shop.*') ? 'is-active bg-emerald-100 text-emerald-900' : 'text-slate-700 hover:bg-slate-100' }}">Shop</a>
-                <a href="{{ route('training.index') }}" class="rounded-md px-3 py-2 {{ request()->routeIs('training.index') ? 'is-active bg-emerald-100 text-emerald-900' : 'text-slate-700 hover:bg-slate-100' }}">Training</a>
-                <a href="{{ route('daycare.index') }}" class="rounded-md px-3 py-2 {{ request()->routeIs('daycare.*') ? 'is-active bg-emerald-100 text-emerald-900' : 'text-slate-700 hover:bg-slate-100' }}">Dagopvang</a>
-                <a href="{{ route('contact.index') }}" class="rounded-md px-3 py-2 {{ request()->routeIs('contact.*') ? 'is-active bg-emerald-100 text-emerald-900' : 'text-slate-700 hover:bg-slate-100' }}">Contact</a>
+                <a href="{{ route('home') }}" aria-current="{{ request()->routeIs('home') ? 'page' : 'false' }}" class="rounded-md px-3 py-2 {{ request()->routeIs('home') ? 'is-active bg-emerald-100 text-emerald-900' : 'text-slate-700 hover:bg-slate-100' }}">Home</a>
+                <a href="{{ route('shop.index') }}" aria-current="{{ request()->routeIs('shop.*') ? 'page' : 'false' }}" class="rounded-md px-3 py-2 {{ request()->routeIs('shop.*') ? 'is-active bg-emerald-100 text-emerald-900' : 'text-slate-700 hover:bg-slate-100' }}">Shop</a>
+                <a href="{{ route('training.index') }}" aria-current="{{ request()->routeIs('training.index') ? 'page' : 'false' }}" class="rounded-md px-3 py-2 {{ request()->routeIs('training.index') ? 'is-active bg-emerald-100 text-emerald-900' : 'text-slate-700 hover:bg-slate-100' }}">Training</a>
+                <a href="{{ route('daycare.index') }}" aria-current="{{ request()->routeIs('daycare.*') ? 'page' : 'false' }}" class="rounded-md px-3 py-2 {{ request()->routeIs('daycare.*') ? 'is-active bg-emerald-100 text-emerald-900' : 'text-slate-700 hover:bg-slate-100' }}">Dagopvang</a>
+                <a href="{{ route('contact.index') }}" aria-current="{{ request()->routeIs('contact.*') ? 'page' : 'false' }}" class="rounded-md px-3 py-2 {{ request()->routeIs('contact.*') ? 'is-active bg-emerald-100 text-emerald-900' : 'text-slate-700 hover:bg-slate-100' }}">Contact</a>
                 @auth
-                    <a href="{{ route('training.content') }}" class="rounded-md px-3 py-2 {{ request()->routeIs('training.content') ? 'is-active bg-emerald-100 text-emerald-900' : 'text-slate-700 hover:bg-slate-100' }}">Training content</a>
-                    <a href="{{ route('beheer.index') }}" class="rounded-md px-3 py-2 {{ request()->routeIs('beheer.*') ? 'is-active bg-emerald-100 text-emerald-900' : 'text-slate-700 hover:bg-slate-100' }}">Beheer</a>
+                    <a href="{{ route('training.content') }}" aria-current="{{ request()->routeIs('training.content') ? 'page' : 'false' }}" class="rounded-md px-3 py-2 {{ request()->routeIs('training.content') ? 'is-active bg-emerald-100 text-emerald-900' : 'text-slate-700 hover:bg-slate-100' }}">Training content</a>
+                    <a href="{{ route('beheer.index') }}" aria-current="{{ request()->routeIs('beheer.*') ? 'page' : 'false' }}" class="rounded-md px-3 py-2 {{ request()->routeIs('beheer.*') ? 'is-active bg-emerald-100 text-emerald-900' : 'text-slate-700 hover:bg-slate-100' }}">Beheer</a>
                     <form action="{{ route('logout') }}" method="post" style="display:inline;">
                         @csrf
                         <button type="submit" class="link-button rounded-md px-3 py-2 text-slate-700 hover:bg-slate-100">Uitloggen</button>
                     </form>
                 @else
-                    <a href="{{ route('login') }}" class="rounded-md px-3 py-2 {{ request()->routeIs('login') ? 'is-active bg-emerald-100 text-emerald-900' : 'text-slate-700 hover:bg-slate-100' }}">Inloggen</a>
+                    <a href="{{ route('login') }}" aria-current="{{ request()->routeIs('login') ? 'page' : 'false' }}" class="rounded-md px-3 py-2 {{ request()->routeIs('login') ? 'is-active bg-emerald-100 text-emerald-900' : 'text-slate-700 hover:bg-slate-100' }}">Inloggen</a>
                 @endauth
             </nav>
         </div>
     </header>
 
-    <main class="mx-auto w-full max-w-6xl px-4 py-8 md:py-10">
+    <main id="main-content" class="mx-auto w-full max-w-6xl px-4 py-8 md:py-10">
         @yield('content')
     </main>
 

@@ -11,6 +11,8 @@
         <p class="mb-4 rounded-lg border border-emerald-200 bg-emerald-50 p-3 text-emerald-900">{{ session('status') }}</p>
     @endif
 
+    @include('partials.form-error-summary')
+
     <section class="max-w-3xl rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
         <p class="text-sm text-slate-500">We reageren meestal binnen 1 werkdag.</p>
         <form action="{{ route('contact.store') }}" method="post" class="mt-4 grid gap-3">

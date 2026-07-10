@@ -6,14 +6,16 @@
         <h1 class="text-3xl font-bold text-slate-900">Inloggen</h1>
         <p class="mt-1 text-slate-600">Log in om afgeschermde trainingscontent te bekijken.</p>
 
+        @include('partials.form-error-summary')
+
         <form action="{{ route('login.store') }}" method="post" class="mt-4 grid gap-3">
             @csrf
             <label class="grid gap-1 text-sm">E-mail
-                <input class="rounded-md border border-slate-300 px-3 py-2" type="email" name="email" value="{{ old('email') }}" required>
+                <input class="rounded-md border border-slate-300 px-3 py-2" type="email" name="email" value="{{ old('email') }}" autocomplete="email" required>
             </label>
             @error('email') <p class="text-sm text-red-700">{{ $message }}</p> @enderror
             <label class="grid gap-1 text-sm">Wachtwoord
-                <input class="rounded-md border border-slate-300 px-3 py-2" type="password" name="password" required>
+                <input class="rounded-md border border-slate-300 px-3 py-2" type="password" name="password" autocomplete="current-password" required>
             </label>
             @error('password') <p class="text-sm text-red-700">{{ $message }}</p> @enderror
             <label class="flex items-center gap-2 text-sm">

@@ -11,6 +11,8 @@
         <p class="mb-4 rounded-lg border border-emerald-200 bg-emerald-50 p-3 text-emerald-900">{{ session('status') }}</p>
     @endif
 
+    @include('partials.form-error-summary')
+
     <section class="grid gap-4 lg:grid-cols-2">
         <article class="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
             <h2 class="text-xl font-semibold text-slate-900">Beschikbare planning</h2>
