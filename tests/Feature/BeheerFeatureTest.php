@@ -59,4 +59,33 @@ class BeheerFeatureTest extends TestCase
             ->assertSee('ZoekNaam')
             ->assertDontSee('AndereNaam');
     }
+
+    public function test_logged_in_user_can_export_beheer_csv(): void
+    {
+        $user = User::factory()->create();
+        $training = Training::query()->create([
+            'title' => 'Puppy Basis',
+            'slug' => 'puppy-basis-export',
+            'summary' => 'Test training for export.',
+            'capacity' => 10,
+            'is_active' => true,
+        ]);
+
+        TrainingEnrollment::query()->create([
+            'training_id' => $training->id,
+            'owner_name' => 'CsvNaam',
+            'email' => 'csv@example.com',
+            'dog_name' => 'Rex',
+        ]);
+
+        $response = $this->actingAs($user)->get('/beheer/export?q=CsvNaam');
+
+        $response->assertOk();
+        $response->assertHeader('content-type', 'text/csv; charset=UTF-8');
+        $response->assertHeader('content-disposition');
+
+        $content = $response->streamedContent();
+        $this->assertStringContainsString('Training inschrijvingen', $content);
+        $this->assertStringContainsString('CsvNaam', $content);
+    }
 }

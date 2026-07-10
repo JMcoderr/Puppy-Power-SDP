@@ -10,9 +10,7 @@ class BeheerController extends Controller
 {
     public function index()
     {
-        $search = trim((string) request('q', ''));
-        $from = request('from');
-        $to = request('to');
+        [$search, $from, $to, $filters] = $this->filters();
 
         // simple latest lists for admin overview
         $totals = [
@@ -21,7 +19,112 @@ class BeheerController extends Controller
             'messages' => ContactMessage::query()->count(),
         ];
 
-        $enrollmentsQuery = TrainingEnrollment::query()
+        $enrollmentsQuery = $this->enrollmentsQuery($search, $from, $to);
+        $daycareQuery = $this->daycareQuery($search, $from, $to);
+        $messagesQuery = $this->messagesQuery($search, $from, $to);
+
+        $enrollments = (clone $enrollmentsQuery)
+            ->latest()
+            ->paginate(10, ['*'], 'enrollments_page')
+            ->withQueryString();
+
+        $daycareRegistrations = (clone $daycareQuery)
+            ->latest()
+            ->paginate(10, ['*'], 'daycare_page')
+            ->withQueryString();
+
+        $contactMessages = (clone $messagesQuery)
+            ->latest()
+            ->paginate(10, ['*'], 'messages_page')
+            ->withQueryString();
+
+        $filteredCounts = [
+            'enrollments' => (clone $enrollmentsQuery)->count(),
+            'daycare' => (clone $daycareQuery)->count(),
+            'messages' => (clone $messagesQuery)->count(),
+        ];
+
+        return view('beheer.index', compact('totals', 'filteredCounts', 'filters', 'enrollments', 'daycareRegistrations', 'contactMessages'));
+    }
+
+    public function export()
+    {
+        [$search, $from, $to] = $this->filters();
+
+        $enrollments = $this->enrollmentsQuery($search, $from, $to)->latest()->get();
+        $daycareRegistrations = $this->daycareQuery($search, $from, $to)->latest()->get();
+        $contactMessages = $this->messagesQuery($search, $from, $to)->latest()->get();
+
+        $filename = 'beheer-export-' . now()->format('Ymd-His') . '.csv';
+
+        return response()->streamDownload(function () use ($enrollments, $daycareRegistrations, $contactMessages) {
+            $handle = fopen('php://output', 'w');
+
+            fputcsv($handle, ['Training inschrijvingen']);
+            fputcsv($handle, ['Eigenaar', 'Hond', 'Training', 'E-mail', 'Aangemaakt op']);
+            foreach ($enrollments as $item) {
+                fputcsv($handle, [
+                    $item->owner_name,
+                    $item->dog_name,
+                    $item->training?->title ?? '-',
+                    $item->email,
+                    optional($item->created_at)->format('Y-m-d H:i:s'),
+                ]);
+            }
+
+            fputcsv($handle, []);
+            fputcsv($handle, ['Dagopvang aanmeldingen']);
+            fputcsv($handle, ['Eigenaar', 'Hond', 'Datum opvang', 'Dagdeel', 'E-mail', 'Aangemaakt op']);
+            foreach ($daycareRegistrations as $item) {
+                fputcsv($handle, [
+                    $item->owner_name,
+                    $item->dog_name,
+                    optional($item->drop_off_date)->format('Y-m-d'),
+                    $item->time_slot,
+                    $item->email,
+                    optional($item->created_at)->format('Y-m-d H:i:s'),
+                ]);
+            }
+
+            fputcsv($handle, []);
+            fputcsv($handle, ['Contactberichten']);
+            fputcsv($handle, ['Naam', 'Onderwerp', 'E-mail', 'Aangemaakt op']);
+            foreach ($contactMessages as $item) {
+                fputcsv($handle, [
+                    $item->name,
+                    $item->subject,
+                    $item->email,
+                    optional($item->created_at)->format('Y-m-d H:i:s'),
+                ]);
+            }
+
+            fclose($handle);
+        }, $filename, [
+            'Content-Type' => 'text/csv; charset=UTF-8',
+        ]);
+    }
+
+    private function filters(): array
+    {
+        $search = trim((string) request('q', ''));
+        $from = request('from');
+        $to = request('to');
+
+        return [
+            $search,
+            $from,
+            $to,
+            [
+                'q' => $search,
+                'from' => $from,
+                'to' => $to,
+            ],
+        ];
+    }
+
+    private function enrollmentsQuery(string $search, ?string $from, ?string $to)
+    {
+        return TrainingEnrollment::query()
             ->with('training')
             ->when($search !== '', function ($query) use ($search) {
                 $query->where(function ($nested) use ($search) {
@@ -32,8 +135,11 @@ class BeheerController extends Controller
             })
             ->when($from, fn ($query) => $query->whereDate('created_at', '>=', $from))
             ->when($to, fn ($query) => $query->whereDate('created_at', '<=', $to));
+    }
 
-        $daycareQuery = DaycareRegistration::query()
+    private function daycareQuery(string $search, ?string $from, ?string $to)
+    {
+        return DaycareRegistration::query()
             ->when($search !== '', function ($query) use ($search) {
                 $query->where(function ($nested) use ($search) {
                     $nested->where('owner_name', 'like', "%{$search}%")
@@ -43,8 +149,11 @@ class BeheerController extends Controller
             })
             ->when($from, fn ($query) => $query->whereDate('created_at', '>=', $from))
             ->when($to, fn ($query) => $query->whereDate('created_at', '<=', $to));
+    }
 
-        $messagesQuery = ContactMessage::query()
+    private function messagesQuery(string $search, ?string $from, ?string $to)
+    {
+        return ContactMessage::query()
             ->when($search !== '', function ($query) use ($search) {
                 $query->where(function ($nested) use ($search) {
                     $nested->where('name', 'like', "%{$search}%")
@@ -54,34 +163,5 @@ class BeheerController extends Controller
             })
             ->when($from, fn ($query) => $query->whereDate('created_at', '>=', $from))
             ->when($to, fn ($query) => $query->whereDate('created_at', '<=', $to));
-
-        $enrollments = (clone $enrollmentsQuery)
-            ->latest()
-            ->take(10)
-            ->get();
-
-        $daycareRegistrations = (clone $daycareQuery)
-            ->latest()
-            ->take(10)
-            ->get();
-
-        $contactMessages = (clone $messagesQuery)
-            ->latest()
-            ->take(10)
-            ->get();
-
-        $filteredCounts = [
-            'enrollments' => (clone $enrollmentsQuery)->count(),
-            'daycare' => (clone $daycareQuery)->count(),
-            'messages' => (clone $messagesQuery)->count(),
-        ];
-
-        $filters = [
-            'q' => $search,
-            'from' => $from,
-            'to' => $to,
-        ];
-
-        return view('beheer.index', compact('totals', 'filteredCounts', 'filters', 'enrollments', 'daycareRegistrations', 'contactMessages'));
     }
 }

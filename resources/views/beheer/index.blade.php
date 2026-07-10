@@ -46,6 +46,12 @@
             <div class="flex gap-2 md:col-span-4">
                 <button type="submit" class="inline-flex rounded-lg bg-slate-800 px-4 py-2 text-sm font-medium text-white hover:bg-slate-900">Toepassen</button>
                 <a href="{{ route('beheer.index') }}" class="inline-flex rounded-lg border border-slate-300 px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50">Reset</a>
+                <a
+                    href="{{ route('beheer.export', request()->only(['q', 'from', 'to'])) }}"
+                    class="inline-flex rounded-lg border border-emerald-300 bg-emerald-50 px-4 py-2 text-sm font-medium text-emerald-800 hover:bg-emerald-100"
+                >
+                    Exporteer CSV
+                </a>
             </div>
         </form>
     </section>
@@ -80,6 +86,9 @@
                     </tbody>
                 </table>
             </div>
+            <div class="mt-3">
+                {{ $enrollments->onEachSide(1)->links() }}
+            </div>
         </article>
 
         <article class="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
@@ -111,6 +120,9 @@
                     </tbody>
                 </table>
             </div>
+            <div class="mt-3">
+                {{ $daycareRegistrations->onEachSide(1)->links() }}
+            </div>
         </article>
 
         <article class="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
@@ -139,6 +151,9 @@
                         @endforelse
                     </tbody>
                 </table>
+            </div>
+            <div class="mt-3">
+                {{ $contactMessages->onEachSide(1)->links() }}
             </div>
         </article>
     </section>

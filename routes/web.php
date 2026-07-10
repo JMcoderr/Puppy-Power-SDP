@@ -28,6 +28,9 @@ Route::post('/contact', [ContactController::class, 'store'])->name('contact.stor
 Route::get('/beheer', [BeheerController::class, 'index'])
     ->middleware('auth')
     ->name('beheer.index');
+Route::get('/beheer/export', [BeheerController::class, 'export'])
+    ->middleware('auth')
+    ->name('beheer.export');
 
 Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
 Route::post('/login', [AuthController::class, 'login'])->name('login.store');
