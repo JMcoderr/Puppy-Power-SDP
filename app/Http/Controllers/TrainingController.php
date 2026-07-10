@@ -52,6 +52,16 @@ class TrainingController extends Controller
                     'level' => 'Opbouw',
                     'highlights' => ['Rustig passeren', 'Samen wandelen'],
                 ],
+                'loslopen-en-terugroepen' => [
+                    'focus' => 'focus',
+                    'level' => 'Buitenwerk',
+                    'highlights' => ['Terugroepen', 'Lijncontrole'],
+                ],
+                'rust-in-huis' => [
+                    'focus' => 'gedrag',
+                    'level' => 'Thuisrust',
+                    'highlights' => ['Ontspanning', 'Prikkelreductie'],
+                ],
                 default => [
                     'focus' => 'basis',
                     'level' => 'Algemeen',
