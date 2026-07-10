@@ -75,8 +75,8 @@
         @yield('content')
     </main>
 
-    {{-- rich footer with dark background, four columns and a bottom bar --}}
-    <footer class="mt-8 bg-slate-900 text-slate-300">
+    {{-- footer uses a soft card-like light theme and switches to dark in dark mode --}}
+    <footer class="mt-8 border-t border-slate-200 bg-linear-to-br from-white via-slate-50 to-emerald-50 text-slate-700 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300">
         <div class="mx-auto w-full max-w-6xl px-4 pt-10 pb-6">
 
             {{-- top row: four columns --}}
@@ -84,10 +84,10 @@
 
                 {{-- column 1: branding and short description --}}
                 <div class="lg:col-span-1">
-                    <a href="{{ route('home') }}" class="text-lg font-bold tracking-tight text-white hover:text-emerald-400">
+                    <a href="{{ route('home') }}" class="text-lg font-bold tracking-tight text-slate-900 hover:text-emerald-700 dark:text-white dark:hover:text-emerald-400">
                         Puppy Power Academy
                     </a>
-                    <p class="mt-2 text-sm leading-relaxed text-slate-400">
+                    <p class="mt-2 text-sm leading-relaxed text-slate-600 dark:text-slate-400">
                         Alles voor jou en je hond op één plek. Shop, training en dagopvang.
                     </p>
                     {{-- simple visual accent strip --}}
@@ -96,38 +96,38 @@
 
                 {{-- column 2: page links --}}
                 <nav aria-label="Footer navigatie">
-                    <p class="text-xs font-semibold uppercase tracking-widest text-slate-500">Navigatie</p>
+                    <p class="text-xs font-semibold uppercase tracking-widest text-slate-500 dark:text-slate-500">Navigatie</p>
                     <ul class="mt-3 space-y-2 text-sm">
-                        <li><a href="{{ route('home') }}"           class="hover:text-emerald-400 transition-colors">Home</a></li>
-                        <li><a href="{{ route('shop.index') }}"     class="hover:text-emerald-400 transition-colors">Shop</a></li>
-                        <li><a href="{{ route('training.index') }}" class="hover:text-emerald-400 transition-colors">Training</a></li>
-                        <li><a href="{{ route('daycare.index') }}"  class="hover:text-emerald-400 transition-colors">Dagopvang</a></li>
-                        <li><a href="{{ route('contact.index') }}"  class="hover:text-emerald-400 transition-colors">Contact</a></li>
+                        <li><a href="{{ route('home') }}"           class="hover:text-emerald-700 transition-colors dark:hover:text-emerald-400">Home</a></li>
+                        <li><a href="{{ route('shop.index') }}"     class="hover:text-emerald-700 transition-colors dark:hover:text-emerald-400">Shop</a></li>
+                        <li><a href="{{ route('training.index') }}" class="hover:text-emerald-700 transition-colors dark:hover:text-emerald-400">Training</a></li>
+                        <li><a href="{{ route('daycare.index') }}"  class="hover:text-emerald-700 transition-colors dark:hover:text-emerald-400">Dagopvang</a></li>
+                        <li><a href="{{ route('contact.index') }}"  class="hover:text-emerald-700 transition-colors dark:hover:text-emerald-400">Contact</a></li>
                     </ul>
                 </nav>
 
                 {{-- column 3: opening hours --}}
                 <div>
-                    <p class="text-xs font-semibold uppercase tracking-widest text-slate-500">Openingstijden</p>
+                    <p class="text-xs font-semibold uppercase tracking-widest text-slate-500 dark:text-slate-500">Openingstijden</p>
                     <ul class="mt-3 space-y-2 text-sm">
-                        <li class="flex justify-between gap-4"><span>Maandag – vrijdag</span><span class="text-slate-400">09:00 – 17:00</span></li>
-                        <li class="flex justify-between gap-4"><span>Zaterdag</span><span class="text-slate-400">10:00 – 14:00</span></li>
-                        <li class="flex justify-between gap-4"><span>Zondag</span><span class="text-slate-400">Gesloten</span></li>
+                        <li class="flex justify-between gap-4"><span>Maandag – vrijdag</span><span class="text-slate-500 dark:text-slate-400">09:00 – 17:00</span></li>
+                        <li class="flex justify-between gap-4"><span>Zaterdag</span><span class="text-slate-500 dark:text-slate-400">10:00 – 14:00</span></li>
+                        <li class="flex justify-between gap-4"><span>Zondag</span><span class="text-slate-500 dark:text-slate-400">Gesloten</span></li>
                     </ul>
                 </div>
 
                 {{-- column 4: contact details --}}
                 <div>
-                    <p class="text-xs font-semibold uppercase tracking-widest text-slate-500">Contact</p>
+                    <p class="text-xs font-semibold uppercase tracking-widest text-slate-500 dark:text-slate-500">Contact</p>
                     <ul class="mt-3 space-y-2 text-sm">
                         <li>
-                            <a href="mailto:info@puppypoweracademy.nl" class="hover:text-emerald-400 transition-colors">
+                            <a href="mailto:info@puppypoweracademy.nl" class="hover:text-emerald-700 transition-colors dark:hover:text-emerald-400">
                                 info@puppypoweracademy.nl
                             </a>
                         </li>
                         <li>Reactie binnen 1 werkdag</li>
                         <li>
-                            <a href="{{ route('contact.index') }}" class="mt-1 inline-flex rounded-md bg-emerald-600 px-3 py-1.5 text-xs font-medium text-white hover:bg-emerald-500 transition-colors">
+                            <a href="{{ route('contact.index') }}" class="mt-1 inline-flex rounded-md bg-emerald-600 px-3 py-1.5 text-xs font-medium text-white hover:bg-emerald-500 transition-colors shadow-sm shadow-emerald-200 dark:shadow-none">
                                 Stuur een bericht
                             </a>
                         </li>
@@ -135,10 +135,21 @@
                 </div>
             </div>
 
+            {{-- small service highlights so the footer feels more complete --}}
+            <div class="mt-8 flex flex-wrap gap-2 border-t border-slate-200 pt-5 dark:border-slate-700">
+                <span class="rounded-full border border-emerald-200 bg-white px-3 py-1 text-xs font-medium text-emerald-800 shadow-sm dark:border-emerald-800 dark:bg-slate-800 dark:text-emerald-300 dark:shadow-none">Persoonlijk advies</span>
+                <span class="rounded-full border border-sky-200 bg-white px-3 py-1 text-xs font-medium text-sky-800 shadow-sm dark:border-sky-800 dark:bg-slate-800 dark:text-sky-300 dark:shadow-none">Snelle reactie</span>
+                <span class="rounded-full border border-amber-200 bg-white px-3 py-1 text-xs font-medium text-amber-800 shadow-sm dark:border-amber-800 dark:bg-slate-800 dark:text-amber-300 dark:shadow-none">Veilige dagopvang</span>
+                <span class="rounded-full border border-slate-200 bg-white px-3 py-1 text-xs font-medium text-slate-700 shadow-sm dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300 dark:shadow-none">Training op maat</span>
+            </div>
+
             {{-- bottom bar with copyright --}}
-            <div class="mt-8 flex flex-col items-center justify-between gap-2 border-t border-slate-700 pt-5 text-xs text-slate-500 sm:flex-row">
+            <div class="mt-8 flex flex-col items-center justify-between gap-2 border-t border-slate-200 pt-5 text-xs text-slate-500 dark:border-slate-700 dark:text-slate-500 sm:flex-row">
                 <p>&copy; {{ date('Y') }} Puppy Power Academy. Alle rechten voorbehouden.</p>
-                <p>Gebouwd met Laravel &amp; Tailwind CSS</p>
+                <div class="flex items-center gap-4">
+                    <a href="#main-content" class="hover:text-emerald-700 dark:hover:text-emerald-400">Naar boven</a>
+                    <p>Gebouwd met Laravel &amp; Tailwind CSS</p>
+                </div>
             </div>
         </div>
     </footer>
