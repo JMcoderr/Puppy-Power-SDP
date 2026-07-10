@@ -57,10 +57,34 @@
         @yield('content')
     </main>
 
-    {{-- quick footer with basic info --}}
+    {{-- footer with navigation links and basic contact info --}}
     <footer class="border-t border-slate-200 bg-white">
-        <div class="mx-auto w-full max-w-6xl px-4 py-4 text-sm text-slate-500">
-            <p>Puppy Power Academy - Shop, training en dagopvang op 1 plek.</p>
+        <div class="mx-auto w-full max-w-6xl px-4 py-6">
+            <div class="grid gap-6 sm:grid-cols-3">
+                <div>
+                    <p class="font-semibold text-slate-900">Puppy Power Academy</p>
+                    <p class="mt-1 text-sm text-slate-500">Shop, training en dagopvang op 1 plek.</p>
+                </div>
+                <nav aria-label="Footer navigatie">
+                    <p class="text-xs font-semibold uppercase tracking-wide text-slate-500">Pagina's</p>
+                    <ul class="mt-2 space-y-1 text-sm">
+                        <li><a href="{{ route('home') }}" class="text-slate-600 hover:text-emerald-700">Home</a></li>
+                        <li><a href="{{ route('shop.index') }}" class="text-slate-600 hover:text-emerald-700">Shop</a></li>
+                        <li><a href="{{ route('training.index') }}" class="text-slate-600 hover:text-emerald-700">Training</a></li>
+                        <li><a href="{{ route('daycare.index') }}" class="text-slate-600 hover:text-emerald-700">Dagopvang</a></li>
+                        <li><a href="{{ route('contact.index') }}" class="text-slate-600 hover:text-emerald-700">Contact</a></li>
+                    </ul>
+                </nav>
+                <div>
+                    <p class="text-xs font-semibold uppercase tracking-wide text-slate-500">Contact</p>
+                    <ul class="mt-2 space-y-1 text-sm text-slate-600">
+                        <li>info@puppypoweracademy.nl</li>
+                        <li>Maandag t/m vrijdag</li>
+                        <li>Reactie binnen 1 werkdag</li>
+                    </ul>
+                </div>
+            </div>
+            <p class="mt-6 border-t border-slate-100 pt-4 text-xs text-slate-400">&copy; {{ date('Y') }} Puppy Power Academy</p>
         </div>
     </footer>
 </body>

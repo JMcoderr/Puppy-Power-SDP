@@ -26,6 +26,40 @@ class ContactFeatureTest extends TestCase
             'subject' => 'Vraag over training',
         ]);
     }
+
+    public function test_contact_form_rejects_unknown_subject(): void
+    {
+        // subject must be one of the predefined dropdown values
+        $response = $this->post('/contact', [
+            'name' => 'Jordy Tester',
+            'email' => 'jordy@test.nl',
+            'subject' => 'Iets willekeurigs',
+            'message' => 'Test.',
+        ]);
+
+        $response->assertSessionHasErrors('subject');
+        $this->assertDatabaseMissing('contact_messages', ['email' => 'jordy@test.nl']);
+    }
+
+    public function test_contact_form_accepts_all_valid_subjects(): void
+    {
+        // verify every dropdown option is accepted by validation
+        $subjects = [
+            'Vraag over training',
+            'Vraag over dagopvang',
+            'Vraag over een product',
+            'Overige vraag',
+        ];
+
+        foreach ($subjects as $subject) {
+            $this->post('/contact', [
+                'name' => 'Test',
+                'email' => 'test+subject@test.nl',
+                'subject' => $subject,
+                'message' => 'Test message.',
+            ])->assertSessionMissing('errors');
+        }
+    }
 }
 
 
