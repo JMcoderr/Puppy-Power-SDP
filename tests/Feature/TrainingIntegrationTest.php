@@ -36,6 +36,37 @@ class TrainingIntegrationTest extends TestCase
         $this->assertCount(1, $freshTraining->enrollments);
         $this->assertSame('Mauwie', $freshTraining->enrollments->first()->dog_name);
     }
+
+    public function test_training_page_shows_available_spots(): void
+    {
+        // create a training with 5 capacity and 2 enrollments, expect 3 shown
+        $training = Training::query()->create([
+            'title' => 'Gedragstraining',
+            'slug' => 'gedragstraining-spots',
+            'summary' => 'Spots test.',
+            'starts_on' => '2026-10-01',
+            'capacity' => 5,
+            'is_active' => true,
+        ]);
+
+        TrainingEnrollment::query()->create([
+            'training_id' => $training->id,
+            'owner_name' => 'Eigenaar A',
+            'email' => 'a@test.nl',
+            'dog_name' => 'Hond A',
+        ]);
+
+        TrainingEnrollment::query()->create([
+            'training_id' => $training->id,
+            'owner_name' => 'Eigenaar B',
+            'email' => 'b@test.nl',
+            'dog_name' => 'Hond B',
+        ]);
+
+        $this->get('/training')
+            ->assertOk()
+            ->assertSee('3 van 5');
+    }
 }
 
 

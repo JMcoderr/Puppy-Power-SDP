@@ -12,7 +12,9 @@ class TrainingController extends Controller
     public function index()
     {
         // only show active trainings, sorted by start date
+        // withCount attaches enrollment_count to each training model
         $trainings = Training::query()
+            ->withCount('enrollments')
             ->where('is_active', true)
             ->orderBy('starts_on')
             ->get();

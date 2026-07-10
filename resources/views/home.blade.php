@@ -49,12 +49,14 @@
     {{-- simple number cards so visitors see activity quickly --}}
     <section class="mt-4 grid gap-4 sm:grid-cols-2">
         <article class="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
-            <p class="text-sm font-medium text-slate-500">Actieve producten</p>
+            <p class="text-sm font-medium text-slate-500">Actieve producten in de shop</p>
             <p class="mt-1 text-3xl font-bold text-slate-900">{{ $activeProducts ?? 0 }}</p>
+            <a href="{{ route('shop.index') }}" class="mt-2 inline-block text-sm text-emerald-700 hover:underline">Bekijk shop &rarr;</a>
         </article>
         <article class="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
-            <p class="text-sm font-medium text-slate-500">Actieve trainingen</p>
+            <p class="text-sm font-medium text-slate-500">Actieve trainingen beschikbaar</p>
             <p class="mt-1 text-3xl font-bold text-slate-900">{{ $activeTrainings ?? 0 }}</p>
+            <a href="{{ route('training.index') }}" class="mt-2 inline-block text-sm text-emerald-700 hover:underline">Bekijk trainingen &rarr;</a>
         </article>
     </section>
 

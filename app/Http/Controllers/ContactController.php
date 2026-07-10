@@ -20,7 +20,8 @@ class ContactController extends Controller
         $validated = $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'email', 'max:255'],
-            'subject' => ['required', 'string', 'max:255'],
+            // subject must be one of the predefined dropdown options
+            'subject' => ['required', 'string', 'in:Vraag over training,Vraag over dagopvang,Vraag over een product,Overige vraag'],
             // allow a longer message body but cap it to avoid huge payloads
             'message' => ['required', 'string', 'max:4000'],
         ]);

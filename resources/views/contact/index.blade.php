@@ -27,7 +27,14 @@
             </label>
             @error('email') <p class="text-sm text-red-700">{{ $message }}</p> @enderror
             <label class="grid gap-1 text-sm">Onderwerp
-                <input class="rounded-md border border-slate-300 px-3 py-2" type="text" name="subject" value="{{ old('subject') }}" required>
+                {{-- dropdown keeps subject values consistent in the admin dashboard --}}
+                <select class="rounded-md border border-slate-300 px-3 py-2" name="subject" required>
+                    <option value="" disabled @selected(! old('subject'))>Kies een onderwerp…</option>
+                    <option value="Vraag over training" @selected(old('subject') === 'Vraag over training')>Vraag over training</option>
+                    <option value="Vraag over dagopvang" @selected(old('subject') === 'Vraag over dagopvang')>Vraag over dagopvang</option>
+                    <option value="Vraag over een product" @selected(old('subject') === 'Vraag over een product')>Vraag over een product</option>
+                    <option value="Overige vraag" @selected(old('subject') === 'Overige vraag')>Overige vraag</option>
+                </select>
             </label>
             @error('subject') <p class="text-sm text-red-700">{{ $message }}</p> @enderror
             <label class="grid gap-1 text-sm">Bericht

@@ -19,7 +19,16 @@
                 <h2 class="text-xl font-semibold text-slate-900">{{ $training->title }}</h2>
                 <p class="mt-2 text-slate-600">{{ $training->summary }}</p>
                 <p class="mt-3 text-sm"><strong>Start:</strong> {{ optional($training->starts_on)->format('d-m-Y') }}</p>
-                <p class="text-sm"><strong>Plekken:</strong> {{ $training->capacity }}</p>
+                {{-- calculate remaining spots from capacity minus current enrollment count --}}
+                @php $spots = max(0, $training->capacity - ($training->enrollments_count ?? 0)); @endphp
+                <p class="text-sm">
+                    <strong>Beschikbare plekken:</strong>
+                    @if ($spots > 0)
+                        <span class="text-emerald-700">{{ $spots }} van {{ $training->capacity }}</span>
+                    @else
+                        <span class="font-semibold text-red-600">Vol</span>
+                    @endif
+                </p>
 
                 <form action="{{ route('training.enroll') }}" method="post" class="mt-4 grid gap-3">
                     @csrf
