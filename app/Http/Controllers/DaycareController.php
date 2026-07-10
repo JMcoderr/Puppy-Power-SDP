@@ -22,7 +22,14 @@ class DaycareController extends Controller
             ];
         });
 
-        return view('daycare.index', compact('schedule'));
+        // small summary cards to make the daycare page feel clearer and more useful
+        $scheduleSummary = [
+            'days' => $schedule->count(),
+            'morning' => $schedule->filter(fn ($slot) => str_contains($slot['available'], 'Ochtend'))->count(),
+            'afternoon' => $schedule->filter(fn ($slot) => str_contains($slot['available'], 'Middag'))->count(),
+        ];
+
+        return view('daycare.index', compact('schedule', 'scheduleSummary'));
     }
 
     public function store(Request $request)

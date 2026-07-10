@@ -13,6 +13,21 @@
 
     @include('partials.form-error-summary')
 
+    <section class="mb-4 grid gap-4 sm:grid-cols-3">
+        <article class="card p-4">
+            <p class="text-sm text-slate-500 dark:text-slate-400">Beschikbare dagen</p>
+            <p class="mt-1 text-2xl font-bold text-slate-900 dark:text-white">{{ $scheduleSummary['days'] ?? 0 }}</p>
+        </article>
+        <article class="card p-4">
+            <p class="text-sm text-slate-500 dark:text-slate-400">Ochtend slots</p>
+            <p class="mt-1 text-2xl font-bold text-slate-900 dark:text-white">{{ $scheduleSummary['morning'] ?? 0 }}</p>
+        </article>
+        <article class="card p-4">
+            <p class="text-sm text-slate-500 dark:text-slate-400">Middag slots</p>
+            <p class="mt-1 text-2xl font-bold text-slate-900 dark:text-white">{{ $scheduleSummary['afternoon'] ?? 0 }}</p>
+        </article>
+    </section>
+
     <section class="grid gap-4 lg:grid-cols-2">
         {{-- left column: schedule preview + why-daycare info block --}}
         <div class="grid gap-4">
@@ -49,6 +64,16 @@
                     <li>Veilige buitenruimte met toezicht</li>
                 </ul>
                 <a href="{{ route('contact.index') }}" class="mt-4 inline-flex rounded-lg bg-emerald-700 px-3 py-2 text-sm font-medium text-white hover:bg-emerald-600">Meer vragen? Neem contact op</a>
+            </article>
+
+            <article class="card">
+                <h2 class="text-lg font-semibold text-slate-900 dark:text-white">Intake checklist</h2>
+                <ul class="mt-3 list-disc space-y-2 pl-5 text-sm text-slate-600 dark:text-slate-400">
+                    <li>Neem een geldig e-mailadres voor bevestiging mee.</li>
+                    <li>Controleer of de opvangdatum in de toekomst ligt.</li>
+                    <li>Vermeld medicatie of sociaal gedrag bij notities.</li>
+                    <li>Kies ochtend, middag of hele dag op basis van je planning.</li>
+                </ul>
             </article>
         </div>
 
