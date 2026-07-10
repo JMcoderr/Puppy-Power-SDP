@@ -45,4 +45,16 @@
             <p class="text-slate-600">Je kunt direct een training kiezen of dagopvang aanvragen via de formulieren.</p>
         </article>
     </section>
+
+    {{-- simple number cards so visitors see activity quickly --}}
+    <section class="mt-4 grid gap-4 sm:grid-cols-2">
+        <article class="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
+            <p class="text-sm font-medium text-slate-500">Actieve producten</p>
+            <p class="mt-1 text-3xl font-bold text-slate-900">{{ $activeProducts ?? 0 }}</p>
+        </article>
+        <article class="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
+            <p class="text-sm font-medium text-slate-500">Actieve trainingen</p>
+            <p class="mt-1 text-3xl font-bold text-slate-900">{{ $activeTrainings ?? 0 }}</p>
+        </article>
+    </section>
 @endsection

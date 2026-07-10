@@ -9,6 +9,12 @@
     @endif
 </head>
 <body class="min-h-screen bg-slate-50 text-slate-800">
+    @unless (file_exists(public_path('build/manifest.json')) || file_exists(public_path('hot')))
+        <div class="border-b border-amber-200 bg-amber-50 px-4 py-2 text-sm text-amber-900">
+            Frontend assets are missing. Run <strong>npm run dev</strong> or <strong>npm run build</strong>.
+        </div>
+    @endunless
+
     {{-- simple fixed header with nav --}}
     <header class="border-b border-slate-200 bg-white/95 backdrop-blur">
         <div class="mx-auto flex w-full max-w-6xl flex-col gap-3 px-4 py-4 md:flex-row md:items-center md:justify-between">
