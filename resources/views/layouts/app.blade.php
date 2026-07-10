@@ -146,10 +146,7 @@
             {{-- bottom bar with copyright --}}
             <div class="mt-8 flex flex-col items-center justify-between gap-2 border-t border-slate-200 pt-5 text-xs text-slate-500 dark:border-slate-700 dark:text-slate-400 sm:flex-row">
                 <p>&copy; {{ date('Y') }} Puppy Power Academy. Alle rechten voorbehouden.</p>
-                <div class="flex items-center gap-4">
-                    <a href="#main-content" class="hover:text-emerald-700 dark:hover:text-emerald-400">Naar boven</a>
-                    <p>Gebouwd met Laravel &amp; Tailwind CSS</p>
-                </div>
+                <a href="#main-content" class="hover:text-emerald-700 dark:hover:text-emerald-400">Naar boven</a>
             </div>
         </div>
     </footer>
