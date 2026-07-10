@@ -4,11 +4,19 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{{ $title ?? 'Puppy Power Academy' }}</title>
+    {{-- anti-flash: apply saved theme before the browser paints to avoid white flash --}}
+    <script>
+        (function(){
+            var t=localStorage.getItem('theme');
+            var d=window.matchMedia('(prefers-color-scheme: dark)').matches;
+            if(t==='dark'||(t===null&&d))document.documentElement.classList.add('dark');
+        })();
+    </script>
     @if (file_exists(public_path('build/manifest.json')) || file_exists(public_path('hot')))
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     @endif
 </head>
-<body class="min-h-screen bg-slate-50 text-slate-800">
+<body class="min-h-screen bg-slate-50 text-slate-800 dark:bg-slate-900 dark:text-slate-200">
     <a
         href="#main-content"
         class="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:rounded-md focus:bg-white focus:px-3 focus:py-2 focus:text-slate-900 focus:shadow"
@@ -26,29 +34,39 @@
     @endunless
 
     {{-- simple fixed header with nav --}}
-    <header class="border-b border-slate-200 bg-white/95 backdrop-blur">
+    <header class="border-b border-slate-200 bg-white/95 backdrop-blur dark:border-slate-700 dark:bg-slate-800/95">
         <div class="mx-auto flex w-full max-w-6xl flex-col gap-3 px-4 py-4 md:flex-row md:items-center md:justify-between">
-            <a href="{{ route('home') }}" class="text-lg font-bold tracking-tight text-slate-900">Puppy Power Academy</a>
+            <a href="{{ route('home') }}" class="text-lg font-bold tracking-tight text-slate-900 dark:text-white">Puppy Power Academy</a>
             <nav class="flex flex-wrap items-center gap-1 text-sm md:gap-2">
-                <a href="{{ route('home') }}" aria-current="{{ request()->routeIs('home') ? 'page' : 'false' }}" class="rounded-md px-3 py-2 {{ request()->routeIs('home') ? 'is-active bg-emerald-100 text-emerald-900' : 'text-slate-700 hover:bg-slate-100' }}">Home</a>
-                <a href="{{ route('shop.index') }}" aria-current="{{ request()->routeIs('shop.*') ? 'page' : 'false' }}" class="rounded-md px-3 py-2 {{ request()->routeIs('shop.*') ? 'is-active bg-emerald-100 text-emerald-900' : 'text-slate-700 hover:bg-slate-100' }}">Shop</a>
-                <a href="{{ route('training.index') }}" aria-current="{{ request()->routeIs('training.index') ? 'page' : 'false' }}" class="rounded-md px-3 py-2 {{ request()->routeIs('training.index') ? 'is-active bg-emerald-100 text-emerald-900' : 'text-slate-700 hover:bg-slate-100' }}">Training</a>
-                <a href="{{ route('daycare.index') }}" aria-current="{{ request()->routeIs('daycare.*') ? 'page' : 'false' }}" class="rounded-md px-3 py-2 {{ request()->routeIs('daycare.*') ? 'is-active bg-emerald-100 text-emerald-900' : 'text-slate-700 hover:bg-slate-100' }}">Dagopvang</a>
-                <a href="{{ route('contact.index') }}" aria-current="{{ request()->routeIs('contact.*') ? 'page' : 'false' }}" class="rounded-md px-3 py-2 {{ request()->routeIs('contact.*') ? 'is-active bg-emerald-100 text-emerald-900' : 'text-slate-700 hover:bg-slate-100' }}">Contact</a>
+                <a href="{{ route('home') }}" aria-current="{{ request()->routeIs('home') ? 'page' : 'false' }}" class="rounded-md px-3 py-2 {{ request()->routeIs('home') ? 'is-active bg-emerald-100 text-emerald-900 dark:bg-emerald-900 dark:text-emerald-200' : 'text-slate-700 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-700' }}">Home</a>
+                <a href="{{ route('shop.index') }}" aria-current="{{ request()->routeIs('shop.*') ? 'page' : 'false' }}" class="rounded-md px-3 py-2 {{ request()->routeIs('shop.*') ? 'is-active bg-emerald-100 text-emerald-900 dark:bg-emerald-900 dark:text-emerald-200' : 'text-slate-700 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-700' }}">Shop</a>
+                <a href="{{ route('training.index') }}" aria-current="{{ request()->routeIs('training.index') ? 'page' : 'false' }}" class="rounded-md px-3 py-2 {{ request()->routeIs('training.index') ? 'is-active bg-emerald-100 text-emerald-900 dark:bg-emerald-900 dark:text-emerald-200' : 'text-slate-700 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-700' }}">Training</a>
+                <a href="{{ route('daycare.index') }}" aria-current="{{ request()->routeIs('daycare.*') ? 'page' : 'false' }}" class="rounded-md px-3 py-2 {{ request()->routeIs('daycare.*') ? 'is-active bg-emerald-100 text-emerald-900 dark:bg-emerald-900 dark:text-emerald-200' : 'text-slate-700 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-700' }}">Dagopvang</a>
+                <a href="{{ route('contact.index') }}" aria-current="{{ request()->routeIs('contact.*') ? 'page' : 'false' }}" class="rounded-md px-3 py-2 {{ request()->routeIs('contact.*') ? 'is-active bg-emerald-100 text-emerald-900 dark:bg-emerald-900 dark:text-emerald-200' : 'text-slate-700 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-700' }}">Contact</a>
                 @auth
                     {{-- training content link is visible to all logged-in users --}}
-                    <a href="{{ route('training.content') }}" aria-current="{{ request()->routeIs('training.content') ? 'page' : 'false' }}" class="rounded-md px-3 py-2 {{ request()->routeIs('training.content') ? 'is-active bg-emerald-100 text-emerald-900' : 'text-slate-700 hover:bg-slate-100' }}">Training content</a>
+                    <a href="{{ route('training.content') }}" aria-current="{{ request()->routeIs('training.content') ? 'page' : 'false' }}" class="rounded-md px-3 py-2 {{ request()->routeIs('training.content') ? 'is-active bg-emerald-100 text-emerald-900 dark:bg-emerald-900 dark:text-emerald-200' : 'text-slate-700 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-700' }}">Training content</a>
                     {{-- beheer link is only shown to admin users --}}
                     @if (auth()->user()->is_admin)
-                        <a href="{{ route('beheer.index') }}" aria-current="{{ request()->routeIs('beheer.*') ? 'page' : 'false' }}" class="rounded-md px-3 py-2 {{ request()->routeIs('beheer.*') ? 'is-active bg-emerald-100 text-emerald-900' : 'text-slate-700 hover:bg-slate-100' }}">Beheer</a>
+                        <a href="{{ route('beheer.index') }}" aria-current="{{ request()->routeIs('beheer.*') ? 'page' : 'false' }}" class="rounded-md px-3 py-2 {{ request()->routeIs('beheer.*') ? 'is-active bg-emerald-100 text-emerald-900 dark:bg-emerald-900 dark:text-emerald-200' : 'text-slate-700 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-700' }}">Beheer</a>
                     @endif
                     <form action="{{ route('logout') }}" method="post" style="display:inline;">
                         @csrf
-                        <button type="submit" class="link-button rounded-md px-3 py-2 text-slate-700 hover:bg-slate-100">Uitloggen</button>
+                        <button type="submit" class="link-button rounded-md px-3 py-2 text-slate-700 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-700">Uitloggen</button>
                     </form>
                 @else
-                    <a href="{{ route('login') }}" aria-current="{{ request()->routeIs('login') ? 'page' : 'false' }}" class="rounded-md px-3 py-2 {{ request()->routeIs('login') ? 'is-active bg-emerald-100 text-emerald-900' : 'text-slate-700 hover:bg-slate-100' }}">Inloggen</a>
+                    <a href="{{ route('login') }}" aria-current="{{ request()->routeIs('login') ? 'page' : 'false' }}" class="rounded-md px-3 py-2 {{ request()->routeIs('login') ? 'is-active bg-emerald-100 text-emerald-900 dark:bg-emerald-900 dark:text-emerald-200' : 'text-slate-700 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-700' }}">Inloggen</a>
                 @endauth
+
+                {{-- light/dark theme toggle button --}}
+                <button
+                    id="theme-toggle-btn"
+                    onclick="toggleTheme()"
+                    aria-label="Schakel naar donker thema"
+                    class="rounded-md px-2 py-2 text-slate-600 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-700"
+                >
+                    &#127769; {{-- moon icon in light mode, sun in dark --}}
+                </button>
             </nav>
         </div>
     </header>
