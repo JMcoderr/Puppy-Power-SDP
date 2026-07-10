@@ -2,35 +2,35 @@
 
 @section('content')
     {{-- quick admin page for recent form entries --}}
-    <section class="page-head mb-4">
+    <section class="mb-4">
         <h1 class="text-3xl font-bold text-slate-900">Beheer overzicht</h1>
         <p class="mt-1 text-slate-600">Hier zie je de nieuwste inschrijvingen, dagopvang-aanmeldingen en contactberichten.</p>
     </section>
 
-    <section class="cards-grid beheer-grid grid gap-4">
-        <article class="card rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
+    <section class="grid gap-4">
+        <article class="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
             <h2 class="text-xl font-semibold text-slate-900">Training inschrijvingen</h2>
-            <div class="table-wrap">
-                <table class="simple-table mt-3 w-full border-collapse text-sm">
+            <div class="overflow-x-auto">
+                <table class="mt-3 w-full border-collapse text-sm">
                     <thead>
                         <tr>
-                            <th>Eigenaar</th>
-                            <th>Hond</th>
-                            <th>Training</th>
-                            <th>E-mail</th>
+                            <th class="border-b border-slate-200 bg-slate-50 px-2 py-2 text-left font-semibold">Eigenaar</th>
+                            <th class="border-b border-slate-200 bg-slate-50 px-2 py-2 text-left font-semibold">Hond</th>
+                            <th class="border-b border-slate-200 bg-slate-50 px-2 py-2 text-left font-semibold">Training</th>
+                            <th class="border-b border-slate-200 bg-slate-50 px-2 py-2 text-left font-semibold">E-mail</th>
                         </tr>
                     </thead>
                     <tbody>
                         @forelse ($enrollments as $item)
                             <tr>
-                                <td>{{ $item->owner_name }}</td>
-                                <td>{{ $item->dog_name }}</td>
-                                <td>{{ $item->training?->title ?? '-' }}</td>
-                                <td>{{ $item->email }}</td>
+                                <td class="border-b border-slate-100 px-2 py-2">{{ $item->owner_name }}</td>
+                                <td class="border-b border-slate-100 px-2 py-2">{{ $item->dog_name }}</td>
+                                <td class="border-b border-slate-100 px-2 py-2">{{ $item->training?->title ?? '-' }}</td>
+                                <td class="border-b border-slate-100 px-2 py-2">{{ $item->email }}</td>
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="4">Nog geen inschrijvingen.</td>
+                                <td colspan="4" class="px-2 py-3 text-slate-500">Nog geen inschrijvingen.</td>
                             </tr>
                         @endforelse
                     </tbody>
@@ -38,29 +38,29 @@
             </div>
         </article>
 
-        <article class="card rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
+        <article class="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
             <h2 class="text-xl font-semibold text-slate-900">Dagopvang aanmeldingen</h2>
-            <div class="table-wrap">
-                <table class="simple-table mt-3 w-full border-collapse text-sm">
+            <div class="overflow-x-auto">
+                <table class="mt-3 w-full border-collapse text-sm">
                     <thead>
                         <tr>
-                            <th>Eigenaar</th>
-                            <th>Hond</th>
-                            <th>Datum</th>
-                            <th>Dagdeel</th>
+                            <th class="border-b border-slate-200 bg-slate-50 px-2 py-2 text-left font-semibold">Eigenaar</th>
+                            <th class="border-b border-slate-200 bg-slate-50 px-2 py-2 text-left font-semibold">Hond</th>
+                            <th class="border-b border-slate-200 bg-slate-50 px-2 py-2 text-left font-semibold">Datum</th>
+                            <th class="border-b border-slate-200 bg-slate-50 px-2 py-2 text-left font-semibold">Dagdeel</th>
                         </tr>
                     </thead>
                     <tbody>
                         @forelse ($daycareRegistrations as $item)
                             <tr>
-                                <td>{{ $item->owner_name }}</td>
-                                <td>{{ $item->dog_name }}</td>
-                                <td>{{ optional($item->drop_off_date)->format('d-m-Y') }}</td>
-                                <td>{{ $item->time_slot }}</td>
+                                <td class="border-b border-slate-100 px-2 py-2">{{ $item->owner_name }}</td>
+                                <td class="border-b border-slate-100 px-2 py-2">{{ $item->dog_name }}</td>
+                                <td class="border-b border-slate-100 px-2 py-2">{{ optional($item->drop_off_date)->format('d-m-Y') }}</td>
+                                <td class="border-b border-slate-100 px-2 py-2">{{ $item->time_slot }}</td>
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="4">Nog geen dagopvang aanmeldingen.</td>
+                                <td colspan="4" class="px-2 py-3 text-slate-500">Nog geen dagopvang aanmeldingen.</td>
                             </tr>
                         @endforelse
                     </tbody>
@@ -68,27 +68,27 @@
             </div>
         </article>
 
-        <article class="card rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
+        <article class="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
             <h2 class="text-xl font-semibold text-slate-900">Contactberichten</h2>
-            <div class="table-wrap">
-                <table class="simple-table mt-3 w-full border-collapse text-sm">
+            <div class="overflow-x-auto">
+                <table class="mt-3 w-full border-collapse text-sm">
                     <thead>
                         <tr>
-                            <th>Naam</th>
-                            <th>Onderwerp</th>
-                            <th>E-mail</th>
+                            <th class="border-b border-slate-200 bg-slate-50 px-2 py-2 text-left font-semibold">Naam</th>
+                            <th class="border-b border-slate-200 bg-slate-50 px-2 py-2 text-left font-semibold">Onderwerp</th>
+                            <th class="border-b border-slate-200 bg-slate-50 px-2 py-2 text-left font-semibold">E-mail</th>
                         </tr>
                     </thead>
                     <tbody>
                         @forelse ($contactMessages as $item)
                             <tr>
-                                <td>{{ $item->name }}</td>
-                                <td>{{ $item->subject }}</td>
-                                <td>{{ $item->email }}</td>
+                                <td class="border-b border-slate-100 px-2 py-2">{{ $item->name }}</td>
+                                <td class="border-b border-slate-100 px-2 py-2">{{ $item->subject }}</td>
+                                <td class="border-b border-slate-100 px-2 py-2">{{ $item->email }}</td>
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="3">Nog geen contactberichten.</td>
+                                <td colspan="3" class="px-2 py-3 text-slate-500">Nog geen contactberichten.</td>
                             </tr>
                         @endforelse
                     </tbody>
