@@ -7,6 +7,49 @@
         <p class="page-sub mt-1">Ontdek cursussen en DIY-pakketten voor jou en je hond.</p>
     </section>
 
+    <section class="mb-4 grid gap-4 sm:grid-cols-3">
+        <article class="card p-4">
+            <p class="text-sm text-slate-500 dark:text-slate-400">Actieve producten</p>
+            <p class="mt-1 text-2xl font-bold text-slate-900 dark:text-white">{{ $summary['total'] ?? 0 }}</p>
+        </article>
+        <article class="card p-4">
+            <p class="text-sm text-slate-500 dark:text-slate-400">Cursussen</p>
+            <p class="mt-1 text-2xl font-bold text-slate-900 dark:text-white">{{ $summary['courses'] ?? 0 }}</p>
+        </article>
+        <article class="card p-4">
+            <p class="text-sm text-slate-500 dark:text-slate-400">DIY-pakketten</p>
+            <p class="mt-1 text-2xl font-bold text-slate-900 dark:text-white">{{ $summary['kits'] ?? 0 }}</p>
+        </article>
+    </section>
+
+    <section class="mb-4 card p-4">
+        <h2 class="text-lg font-semibold text-slate-900 dark:text-white">Filter en sorteer</h2>
+        <form method="get" action="{{ route('shop.index') }}" class="mt-3 grid gap-3 md:grid-cols-3 md:items-end">
+            <label class="grid gap-1 text-sm dark:text-slate-300">
+                Categorie
+                <select name="category" class="form-input">
+                    <option value="all" @selected(($filters['category'] ?? 'all') === 'all')>Alles</option>
+                    @foreach ($categories as $category)
+                        <option value="{{ $category }}" @selected(($filters['category'] ?? '') === $category)>{{ $category }}</option>
+                    @endforeach
+                </select>
+            </label>
+            <label class="grid gap-1 text-sm dark:text-slate-300">
+                Sorteer op
+                <select name="sort" class="form-input">
+                    <option value="name" @selected(($filters['sort'] ?? 'name') === 'name')>Naam A-Z</option>
+                    <option value="price_low" @selected(($filters['sort'] ?? '') === 'price_low')>Prijs laag-hoog</option>
+                    <option value="price_high" @selected(($filters['sort'] ?? '') === 'price_high')>Prijs hoog-laag</option>
+                    <option value="category" @selected(($filters['sort'] ?? '') === 'category')>Categorie</option>
+                </select>
+            </label>
+            <div class="flex gap-2">
+                <button type="submit" class="inline-flex rounded-lg bg-slate-800 px-4 py-2 text-sm font-medium text-white hover:bg-slate-700 dark:bg-slate-700 dark:hover:bg-slate-600">Toepassen</button>
+                <a href="{{ route('shop.index') }}" class="inline-flex rounded-lg border border-slate-300 px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50 dark:border-slate-600 dark:text-slate-300 dark:hover:bg-slate-700">Reset</a>
+            </div>
+        </form>
+    </section>
+
     <section class="mb-4 grid gap-4 lg:grid-cols-[1.2fr_0.8fr]">
         <article class="card">
             <p class="text-xs font-semibold uppercase tracking-wide text-emerald-700 dark:text-emerald-400">Keuzehulp</p>
