@@ -2,16 +2,16 @@
 
 @section('content')
     {{-- quick admin page for recent form entries --}}
-    <section class="page-head">
-        <h1>Beheer overzicht</h1>
-        <p>Hier zie je de nieuwste inschrijvingen, dagopvang-aanmeldingen en contactberichten.</p>
+    <section class="page-head mb-4">
+        <h1 class="text-3xl font-bold text-slate-900">Beheer overzicht</h1>
+        <p class="mt-1 text-slate-600">Hier zie je de nieuwste inschrijvingen, dagopvang-aanmeldingen en contactberichten.</p>
     </section>
 
-    <section class="cards-grid beheer-grid">
-        <article class="card">
-            <h2>Training inschrijvingen</h2>
+    <section class="cards-grid beheer-grid grid gap-4">
+        <article class="card rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
+            <h2 class="text-xl font-semibold text-slate-900">Training inschrijvingen</h2>
             <div class="table-wrap">
-                <table class="simple-table">
+                <table class="simple-table mt-3 w-full border-collapse text-sm">
                     <thead>
                         <tr>
                             <th>Eigenaar</th>
@@ -38,10 +38,10 @@
             </div>
         </article>
 
-        <article class="card">
-            <h2>Dagopvang aanmeldingen</h2>
+        <article class="card rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
+            <h2 class="text-xl font-semibold text-slate-900">Dagopvang aanmeldingen</h2>
             <div class="table-wrap">
-                <table class="simple-table">
+                <table class="simple-table mt-3 w-full border-collapse text-sm">
                     <thead>
                         <tr>
                             <th>Eigenaar</th>
@@ -68,10 +68,10 @@
             </div>
         </article>
 
-        <article class="card">
-            <h2>Contactberichten</h2>
+        <article class="card rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
+            <h2 class="text-xl font-semibold text-slate-900">Contactberichten</h2>
             <div class="table-wrap">
-                <table class="simple-table">
+                <table class="simple-table mt-3 w-full border-collapse text-sm">
                     <thead>
                         <tr>
                             <th>Naam</th>
