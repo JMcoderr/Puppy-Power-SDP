@@ -57,34 +57,71 @@
         @yield('content')
     </main>
 
-    {{-- footer with navigation links and basic contact info --}}
-    <footer class="border-t border-slate-200 bg-white">
-        <div class="mx-auto w-full max-w-6xl px-4 py-6">
-            <div class="grid gap-6 sm:grid-cols-3">
-                <div>
-                    <p class="font-semibold text-slate-900">Puppy Power Academy</p>
-                    <p class="mt-1 text-sm text-slate-500">Shop, training en dagopvang op 1 plek.</p>
+    {{-- rich footer with dark background, four columns and a bottom bar --}}
+    <footer class="mt-8 bg-slate-900 text-slate-300">
+        <div class="mx-auto w-full max-w-6xl px-4 pt-10 pb-6">
+
+            {{-- top row: four columns --}}
+            <div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+
+                {{-- column 1: branding and short description --}}
+                <div class="lg:col-span-1">
+                    <a href="{{ route('home') }}" class="text-lg font-bold tracking-tight text-white hover:text-emerald-400">
+                        Puppy Power Academy
+                    </a>
+                    <p class="mt-2 text-sm leading-relaxed text-slate-400">
+                        Alles voor jou en je hond op één plek. Shop, training en dagopvang.
+                    </p>
+                    {{-- simple visual accent strip --}}
+                    <div class="mt-4 h-1 w-10 rounded-full bg-emerald-500"></div>
                 </div>
+
+                {{-- column 2: page links --}}
                 <nav aria-label="Footer navigatie">
-                    <p class="text-xs font-semibold uppercase tracking-wide text-slate-500">Pagina's</p>
-                    <ul class="mt-2 space-y-1 text-sm">
-                        <li><a href="{{ route('home') }}" class="text-slate-600 hover:text-emerald-700">Home</a></li>
-                        <li><a href="{{ route('shop.index') }}" class="text-slate-600 hover:text-emerald-700">Shop</a></li>
-                        <li><a href="{{ route('training.index') }}" class="text-slate-600 hover:text-emerald-700">Training</a></li>
-                        <li><a href="{{ route('daycare.index') }}" class="text-slate-600 hover:text-emerald-700">Dagopvang</a></li>
-                        <li><a href="{{ route('contact.index') }}" class="text-slate-600 hover:text-emerald-700">Contact</a></li>
+                    <p class="text-xs font-semibold uppercase tracking-widest text-slate-500">Navigatie</p>
+                    <ul class="mt-3 space-y-2 text-sm">
+                        <li><a href="{{ route('home') }}"           class="hover:text-emerald-400 transition-colors">Home</a></li>
+                        <li><a href="{{ route('shop.index') }}"     class="hover:text-emerald-400 transition-colors">Shop</a></li>
+                        <li><a href="{{ route('training.index') }}" class="hover:text-emerald-400 transition-colors">Training</a></li>
+                        <li><a href="{{ route('daycare.index') }}"  class="hover:text-emerald-400 transition-colors">Dagopvang</a></li>
+                        <li><a href="{{ route('contact.index') }}"  class="hover:text-emerald-400 transition-colors">Contact</a></li>
                     </ul>
                 </nav>
+
+                {{-- column 3: opening hours --}}
                 <div>
-                    <p class="text-xs font-semibold uppercase tracking-wide text-slate-500">Contact</p>
-                    <ul class="mt-2 space-y-1 text-sm text-slate-600">
-                        <li>info@puppypoweracademy.nl</li>
-                        <li>Maandag t/m vrijdag</li>
+                    <p class="text-xs font-semibold uppercase tracking-widest text-slate-500">Openingstijden</p>
+                    <ul class="mt-3 space-y-2 text-sm">
+                        <li class="flex justify-between gap-4"><span>Maandag – vrijdag</span><span class="text-slate-400">09:00 – 17:00</span></li>
+                        <li class="flex justify-between gap-4"><span>Zaterdag</span><span class="text-slate-400">10:00 – 14:00</span></li>
+                        <li class="flex justify-between gap-4"><span>Zondag</span><span class="text-slate-400">Gesloten</span></li>
+                    </ul>
+                </div>
+
+                {{-- column 4: contact details --}}
+                <div>
+                    <p class="text-xs font-semibold uppercase tracking-widest text-slate-500">Contact</p>
+                    <ul class="mt-3 space-y-2 text-sm">
+                        <li>
+                            <a href="mailto:info@puppypoweracademy.nl" class="hover:text-emerald-400 transition-colors">
+                                info@puppypoweracademy.nl
+                            </a>
+                        </li>
                         <li>Reactie binnen 1 werkdag</li>
+                        <li>
+                            <a href="{{ route('contact.index') }}" class="mt-1 inline-flex rounded-md bg-emerald-600 px-3 py-1.5 text-xs font-medium text-white hover:bg-emerald-500 transition-colors">
+                                Stuur een bericht
+                            </a>
+                        </li>
                     </ul>
                 </div>
             </div>
-            <p class="mt-6 border-t border-slate-100 pt-4 text-xs text-slate-400">&copy; {{ date('Y') }} Puppy Power Academy</p>
+
+            {{-- bottom bar with copyright --}}
+            <div class="mt-8 flex flex-col items-center justify-between gap-2 border-t border-slate-700 pt-5 text-xs text-slate-500 sm:flex-row">
+                <p>&copy; {{ date('Y') }} Puppy Power Academy. Alle rechten voorbehouden.</p>
+                <p>Gebouwd met Laravel &amp; Tailwind CSS</p>
+            </div>
         </div>
     </footer>
 </body>
