@@ -86,42 +86,42 @@
     </section>
 
     <section class="grid gap-4">
-        <article class="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
-            <h2 class="text-xl font-semibold text-slate-900">Training inschrijvingen</h2>
-            <p class="mt-1 text-sm text-slate-500">Resultaten: {{ $filteredCounts['enrollments'] ?? 0 }}</p>
+        <article class="card">
+            <h2 class="text-xl font-semibold text-slate-900 dark:text-white">Training inschrijvingen</h2>
+            <p class="mt-1 text-sm text-slate-500 dark:text-slate-400">Resultaten: {{ $filteredCounts['enrollments'] ?? 0 }}</p>
             <div class="mt-3 grid gap-3 md:hidden">
                 @forelse ($enrollments as $item)
-                    <article class="rounded-lg border border-slate-200 bg-slate-50 p-3 text-sm">
+                    <article class="rounded-lg border border-slate-200 bg-slate-50 p-3 text-sm dark:border-slate-700 dark:bg-slate-700/50 dark:text-slate-300">
                         <p><strong>Eigenaar:</strong> {{ $item->owner_name }}</p>
                         <p><strong>Hond:</strong> {{ $item->dog_name }}</p>
                         <p><strong>Training:</strong> {{ $item->training?->title ?? '-' }}</p>
                         <p><strong>E-mail:</strong> {{ $item->email }}</p>
                     </article>
                 @empty
-                    <p class="text-sm text-slate-500">Nog geen inschrijvingen.</p>
+                    <p class="text-sm text-slate-500 dark:text-slate-400">Nog geen inschrijvingen.</p>
                 @endforelse
             </div>
-            <div class="overflow-x-auto">
+            <div class="overflow-x-auto rounded-lg border border-slate-200 dark:border-slate-700">
                 <table class="mt-3 hidden w-full border-collapse text-sm md:table">
                     <thead>
                         <tr>
-                            <th class="border-b border-slate-200 bg-slate-50 px-2 py-2 text-left font-semibold">Eigenaar</th>
-                            <th class="border-b border-slate-200 bg-slate-50 px-2 py-2 text-left font-semibold">Hond</th>
-                            <th class="border-b border-slate-200 bg-slate-50 px-2 py-2 text-left font-semibold">Training</th>
-                            <th class="border-b border-slate-200 bg-slate-50 px-2 py-2 text-left font-semibold">E-mail</th>
+                            <th class="border-b border-slate-200 bg-slate-50 px-2 py-2 text-left font-semibold dark:border-slate-600 dark:bg-slate-700 dark:text-slate-200">Eigenaar</th>
+                            <th class="border-b border-slate-200 bg-slate-50 px-2 py-2 text-left font-semibold dark:border-slate-600 dark:bg-slate-700 dark:text-slate-200">Hond</th>
+                            <th class="border-b border-slate-200 bg-slate-50 px-2 py-2 text-left font-semibold dark:border-slate-600 dark:bg-slate-700 dark:text-slate-200">Training</th>
+                            <th class="border-b border-slate-200 bg-slate-50 px-2 py-2 text-left font-semibold dark:border-slate-600 dark:bg-slate-700 dark:text-slate-200">E-mail</th>
                         </tr>
                     </thead>
                     <tbody>
                         @forelse ($enrollments as $item)
                             <tr>
-                                <td class="border-b border-slate-100 px-2 py-2">{{ $item->owner_name }}</td>
-                                <td class="border-b border-slate-100 px-2 py-2">{{ $item->dog_name }}</td>
-                                <td class="border-b border-slate-100 px-2 py-2">{{ $item->training?->title ?? '-' }}</td>
-                                <td class="border-b border-slate-100 px-2 py-2">{{ $item->email }}</td>
+                                <td class="border-b border-slate-100 px-2 py-2 dark:border-slate-700 dark:text-slate-300">{{ $item->owner_name }}</td>
+                                <td class="border-b border-slate-100 px-2 py-2 dark:border-slate-700 dark:text-slate-300">{{ $item->dog_name }}</td>
+                                <td class="border-b border-slate-100 px-2 py-2 dark:border-slate-700 dark:text-slate-300">{{ $item->training?->title ?? '-' }}</td>
+                                <td class="border-b border-slate-100 px-2 py-2 dark:border-slate-700 dark:text-slate-300">{{ $item->email }}</td>
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="4" class="px-2 py-3 text-slate-500">Nog geen inschrijvingen.</td>
+                                <td colspan="4" class="px-2 py-3 text-slate-500 dark:text-slate-400">Nog geen inschrijvingen.</td>
                             </tr>
                         @endforelse
                     </tbody>
@@ -132,42 +132,42 @@
             </div>
         </article>
 
-        <article class="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
-            <h2 class="text-xl font-semibold text-slate-900">Dagopvang aanmeldingen</h2>
-            <p class="mt-1 text-sm text-slate-500">Resultaten: {{ $filteredCounts['daycare'] ?? 0 }}</p>
+        <article class="card">
+            <h2 class="text-xl font-semibold text-slate-900 dark:text-white">Dagopvang aanmeldingen</h2>
+            <p class="mt-1 text-sm text-slate-500 dark:text-slate-400">Resultaten: {{ $filteredCounts['daycare'] ?? 0 }}</p>
             <div class="mt-3 grid gap-3 md:hidden">
                 @forelse ($daycareRegistrations as $item)
-                    <article class="rounded-lg border border-slate-200 bg-slate-50 p-3 text-sm">
+                    <article class="rounded-lg border border-slate-200 bg-slate-50 p-3 text-sm dark:border-slate-700 dark:bg-slate-700/50 dark:text-slate-300">
                         <p><strong>Eigenaar:</strong> {{ $item->owner_name }}</p>
                         <p><strong>Hond:</strong> {{ $item->dog_name }}</p>
                         <p><strong>Datum:</strong> {{ optional($item->drop_off_date)->format('d-m-Y') }}</p>
                         <p><strong>Dagdeel:</strong> {{ $item->time_slot }}</p>
                     </article>
                 @empty
-                    <p class="text-sm text-slate-500">Nog geen dagopvang aanmeldingen.</p>
+                    <p class="text-sm text-slate-500 dark:text-slate-400">Nog geen dagopvang aanmeldingen.</p>
                 @endforelse
             </div>
-            <div class="overflow-x-auto">
+            <div class="overflow-x-auto rounded-lg border border-slate-200 dark:border-slate-700">
                 <table class="mt-3 hidden w-full border-collapse text-sm md:table">
                     <thead>
                         <tr>
-                            <th class="border-b border-slate-200 bg-slate-50 px-2 py-2 text-left font-semibold">Eigenaar</th>
-                            <th class="border-b border-slate-200 bg-slate-50 px-2 py-2 text-left font-semibold">Hond</th>
-                            <th class="border-b border-slate-200 bg-slate-50 px-2 py-2 text-left font-semibold">Datum</th>
-                            <th class="border-b border-slate-200 bg-slate-50 px-2 py-2 text-left font-semibold">Dagdeel</th>
+                            <th class="border-b border-slate-200 bg-slate-50 px-2 py-2 text-left font-semibold dark:border-slate-600 dark:bg-slate-700 dark:text-slate-200">Eigenaar</th>
+                            <th class="border-b border-slate-200 bg-slate-50 px-2 py-2 text-left font-semibold dark:border-slate-600 dark:bg-slate-700 dark:text-slate-200">Hond</th>
+                            <th class="border-b border-slate-200 bg-slate-50 px-2 py-2 text-left font-semibold dark:border-slate-600 dark:bg-slate-700 dark:text-slate-200">Datum</th>
+                            <th class="border-b border-slate-200 bg-slate-50 px-2 py-2 text-left font-semibold dark:border-slate-600 dark:bg-slate-700 dark:text-slate-200">Dagdeel</th>
                         </tr>
                     </thead>
                     <tbody>
                         @forelse ($daycareRegistrations as $item)
                             <tr>
-                                <td class="border-b border-slate-100 px-2 py-2">{{ $item->owner_name }}</td>
-                                <td class="border-b border-slate-100 px-2 py-2">{{ $item->dog_name }}</td>
-                                <td class="border-b border-slate-100 px-2 py-2">{{ optional($item->drop_off_date)->format('d-m-Y') }}</td>
-                                <td class="border-b border-slate-100 px-2 py-2">{{ $item->time_slot }}</td>
+                                <td class="border-b border-slate-100 px-2 py-2 dark:border-slate-700 dark:text-slate-300">{{ $item->owner_name }}</td>
+                                <td class="border-b border-slate-100 px-2 py-2 dark:border-slate-700 dark:text-slate-300">{{ $item->dog_name }}</td>
+                                <td class="border-b border-slate-100 px-2 py-2 dark:border-slate-700 dark:text-slate-300">{{ optional($item->drop_off_date)->format('d-m-Y') }}</td>
+                                <td class="border-b border-slate-100 px-2 py-2 dark:border-slate-700 dark:text-slate-300">{{ $item->time_slot }}</td>
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="4" class="px-2 py-3 text-slate-500">Nog geen dagopvang aanmeldingen.</td>
+                                <td colspan="4" class="px-2 py-3 text-slate-500 dark:text-slate-400">Nog geen dagopvang aanmeldingen.</td>
                             </tr>
                         @endforelse
                     </tbody>
@@ -178,39 +178,39 @@
             </div>
         </article>
 
-        <article class="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
-            <h2 class="text-xl font-semibold text-slate-900">Contactberichten</h2>
-            <p class="mt-1 text-sm text-slate-500">Resultaten: {{ $filteredCounts['messages'] ?? 0 }}</p>
+        <article class="card">
+            <h2 class="text-xl font-semibold text-slate-900 dark:text-white">Contactberichten</h2>
+            <p class="mt-1 text-sm text-slate-500 dark:text-slate-400">Resultaten: {{ $filteredCounts['messages'] ?? 0 }}</p>
             <div class="mt-3 grid gap-3 md:hidden">
                 @forelse ($contactMessages as $item)
-                    <article class="rounded-lg border border-slate-200 bg-slate-50 p-3 text-sm">
+                    <article class="rounded-lg border border-slate-200 bg-slate-50 p-3 text-sm dark:border-slate-700 dark:bg-slate-700/50 dark:text-slate-300">
                         <p><strong>Naam:</strong> {{ $item->name }}</p>
                         <p><strong>Onderwerp:</strong> {{ $item->subject }}</p>
                         <p><strong>E-mail:</strong> {{ $item->email }}</p>
                     </article>
                 @empty
-                    <p class="text-sm text-slate-500">Nog geen contactberichten.</p>
+                    <p class="text-sm text-slate-500 dark:text-slate-400">Nog geen contactberichten.</p>
                 @endforelse
             </div>
-            <div class="overflow-x-auto">
+            <div class="overflow-x-auto rounded-lg border border-slate-200 dark:border-slate-700">
                 <table class="mt-3 hidden w-full border-collapse text-sm md:table">
                     <thead>
                         <tr>
-                            <th class="border-b border-slate-200 bg-slate-50 px-2 py-2 text-left font-semibold">Naam</th>
-                            <th class="border-b border-slate-200 bg-slate-50 px-2 py-2 text-left font-semibold">Onderwerp</th>
-                            <th class="border-b border-slate-200 bg-slate-50 px-2 py-2 text-left font-semibold">E-mail</th>
+                            <th class="border-b border-slate-200 bg-slate-50 px-2 py-2 text-left font-semibold dark:border-slate-600 dark:bg-slate-700 dark:text-slate-200">Naam</th>
+                            <th class="border-b border-slate-200 bg-slate-50 px-2 py-2 text-left font-semibold dark:border-slate-600 dark:bg-slate-700 dark:text-slate-200">Onderwerp</th>
+                            <th class="border-b border-slate-200 bg-slate-50 px-2 py-2 text-left font-semibold dark:border-slate-600 dark:bg-slate-700 dark:text-slate-200">E-mail</th>
                         </tr>
                     </thead>
                     <tbody>
                         @forelse ($contactMessages as $item)
                             <tr>
-                                <td class="border-b border-slate-100 px-2 py-2">{{ $item->name }}</td>
-                                <td class="border-b border-slate-100 px-2 py-2">{{ $item->subject }}</td>
-                                <td class="border-b border-slate-100 px-2 py-2">{{ $item->email }}</td>
+                                <td class="border-b border-slate-100 px-2 py-2 dark:border-slate-700 dark:text-slate-300">{{ $item->name }}</td>
+                                <td class="border-b border-slate-100 px-2 py-2 dark:border-slate-700 dark:text-slate-300">{{ $item->subject }}</td>
+                                <td class="border-b border-slate-100 px-2 py-2 dark:border-slate-700 dark:text-slate-300">{{ $item->email }}</td>
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="3" class="px-2 py-3 text-slate-500">Nog geen contactberichten.</td>
+                                <td colspan="3" class="px-2 py-3 text-slate-500 dark:text-slate-400">Nog geen contactberichten.</td>
                             </tr>
                         @endforelse
                     </tbody>

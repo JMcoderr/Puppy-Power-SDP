@@ -26,17 +26,31 @@
             <p class="text-sm text-slate-500 dark:text-slate-400">Eerstvolgende start</p>
             <p class="mt-1 text-2xl font-bold text-slate-900 dark:text-white">{{ $summary['nextStart'] ?? '-' }}</p>
         </article>
+        <article class="card p-4 sm:col-span-3">
+            <p class="text-sm text-slate-500 dark:text-slate-400">Gedragstrainingen in overzicht</p>
+            <p class="mt-1 text-2xl font-bold text-slate-900 dark:text-white">{{ $summary['behaviour'] ?? 0 }}</p>
+        </article>
     </section>
 
     <section class="mb-4 card p-4">
         <h2 class="text-lg font-semibold text-slate-900 dark:text-white">Filter en sorteer</h2>
-        <form method="get" action="{{ route('training.index') }}" class="mt-3 grid gap-3 md:grid-cols-3 md:items-end">
+        <form method="get" action="{{ route('training.index') }}" class="mt-3 grid gap-3 md:grid-cols-4 md:items-end">
             <label class="grid gap-1 text-sm dark:text-slate-300">
                 Beschikbaarheid
                 <select name="availability" class="form-input">
                     <option value="all" @selected(($filters['availability'] ?? 'all') === 'all')>Alles</option>
                     <option value="open" @selected(($filters['availability'] ?? '') === 'open')>Nog plek</option>
                     <option value="full" @selected(($filters['availability'] ?? '') === 'full')>Vol</option>
+                </select>
+            </label>
+            <label class="grid gap-1 text-sm dark:text-slate-300">
+                Doel
+                <select name="focus" class="form-input">
+                    <option value="all" @selected(($filters['focus'] ?? 'all') === 'all')>Alle doelen</option>
+                    <option value="basis" @selected(($filters['focus'] ?? '') === 'basis')>Basis en puppy</option>
+                    <option value="gedrag" @selected(($filters['focus'] ?? '') === 'gedrag')>Gedrag</option>
+                    <option value="zelfvertrouwen" @selected(($filters['focus'] ?? '') === 'zelfvertrouwen')>Zelfvertrouwen</option>
+                    <option value="focus" @selected(($filters['focus'] ?? '') === 'focus')>Focus en puberfase</option>
                 </select>
             </label>
             <label class="grid gap-1 text-sm dark:text-slate-300">
@@ -58,6 +72,10 @@
     <section class="grid gap-4 lg:grid-cols-2">
         @forelse ($trainings as $training)
             <article class="card">
+                <div class="mb-2 flex flex-wrap gap-2">
+                    <span class="inline-flex rounded-full bg-slate-100 px-3 py-1 text-xs font-medium text-slate-700 dark:bg-slate-700 dark:text-slate-200">{{ $training->level }}</span>
+                    <span class="inline-flex rounded-full bg-emerald-50 px-3 py-1 text-xs font-medium text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300">{{ ucfirst($training->focus) }}</span>
+                </div>
                 <h2 class="text-xl font-semibold text-slate-900 dark:text-white">{{ $training->title }}</h2>
                 <p class="mt-2 page-sub">{{ $training->summary }}</p>
                 <p class="mt-3 text-sm dark:text-slate-300"><strong>Start:</strong> {{ optional($training->starts_on)->format('d-m-Y') }}</p>
@@ -71,6 +89,12 @@
                         <span class="font-semibold text-red-600 dark:text-red-400">Vol</span>
                     @endif
                 </p>
+
+                <div class="mt-3 flex flex-wrap gap-2">
+                    @foreach ($training->highlights as $highlight)
+                        <span class="inline-flex rounded-full border border-slate-200 bg-slate-50 px-3 py-1 text-xs font-medium text-slate-700 dark:border-slate-700 dark:bg-slate-700/50 dark:text-slate-200">{{ $highlight }}</span>
+                    @endforeach
+                </div>
 
                 <form action="{{ route('training.enroll') }}" method="post" class="mt-4 grid gap-3">
                     @csrf

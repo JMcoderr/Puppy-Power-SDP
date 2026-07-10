@@ -80,6 +80,22 @@ class AuthIntegrationTest extends TestCase
             'password' => 'newpassword123',
         ])->assertRedirect('/training/content');
     }
+
+    public function test_logged_in_user_can_open_account_page(): void
+    {
+        $user = User::factory()->create();
+
+        $this->actingAs($user)
+            ->get('/mijn-account')
+            ->assertOk()
+            ->assertSee('Mijn account')
+            ->assertSee('Snelle acties');
+    }
+
+    public function test_account_page_requires_login(): void
+    {
+        $this->get('/mijn-account')->assertRedirect('/login');
+    }
 }
 
 
