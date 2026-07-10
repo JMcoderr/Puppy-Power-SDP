@@ -10,6 +10,56 @@
 
 @layer base {
     body {
-        background: radial-gradient(circle at top right, #d9f3e7, transparent 40%), #f9f6f1;
+        background:
+            radial-gradient(circle at top right, #d9f3e7, transparent 40%),
+            radial-gradient(circle at 10% 20%, #fdeecf, transparent 35%),
+            repeating-linear-gradient(
+                135deg,
+                rgba(255, 255, 255, 0.45) 0,
+                rgba(255, 255, 255, 0.45) 6px,
+                rgba(255, 255, 255, 0) 6px,
+                rgba(255, 255, 255, 0) 12px
+            ),
+            #f9f6f1;
+    }
+
+    ::selection {
+        background: #9ae6b4;
+        color: #0f172a;
+    }
+
+    :focus-visible {
+        outline: 2px solid #059669;
+        outline-offset: 2px;
+    }
+}
+
+@keyframes fade-up {
+    from {
+        opacity: 0;
+        transform: translateY(12px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@layer utilities {
+    .fade-up {
+        animation: fade-up 0.55s ease-out both;
+    }
+
+    .fade-delay-1 {
+        animation-delay: 0.08s;
+    }
+
+    .fade-delay-2 {
+        animation-delay: 0.16s;
+    }
+
+    .fade-delay-3 {
+        animation-delay: 0.24s;
     }
 }
