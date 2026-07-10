@@ -13,6 +13,27 @@
 
     @include('partials.form-error-summary')
 
+    <section class="mb-4 grid gap-4 md:grid-cols-3">
+        <article class="card p-4">
+            <p class="text-xs font-semibold uppercase tracking-wide text-emerald-700 dark:text-emerald-400">Snelle route</p>
+            <h2 class="mt-1 text-lg font-semibold text-slate-900 dark:text-white">Training</h2>
+            <p class="mt-2 text-sm text-slate-600 dark:text-slate-400">Gebruik dit als je hulp wilt bij gedrag, focus of wandeltraining.</p>
+            <p class="mt-3 inline-flex w-fit rounded-full bg-emerald-50 px-3 py-1 text-xs font-medium text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300">Vraag over training</p>
+        </article>
+        <article class="card p-4">
+            <p class="text-xs font-semibold uppercase tracking-wide text-sky-700 dark:text-sky-400">Snelle route</p>
+            <h2 class="mt-1 text-lg font-semibold text-slate-900 dark:text-white">Dagopvang</h2>
+            <p class="mt-2 text-sm text-slate-600 dark:text-slate-400">Gebruik dit als je vragen hebt over planning, intake of beschikbare plaatsen.</p>
+            <p class="mt-3 inline-flex w-fit rounded-full bg-sky-50 px-3 py-1 text-xs font-medium text-sky-800 dark:bg-sky-950 dark:text-sky-300">Vraag over dagopvang</p>
+        </article>
+        <article class="card p-4">
+            <p class="text-xs font-semibold uppercase tracking-wide text-amber-700 dark:text-amber-400">Snelle route</p>
+            <h2 class="mt-1 text-lg font-semibold text-slate-900 dark:text-white">Producten</h2>
+            <p class="mt-2 text-sm text-slate-600 dark:text-slate-400">Gebruik dit als je twijfelt tussen producten of advies wilt voor je situatie.</p>
+            <p class="mt-3 inline-flex w-fit rounded-full bg-amber-50 px-3 py-1 text-xs font-medium text-amber-800 dark:bg-amber-950 dark:text-amber-300">Vraag over een product</p>
+        </article>
+    </section>
+
     <section class="grid gap-4 lg:grid-cols-[2fr_1fr]">
         <article class="card">
         <p class="text-sm text-slate-500 dark:text-slate-400">We reageren meestal binnen 1 werkdag.</p>
@@ -36,9 +57,10 @@
                     <option value="Overige vraag" @selected(old('subject') === 'Overige vraag')>Overige vraag</option>
                 </select>
             </label>
+            <p class="-mt-2 text-xs text-slate-500 dark:text-slate-400">Kies het onderwerp dat het dichtst bij je vraag past. Zo krijg je sneller een passend antwoord.</p>
             @error('subject') <p class="text-sm text-red-500">{{ $message }}</p> @enderror
             <label class="grid gap-1 text-sm dark:text-slate-300">Bericht
-                <textarea class="form-input" name="message" rows="6" required>{{ old('message') }}</textarea>
+                <textarea class="form-input" name="message" rows="6" placeholder="Beschrijf kort je situatie, je hond en waar je hulp bij zoekt." required>{{ old('message') }}</textarea>
             </label>
             @error('message') <p class="text-sm text-red-500">{{ $message }}</p> @enderror
             <button type="submit" class="inline-flex w-fit rounded-lg bg-emerald-700 px-4 py-2 text-sm font-medium text-white hover:bg-emerald-600">Verstuur bericht</button>

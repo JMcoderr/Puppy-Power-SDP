@@ -60,6 +60,16 @@ class ContactFeatureTest extends TestCase
             ])->assertSessionMissing('errors');
         }
     }
+
+    public function test_contact_page_shows_quick_route_cards(): void
+    {
+        $this->get('/contact')
+            ->assertOk()
+            ->assertSee('Snelle route')
+            ->assertSee('Vraag over training')
+            ->assertSee('Vraag over dagopvang')
+            ->assertSee('Vraag over een product');
+    }
 }
 
 
