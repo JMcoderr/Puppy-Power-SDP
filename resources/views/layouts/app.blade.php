@@ -36,8 +36,12 @@
                 <a href="{{ route('daycare.index') }}" aria-current="{{ request()->routeIs('daycare.*') ? 'page' : 'false' }}" class="rounded-md px-3 py-2 {{ request()->routeIs('daycare.*') ? 'is-active bg-emerald-100 text-emerald-900' : 'text-slate-700 hover:bg-slate-100' }}">Dagopvang</a>
                 <a href="{{ route('contact.index') }}" aria-current="{{ request()->routeIs('contact.*') ? 'page' : 'false' }}" class="rounded-md px-3 py-2 {{ request()->routeIs('contact.*') ? 'is-active bg-emerald-100 text-emerald-900' : 'text-slate-700 hover:bg-slate-100' }}">Contact</a>
                 @auth
+                    {{-- training content link is visible to all logged-in users --}}
                     <a href="{{ route('training.content') }}" aria-current="{{ request()->routeIs('training.content') ? 'page' : 'false' }}" class="rounded-md px-3 py-2 {{ request()->routeIs('training.content') ? 'is-active bg-emerald-100 text-emerald-900' : 'text-slate-700 hover:bg-slate-100' }}">Training content</a>
-                    <a href="{{ route('beheer.index') }}" aria-current="{{ request()->routeIs('beheer.*') ? 'page' : 'false' }}" class="rounded-md px-3 py-2 {{ request()->routeIs('beheer.*') ? 'is-active bg-emerald-100 text-emerald-900' : 'text-slate-700 hover:bg-slate-100' }}">Beheer</a>
+                    {{-- beheer link is only shown to admin users --}}
+                    @if (auth()->user()->is_admin)
+                        <a href="{{ route('beheer.index') }}" aria-current="{{ request()->routeIs('beheer.*') ? 'page' : 'false' }}" class="rounded-md px-3 py-2 {{ request()->routeIs('beheer.*') ? 'is-active bg-emerald-100 text-emerald-900' : 'text-slate-700 hover:bg-slate-100' }}">Beheer</a>
+                    @endif
                     <form action="{{ route('logout') }}" method="post" style="display:inline;">
                         @csrf
                         <button type="submit" class="link-button rounded-md px-3 py-2 text-slate-700 hover:bg-slate-100">Uitloggen</button>

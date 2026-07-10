@@ -6,10 +6,12 @@ use App\Models\Training;
 use App\Models\TrainingEnrollment;
 use Illuminate\Http\Request;
 
+// handles the public training overview page, enrollment, and protected content
 class TrainingController extends Controller
 {
     public function index()
     {
+        // only show active trainings, sorted by start date
         $trainings = Training::query()
             ->where('is_active', true)
             ->orderBy('starts_on')
@@ -20,7 +22,9 @@ class TrainingController extends Controller
 
     public function enroll(Request $request)
     {
+        // validate the enrollment form fields
         $validated = $request->validate([
+            // training_id must exist in the trainings table
             'training_id' => ['required', 'exists:trainings,id'],
             'owner_name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'email', 'max:255'],
@@ -36,6 +40,7 @@ class TrainingController extends Controller
 
     public function content()
     {
+        // static lesson list shown to authenticated users only
         $lessons = [
             ['title' => 'Week 1: Focus en rust opbouwen', 'duration' => '18 min'],
             ['title' => 'Week 2: Wandelen zonder trekken', 'duration' => '24 min'],

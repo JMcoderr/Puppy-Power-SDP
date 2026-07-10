@@ -12,14 +12,31 @@ class BeheerFeatureTest extends TestCase
 {
     use RefreshDatabase;
 
+    // helper to quickly create an admin user in each test
+    private function adminUser(): User
+    {
+        return User::factory()->admin()->create();
+    }
+
     public function test_beheer_page_requires_login(): void
     {
+        // unauthenticated visitors should be redirected to the login page
         $this->get('/beheer')->assertRedirect('/login');
+    }
+
+    public function test_regular_user_cannot_access_beheer(): void
+    {
+        // a regular (non-admin) user must get a 403 forbidden response
+        $user = User::factory()->create(['is_admin' => false]);
+
+        $this->actingAs($user)
+            ->get('/beheer')
+            ->assertForbidden();
     }
 
     public function test_logged_in_user_can_open_beheer_page(): void
     {
-        $user = User::factory()->create();
+        $user = $this->adminUser();
 
         $this->actingAs($user)
             ->get('/beheer')
@@ -30,7 +47,7 @@ class BeheerFeatureTest extends TestCase
 
     public function test_beheer_search_filters_results(): void
     {
-        $user = User::factory()->create();
+        $user = $this->adminUser();
         $training = Training::query()->create([
             'title' => 'Puppy Basis',
             'slug' => 'puppy-basis',
@@ -62,7 +79,7 @@ class BeheerFeatureTest extends TestCase
 
     public function test_logged_in_user_can_export_beheer_csv(): void
     {
-        $user = User::factory()->create();
+        $user = $this->adminUser();
         $training = Training::query()->create([
             'title' => 'Puppy Basis',
             'slug' => 'puppy-basis-export',
@@ -91,7 +108,7 @@ class BeheerFeatureTest extends TestCase
 
     public function test_beheer_accepts_sorting_query_parameters(): void
     {
-        $user = User::factory()->create();
+        $user = $this->adminUser();
         $training = Training::query()->create([
             'title' => 'Sort Test',
             'slug' => 'sort-test',
@@ -123,7 +140,7 @@ class BeheerFeatureTest extends TestCase
 
     public function test_beheer_page_accepts_sort_filter(): void
     {
-        $user = User::factory()->create();
+        $user = $this->adminUser();
 
         $this->actingAs($user)
             ->get('/beheer?sort=name_az')
@@ -133,11 +150,22 @@ class BeheerFeatureTest extends TestCase
 
     public function test_beheer_reversed_date_range_gets_adjusted_with_feedback(): void
     {
-        $user = User::factory()->create();
+        $user = $this->adminUser();
 
         $this->actingAs($user)
             ->get('/beheer?from=2026-12-31&to=2026-01-01')
             ->assertOk()
             ->assertSee('Datumbereik is automatisch omgedraaid');
+    }
+
+    public function test_non_admin_user_gets_forbidden_on_beheer_page(): void
+    {
+        $user = User::factory()->create([
+            'is_admin' => false,
+        ]);
+
+        $this->actingAs($user)
+            ->get('/beheer')
+            ->assertForbidden();
     }
 }
