@@ -63,6 +63,26 @@
                 </a>
             </div>
         </form>
+
+        @if (($filters['adjusted'] ?? false) === true)
+            <p class="mt-3 rounded-md border border-amber-200 bg-amber-50 px-3 py-2 text-sm text-amber-900">
+                Datumbereik is automatisch omgedraaid, omdat "vanaf" later was dan "tot en met".
+            </p>
+        @endif
+
+        @if (! empty($filters['q']) || ! empty($filters['from']) || ! empty($filters['to']))
+            <div class="mt-3 flex flex-wrap gap-2 text-xs">
+                @if (! empty($filters['q']))
+                    <span class="rounded-full border border-sky-200 bg-sky-50 px-3 py-1 font-medium text-sky-800">Zoek: {{ $filters['q'] }}</span>
+                @endif
+                @if (! empty($filters['from']))
+                    <span class="rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1 font-medium text-emerald-800">Vanaf: {{ $filters['from'] }}</span>
+                @endif
+                @if (! empty($filters['to']))
+                    <span class="rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1 font-medium text-emerald-800">Tot: {{ $filters['to'] }}</span>
+                @endif
+            </div>
+        @endif
     </section>
 
     <section class="grid gap-4">

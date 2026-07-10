@@ -130,4 +130,14 @@ class BeheerFeatureTest extends TestCase
             ->assertOk()
             ->assertSee('Sortering');
     }
+
+    public function test_beheer_reversed_date_range_gets_adjusted_with_feedback(): void
+    {
+        $user = User::factory()->create();
+
+        $this->actingAs($user)
+            ->get('/beheer?from=2026-12-31&to=2026-01-01')
+            ->assertOk()
+            ->assertSee('Datumbereik is automatisch omgedraaid');
+    }
 }
