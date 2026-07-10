@@ -107,6 +107,13 @@ class BeheerController extends Controller
         $from = request('from');
         $to = request('to');
         $sort = (string) request('sort', 'newest');
+        $adjusted = false;
+
+        // if user enters reversed dates, we flip them so the filter still works
+        if ($from && $to && $from > $to) {
+            [$from, $to] = [$to, $from];
+            $adjusted = true;
+        }
 
         $allowedSorts = ['newest', 'oldest', 'name_az', 'name_za'];
         if (! in_array($sort, $allowedSorts, true)) {
@@ -123,6 +130,7 @@ class BeheerController extends Controller
                 'from' => $from,
                 'to' => $to,
                 'sort' => $sort,
+                'adjusted' => $adjusted,
             ],
         ];
     }
