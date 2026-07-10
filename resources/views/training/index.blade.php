@@ -13,6 +13,48 @@
 
     @include('partials.form-error-summary')
 
+    <section class="mb-4 grid gap-4 sm:grid-cols-3">
+        <article class="card p-4">
+            <p class="text-sm text-slate-500 dark:text-slate-400">Actieve trainingen</p>
+            <p class="mt-1 text-2xl font-bold text-slate-900 dark:text-white">{{ $summary['active'] ?? 0 }}</p>
+        </article>
+        <article class="card p-4">
+            <p class="text-sm text-slate-500 dark:text-slate-400">Open inschrijvingen</p>
+            <p class="mt-1 text-2xl font-bold text-slate-900 dark:text-white">{{ $summary['open'] ?? 0 }}</p>
+        </article>
+        <article class="card p-4">
+            <p class="text-sm text-slate-500 dark:text-slate-400">Eerstvolgende start</p>
+            <p class="mt-1 text-2xl font-bold text-slate-900 dark:text-white">{{ $summary['nextStart'] ?? '-' }}</p>
+        </article>
+    </section>
+
+    <section class="mb-4 card p-4">
+        <h2 class="text-lg font-semibold text-slate-900 dark:text-white">Filter en sorteer</h2>
+        <form method="get" action="{{ route('training.index') }}" class="mt-3 grid gap-3 md:grid-cols-3 md:items-end">
+            <label class="grid gap-1 text-sm dark:text-slate-300">
+                Beschikbaarheid
+                <select name="availability" class="form-input">
+                    <option value="all" @selected(($filters['availability'] ?? 'all') === 'all')>Alles</option>
+                    <option value="open" @selected(($filters['availability'] ?? '') === 'open')>Nog plek</option>
+                    <option value="full" @selected(($filters['availability'] ?? '') === 'full')>Vol</option>
+                </select>
+            </label>
+            <label class="grid gap-1 text-sm dark:text-slate-300">
+                Sorteer op
+                <select name="sort" class="form-input">
+                    <option value="start_date" @selected(($filters['sort'] ?? 'start_date') === 'start_date')>Startdatum</option>
+                    <option value="spots" @selected(($filters['sort'] ?? '') === 'spots')>Meeste plekken</option>
+                    <option value="capacity" @selected(($filters['sort'] ?? '') === 'capacity')>Capaciteit</option>
+                    <option value="name" @selected(($filters['sort'] ?? '') === 'name')>Naam A-Z</option>
+                </select>
+            </label>
+            <div class="flex gap-2">
+                <button type="submit" class="inline-flex rounded-lg bg-slate-800 px-4 py-2 text-sm font-medium text-white hover:bg-slate-700 dark:bg-slate-700 dark:hover:bg-slate-600">Toepassen</button>
+                <a href="{{ route('training.index') }}" class="inline-flex rounded-lg border border-slate-300 px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50 dark:border-slate-600 dark:text-slate-300 dark:hover:bg-slate-700">Reset</a>
+            </div>
+        </form>
+    </section>
+
     <section class="grid gap-4 lg:grid-cols-2">
         @forelse ($trainings as $training)
             <article class="card">
@@ -20,7 +62,7 @@
                 <p class="mt-2 page-sub">{{ $training->summary }}</p>
                 <p class="mt-3 text-sm dark:text-slate-300"><strong>Start:</strong> {{ optional($training->starts_on)->format('d-m-Y') }}</p>
                 {{-- calculate remaining spots from capacity minus current enrollment count --}}
-                @php $spots = max(0, $training->capacity - ($training->enrollments_count ?? 0)); @endphp
+                @php $spots = $training->remaining_spots ?? max(0, $training->capacity - ($training->enrollments_count ?? 0)); @endphp
                 <p class="text-sm dark:text-slate-300">
                     <strong>Beschikbare plekken:</strong>
                     @if ($spots > 0)
