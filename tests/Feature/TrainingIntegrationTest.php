@@ -109,6 +109,32 @@ class TrainingIntegrationTest extends TestCase
             ->assertSee('Volle training')
             ->assertDontSee('Open training');
     }
+
+    public function test_training_page_can_filter_by_focus(): void
+    {
+        Training::query()->create([
+            'title' => 'Puppytraining',
+            'slug' => 'puppytraining',
+            'summary' => 'Basis',
+            'starts_on' => '2026-09-01',
+            'capacity' => 10,
+            'is_active' => true,
+        ]);
+
+        Training::query()->create([
+            'title' => 'Gedragstraining',
+            'slug' => 'gedragstraining',
+            'summary' => 'Gedrag',
+            'starts_on' => '2026-09-02',
+            'capacity' => 10,
+            'is_active' => true,
+        ]);
+
+        $this->get('/training?focus=gedrag')
+            ->assertOk()
+            ->assertSee('Gedragstraining')
+            ->assertDontSee('Puppytraining');
+    }
 }
 
 

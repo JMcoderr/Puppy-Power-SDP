@@ -52,4 +52,28 @@ class ShopPageFeatureTest extends TestCase
             ->assertSee('Cursus A')
             ->assertDontSee('DIY B');
     }
+
+    public function test_shop_page_can_filter_by_budget(): void
+    {
+        Product::query()->create([
+            'name' => 'Budget pakket',
+            'category' => 'DIY-pakket',
+            'description' => 'Goedkoop',
+            'price' => 30,
+            'is_active' => true,
+        ]);
+
+        Product::query()->create([
+            'name' => 'Premium cursus',
+            'category' => 'Cursus',
+            'description' => 'Duurder',
+            'price' => 90,
+            'is_active' => true,
+        ]);
+
+        $this->get('/shop?budget=under_50')
+            ->assertOk()
+            ->assertSee('Budget pakket')
+            ->assertDontSee('Premium cursus');
+    }
 }

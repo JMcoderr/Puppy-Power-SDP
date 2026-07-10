@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\AccountController;
 use App\Http\Controllers\BeheerController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\DaycareController;
@@ -46,4 +47,5 @@ Route::get('/wachtwoord-vergeten', [AuthController::class, 'showForgotPassword']
 Route::post('/wachtwoord-vergeten', [AuthController::class, 'sendResetLink'])->name('password.email');
 Route::get('/wachtwoord-reset/{token}', [AuthController::class, 'showResetPassword'])->name('password.reset.form');
 Route::post('/wachtwoord-reset', [AuthController::class, 'resetPassword'])->name('password.update');
+Route::get('/mijn-account', [AccountController::class, 'index'])->middleware('auth')->name('account.index');
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');

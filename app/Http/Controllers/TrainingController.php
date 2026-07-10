@@ -12,6 +12,7 @@ class TrainingController extends Controller
     public function index()
     {
         $availability = (string) request('availability', 'all');
+        $focus = (string) request('focus', 'all');
         $sort = (string) request('sort', 'start_date');
 
         // only show active trainings, sorted by start date
@@ -25,6 +26,43 @@ class TrainingController extends Controller
         $trainings = $trainings->map(function (Training $training) {
             $training->remaining_spots = max(0, $training->capacity - ($training->enrollments_count ?? 0));
 
+            $meta = match ($training->slug) {
+                'puppytraining' => [
+                    'focus' => 'basis',
+                    'level' => 'Starter',
+                    'highlights' => ['Socialisatie', 'Basiscommando\'s'],
+                ],
+                'vuurwerkangst' => [
+                    'focus' => 'zelfvertrouwen',
+                    'level' => 'Rust',
+                    'highlights' => ['Geluidstraining', 'Rustopbouw'],
+                ],
+                'gedragstraining' => [
+                    'focus' => 'gedrag',
+                    'level' => 'Begeleiding',
+                    'highlights' => ['Uitvalgedrag', 'Prikkelcontrole'],
+                ],
+                'pubertraining' => [
+                    'focus' => 'focus',
+                    'level' => 'Midden',
+                    'highlights' => ['Luisteren', 'Grenzen oefenen'],
+                ],
+                'sociale-wandeling' => [
+                    'focus' => 'zelfvertrouwen',
+                    'level' => 'Opbouw',
+                    'highlights' => ['Rustig passeren', 'Samen wandelen'],
+                ],
+                default => [
+                    'focus' => 'basis',
+                    'level' => 'Algemeen',
+                    'highlights' => ['Praktische tips', 'Dagelijkse oefeningen'],
+                ],
+            };
+
+            $training->focus = $meta['focus'];
+            $training->level = $meta['level'];
+            $training->highlights = $meta['highlights'];
+
             return $training;
         });
 
@@ -32,6 +70,15 @@ class TrainingController extends Controller
         $trainings = match ($availability) {
             'open' => $trainings->where('remaining_spots', '>', 0),
             'full' => $trainings->where('remaining_spots', 0),
+            default => $trainings,
+        };
+
+        // filter by the kind of help the visitor is looking for
+        $trainings = match ($focus) {
+            'basis' => $trainings->where('focus', 'basis'),
+            'gedrag' => $trainings->where('focus', 'gedrag'),
+            'zelfvertrouwen' => $trainings->where('focus', 'zelfvertrouwen'),
+            'focus' => $trainings->where('focus', 'focus'),
             default => $trainings,
         };
 
@@ -48,10 +95,12 @@ class TrainingController extends Controller
             'active' => $trainings->count(),
             'open' => $trainings->where('remaining_spots', '>', 0)->count(),
             'nextStart' => optional($trainings->sortBy('starts_on')->first()?->starts_on)->format('d-m-Y'),
+            'behaviour' => $trainings->where('focus', 'gedrag')->count(),
         ];
 
         $filters = [
             'availability' => $availability,
+            'focus' => $focus,
             'sort' => $sort,
         ];
 

@@ -20,11 +20,19 @@
             <p class="text-sm text-slate-500 dark:text-slate-400">DIY-pakketten</p>
             <p class="mt-1 text-2xl font-bold text-slate-900 dark:text-white">{{ $summary['kits'] ?? 0 }}</p>
         </article>
+        <article class="card p-4 sm:col-span-3">
+            <p class="text-sm text-slate-500 dark:text-slate-400">Vanaf prijs</p>
+            <p class="mt-1 text-2xl font-bold text-slate-900 dark:text-white">&euro;&nbsp;{{ number_format($summary['lowestPrice'] ?? 0, 2, ',', '.') }}</p>
+        </article>
     </section>
 
     <section class="mb-4 card p-4">
         <h2 class="text-lg font-semibold text-slate-900 dark:text-white">Filter en sorteer</h2>
-        <form method="get" action="{{ route('shop.index') }}" class="mt-3 grid gap-3 md:grid-cols-3 md:items-end">
+        <form method="get" action="{{ route('shop.index') }}" class="mt-3 grid gap-3 md:grid-cols-4 md:items-end">
+            <label class="grid gap-1 text-sm dark:text-slate-300">
+                Zoekterm
+                <input name="q" value="{{ $filters['q'] ?? '' }}" class="form-input" placeholder="Zoek op naam of omschrijving">
+            </label>
             <label class="grid gap-1 text-sm dark:text-slate-300">
                 Categorie
                 <select name="category" class="form-input">
@@ -32,6 +40,15 @@
                     @foreach ($categories as $category)
                         <option value="{{ $category }}" @selected(($filters['category'] ?? '') === $category)>{{ $category }}</option>
                     @endforeach
+                </select>
+            </label>
+            <label class="grid gap-1 text-sm dark:text-slate-300">
+                Budget
+                <select name="budget" class="form-input">
+                    <option value="all" @selected(($filters['budget'] ?? 'all') === 'all')>Alle prijzen</option>
+                    <option value="under_50" @selected(($filters['budget'] ?? '') === 'under_50')>Onder €50</option>
+                    <option value="50_80" @selected(($filters['budget'] ?? '') === '50_80')>€50 - €80</option>
+                    <option value="above_80" @selected(($filters['budget'] ?? '') === 'above_80')>Boven €80</option>
                 </select>
             </label>
             <label class="grid gap-1 text-sm dark:text-slate-300">
@@ -81,6 +98,10 @@
                 <li class="rounded-lg bg-slate-50 px-3 py-2 dark:bg-slate-700/50">Hond raakt snel overprikkeld</li>
                 <li class="rounded-lg bg-slate-50 px-3 py-2 dark:bg-slate-700/50">Je wilt thuis gerichter oefenen</li>
             </ul>
+            <div class="mt-4 rounded-lg border border-slate-200 bg-slate-50 p-4 dark:border-slate-700 dark:bg-slate-700/50">
+                <p class="text-sm font-semibold text-slate-900 dark:text-white">Tip van ons</p>
+                <p class="mt-1 text-sm text-slate-600 dark:text-slate-400">Gebruik eerst de filters op categorie en budget. Zo vind je sneller wat past bij jouw hond en jouw plan.</p>
+            </div>
         </article>
     </section>
 

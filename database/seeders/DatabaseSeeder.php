@@ -102,6 +102,26 @@ class DatabaseSeeder extends Seeder
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
+            [
+                'title' => 'Pubertraining',
+                'slug' => 'pubertraining',
+                'summary' => 'Voor jonge honden die grenzen testen en extra focus nodig hebben.',
+                'starts_on' => now()->addWeeks(4)->toDateString(),
+                'capacity' => 9,
+                'is_active' => true,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'title' => 'Sociale wandeling',
+                'slug' => 'sociale-wandeling',
+                'summary' => 'Rustige begeleide wandeling voor honden die vertrouwen moeten opbouwen in de buitenwereld.',
+                'starts_on' => now()->addWeeks(5)->toDateString(),
+                'capacity' => 6,
+                'is_active' => true,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
         ]);
         } // end trainings guard
     }
