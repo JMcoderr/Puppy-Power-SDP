@@ -24,10 +24,6 @@
             <button type="submit" class="inline-flex w-fit rounded-lg bg-emerald-700 px-4 py-2 text-sm font-medium text-white hover:bg-emerald-800">Login</button>
         </form>
 
-        @if ($errors->any())
-            <p class="mt-2 text-sm text-red-700">{{ $errors->first() }}</p>
-        @endif
-
         <p class="mt-3 text-sm text-slate-500">Demo account: test@example.com / password</p>
     </section>
 @endsection
