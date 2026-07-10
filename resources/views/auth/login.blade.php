@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+    {{-- login card for protected training content --}}
     <section class="card login-card">
         <h1>Inloggen</h1>
         <p>Log in om afgeschermde trainingscontent te bekijken.</p>
@@ -10,9 +11,11 @@
             <label>E-mail
                 <input type="email" name="email" value="{{ old('email') }}" required>
             </label>
+            @error('email') <p class="error">{{ $message }}</p> @enderror
             <label>Wachtwoord
                 <input type="password" name="password" required>
             </label>
+            @error('password') <p class="error">{{ $message }}</p> @enderror
             <label class="checkbox">
                 <input type="checkbox" name="remember" value="1"> Onthoud mij
             </label>
