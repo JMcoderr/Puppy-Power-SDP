@@ -7,6 +7,7 @@ use App\Models\Training;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
 {
@@ -17,13 +18,26 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
-
-        User::factory()->create([
-            'name' => 'Test User',
+        // create a regular test user (can view training content, cannot access beheer)
+        User::query()->updateOrCreate([
             'email' => 'test@example.com',
+        ], [
+            'name' => 'Test User',
+            'password' => Hash::make('password'),
+            'is_admin' => false,
         ]);
 
+        // create an admin test user (has access to the beheer dashboard)
+        User::query()->updateOrCreate([
+            'email' => 'admin@example.com',
+        ], [
+            'name' => 'Test Admin',
+            'password' => Hash::make('password'),
+            'is_admin' => true,
+        ]);
+
+        // seed demo products only if the table is empty, to avoid duplicates
+        if (Product::query()->count() === 0) {
         Product::query()->insert([
             [
                 'name' => 'Puppy Basis Cursus',
@@ -53,7 +67,10 @@ class DatabaseSeeder extends Seeder
                 'updated_at' => now(),
             ],
         ]);
+        } // end products guard
 
+        // seed demo trainings only if the table is empty, to avoid duplicate slugs
+        if (Training::query()->count() === 0) {
         Training::query()->insert([
             [
                 'title' => 'Puppytraining',
@@ -86,5 +103,6 @@ class DatabaseSeeder extends Seeder
                 'updated_at' => now(),
             ],
         ]);
+        } // end trainings guard
     }
 }

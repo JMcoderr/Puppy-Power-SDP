@@ -6,23 +6,27 @@ use App\Models\ContactMessage;
 use App\Models\DaycareRegistration;
 use App\Models\TrainingEnrollment;
 
+// handles the admin dashboard: overview, filtering, sorting, CSV export
 class BeheerController extends Controller
 {
     public function index()
     {
+        // parse filter + sort settings from the current request
         [$search, $from, $to, $sort, $filters] = $this->filters();
 
-        // simple latest lists for admin overview
+        // always show the global totals (not affected by filters)
         $totals = [
             'enrollments' => TrainingEnrollment::query()->count(),
             'daycare' => DaycareRegistration::query()->count(),
             'messages' => ContactMessage::query()->count(),
         ];
 
+        // build base queries with the active filters applied
         $enrollmentsQuery = $this->enrollmentsQuery($search, $from, $to);
         $daycareQuery = $this->daycareQuery($search, $from, $to);
         $messagesQuery = $this->messagesQuery($search, $from, $to);
 
+        // paginate each dataset separately so they can be paged independently
         $enrollments = $this->applySorting(clone $enrollmentsQuery, $sort, 'owner_name')
             ->paginate(10, ['*'], 'enrollments_page')
             ->withQueryString();
@@ -35,6 +39,7 @@ class BeheerController extends Controller
             ->paginate(10, ['*'], 'messages_page')
             ->withQueryString();
 
+        // filtered totals shown next to each table heading
         $filteredCounts = [
             'enrollments' => (clone $enrollmentsQuery)->count(),
             'daycare' => (clone $daycareQuery)->count(),
@@ -44,6 +49,7 @@ class BeheerController extends Controller
         return view('beheer.index', compact('totals', 'filteredCounts', 'filters', 'enrollments', 'daycareRegistrations', 'contactMessages'));
     }
 
+    // streams all filtered data as a CSV download (respects current filters)
     public function export()
     {
         [$search, $from, $to, $sort] = $this->filters();
@@ -101,6 +107,7 @@ class BeheerController extends Controller
         ]);
     }
 
+    // collect and sanitize filter parameters from the request
     private function filters(): array
     {
         $search = trim((string) request('q', ''));
@@ -135,6 +142,7 @@ class BeheerController extends Controller
         ];
     }
 
+    // apply a named sort preset to any Eloquent query builder
     private function applySorting($query, string $sort, string $nameColumn)
     {
         return match ($sort) {
@@ -145,6 +153,7 @@ class BeheerController extends Controller
         };
     }
 
+    // base query for training enrollments with optional search + date filters
     private function enrollmentsQuery(string $search, ?string $from, ?string $to)
     {
         return TrainingEnrollment::query()
@@ -160,6 +169,7 @@ class BeheerController extends Controller
             ->when($to, fn ($query) => $query->whereDate('created_at', '<=', $to));
     }
 
+    // base query for daycare registrations with optional search + date filters
     private function daycareQuery(string $search, ?string $from, ?string $to)
     {
         return DaycareRegistration::query()
@@ -174,6 +184,7 @@ class BeheerController extends Controller
             ->when($to, fn ($query) => $query->whereDate('created_at', '<=', $to));
     }
 
+    // base query for contact messages with optional search + date filters
     private function messagesQuery(string $search, ?string $from, ?string $to)
     {
         return ContactMessage::query()

@@ -12,16 +12,10 @@ use Illuminate\Support\Str;
  */
 class UserFactory extends Factory
 {
-    /**
-     * The current password being used by the factory.
-     */
+    // reuse the hashed password between factory calls to save time
     protected static ?string $password;
 
-    /**
-     * Define the model's default state.
-     *
-     * @return array<string, mixed>
-     */
+    // default state used whenever User::factory() is called in tests
     public function definition(): array
     {
         return [
@@ -30,12 +24,20 @@ class UserFactory extends Factory
             'email_verified_at' => now(),
             'password' => static::$password ??= Hash::make('password'),
             'remember_token' => Str::random(10),
+            // regular users are not admins by default
+            'is_admin' => false,
         ];
     }
 
-    /**
-     * Indicate that the model's email address should be unverified.
-     */
+    // helper state to create an admin user in tests
+    public function admin(): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'is_admin' => true,
+        ]);
+    }
+
+    // helper to create an unverified user
     public function unverified(): static
     {
         return $this->state(fn (array $attributes) => [
